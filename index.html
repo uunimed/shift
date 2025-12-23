@@ -124,9 +124,34 @@
             display: none;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
         }
         
+        .activity-cell.filled {
+    font-weight: bold; /* Make text bolder */
+    letter-spacing: 0.5px; /* Add slight letter spacing */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Or set specific sizes by class */
+.german-cell.filled {
+    font-size: 17px !important; /* Force size for GER */
+}
+
+.mcg-cell.filled {
+    font-size: 17px !important; /* Force size for MCG */
+}
+
+/* Alternative: Use relative sizing */
+.german-cell.filled {
+    font-size: 1.2em; /* 20% larger */
+}
+
+.mcg-cell.filled {
+    font-size: 1.2em; /* Normal size */
+}
+
         /* Header with logout */
         .app-header {
             display: flex;
@@ -139,14 +164,14 @@
         
         .app-title {
             color: #33465C;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
         }
         
         .user-info {
             display: flex;
             align-items: center;
-            font-size: 10px;
+            font-size: 12px;
             gap: 15px;
         }
         
@@ -1195,7 +1220,7 @@
                 // Show comment preview
                 if (commentData) {
                     document.getElementById('commentPreview').style.display = 'block';
-                    document.getElementById('commentPreviewTime').textContent = commentData.time ? `დრო: ${commentData.time}` : '';
+                    document.getElementById('commentPreviewTime').textContent = commentData.time ? `გამოცხადების დრო: ${commentData.time}` : '';
                     document.getElementById('commentPreviewText').textContent = commentData.text || '';
                 }
                 
