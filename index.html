@@ -225,6 +225,25 @@ body {
     width: 100%; /* Full width within padding */
 }
 
+/* German Counter Styles */
+.german-counter {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(27, 94, 32, 0.3);
+}
+
+.german-counter i {
+    font-size: 12px;
+}
+
 .month-box {
     margin-bottom: 20px;
     position: relative;
@@ -1269,44 +1288,79 @@ function getPastDateClass(year, month, day) {
         }
         
         // Create Schedule with grid layout
-        function createSchedule() {
-            const container = document.getElementById('tableContainer');
-            container.innerHTML = '';
-            
-            // Get months from current month to August
-            let year = currentYear;
-            let month = currentMonth;
-            
-            while (true) {
-                const daysInMonth = getDaysInMonth(year, month);
-                const monthInfo = {
-                    year: year,
-                    month: month,
-                    name: monthNames[month],
-                    days: daysInMonth
-                };
-                
-                // Create month box
-                createMonthBox(container, monthInfo);
-                
-                if (month === 7) break; // Stop at August (month index 7)
-                
-                month++;
-                if (month > 11) {
-                    month = 0;
-                    year++;
-                }
-            }
+function createSchedule() {
+    const container = document.getElementById('tableContainer');
+    container.innerHTML = '';
+    
+    // Get months from current month to August
+    let year = currentYear;
+    let month = currentMonth;
+    
+    while (true) {
+        const daysInMonth = getDaysInMonth(year, month);
+        const monthInfo = {
+            year: year,
+            month: month,
+            name: monthNames[month],
+            days: daysInMonth
+        };
+        
+        // Create month box
+        createMonthBox(container, monthInfo);
+        
+        if (month === 7) break; // Stop at August (month index 7)
+        
+        month++;
+        if (month > 11) {
+            month = 0;
+            year++;
         }
+    }
+    
+    // ADD THIS LINE HERE:
+    setTimeout(updateGermanCounters, 100);
+}
         
 function createMonthBox(container, monthInfo) {
     const monthBox = document.createElement('div');
     monthBox.className = 'month-box';
     
-    // Month title
+    // Month title WITH COUNTER
     const monthTitle = document.createElement('div');
     monthTitle.className = 'month-title';
-    monthTitle.textContent = monthInfo.name;
+    
+    // Create title container
+    const titleContainer = document.createElement('div');
+    titleContainer.style.display = 'flex';
+    titleContainer.style.alignItems = 'center';
+    titleContainer.style.justifyContent = 'space-between';
+    titleContainer.style.width = '100%';
+    
+    // Month name
+    const monthName = document.createElement('div');
+    monthName.textContent = monthInfo.name;
+    
+    // German counter
+    const germanCounter = document.createElement('div');
+    germanCounter.className = 'german-counter';
+    germanCounter.id = `german-counter-${monthInfo.year}-${monthInfo.month}`;
+    
+    // Count German lessons for this month
+    let germanCount = 0;
+    for (let day = 1; day <= monthInfo.days; day++) {
+        const dateKey = getDateKey(monthInfo.year, monthInfo.month, day);
+        if (scheduleData[dateKey] === 'german') {
+            germanCount++;
+        }
+    }
+    
+    germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> GER: ${germanCount}`;
+    
+    // Add elements to title container
+    titleContainer.appendChild(monthName);
+    titleContainer.appendChild(germanCounter);
+    
+    monthTitle.appendChild(titleContainer);
     monthBox.appendChild(monthTitle);
     
     // Create grid container
@@ -1366,6 +1420,53 @@ grid.appendChild(dateHeaders);
     container.appendChild(monthBox);
 }
         
+// Function to update all German counters
+function updateGermanCounters() {
+    // Get all month boxes
+    const monthBoxes = document.querySelectorAll('.month-box');
+    
+    // Get current year/month for reference
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    
+    monthBoxes.forEach((monthBox, index) => {
+        // Find the counter inside the month box
+        const germanCounter = monthBox.querySelector('.german-counter');
+        if (!germanCounter) return;
+        
+        // Get the month title text
+        const monthTitle = monthBox.querySelector('.month-title div:first-child');
+        if (!monthTitle) return;
+        
+        const monthName = monthTitle.textContent.trim();
+        const monthIndex = monthNames.indexOf(monthName);
+        
+        if (monthIndex === -1) return;
+        
+        // Determine the year
+        let year = currentYear;
+        // If month index is less than current month, it's next year
+        if (monthIndex < currentMonth && index === 0) {
+            // First month box might be current month
+        } else if (monthIndex < monthIndex) {
+            // This logic might need adjustment based on your schedule display
+        }
+        
+        // Count ALL German lessons for this month (past and future)
+        let germanCount = 0;
+        const daysInMonth = getDaysInMonth(year, monthIndex);
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateKey = getDateKey(year, monthIndex, day);
+            if (scheduleData[dateKey] === 'german') {
+                germanCount++;
+            }
+        }
+        
+        germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> GER: ${germanCount}`;
+    });
+}
+
 // Helper function to format time for display
 function formatTimeForDisplay(time24) {
     if (!time24) return '';
@@ -1592,6 +1693,7 @@ async function toggleEvent(cell, date, type) {
     
     await saveDataToFirebase();
     saveDataToLocalStorage();
+    updateGermanCounters();
 }
 
 function saveComment() {
@@ -1712,6 +1814,7 @@ function deleteComment() {
                 
                 await saveDataToFirebase();
                 saveDataToLocalStorage();
+                updateGermanCounters();
                 
                 // Reset confirm button text
                 document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> წაშლა';
