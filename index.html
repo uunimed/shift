@@ -1,589 +1,1033 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ka">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Work & German Lessons Schedule</title>
+    <title>განრიგი - გერმანული და MCG</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
-            line-height: 1.5;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 25px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+            overflow: hidden;
+            position: relative;
         }
         
-        header {
-            text-align: center;
-            margin-bottom: 30px;
+        /* Header with title and user section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #eaeaea;
+            border-bottom: 2px solid #eef2f7;
         }
         
-        h1 {
+        .main-title {
             color: #2c3e50;
-            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
         
-        .description {
+        .subtitle {
             color: #7f8c8d;
-            font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto;
+            font-size: 16px;
+            font-weight: 400;
         }
         
-        .schedule-container {
+        /* User controls */
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .auth-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .auth-input {
+            padding: 10px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .auth-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .auth-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .auth-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .user-info {
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-info.active {
+            display: flex;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .sign-out-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sign-out-btn:hover {
+            background: #c0392b;
+            transform: translateY(-1px);
+        }
+        
+        .table-container {
             overflow-x: auto;
-            margin-bottom: 30px;
+            margin-top: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            background: white;
         }
         
-        .schedule-table {
+        table {
             border-collapse: collapse;
             width: 100%;
             min-width: 800px;
+            font-size: 14px;
         }
         
-        .schedule-table th {
-            background-color: #f8f9fa;
-            padding: 12px 8px;
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px 4px;
             text-align: center;
-            font-weight: 600;
-            border: 1px solid #dee2e6;
+            min-width: 35px;
+            height: 40px;
         }
         
-        .month-header {
-            background-color: #3498db;
+        /* Month header row */
+        .month-row th {
+            background: linear-gradient(135deg, #4a6fa5 0%, #3a5a85 100%);
             color: white;
-            font-size: 1rem;
-            padding: 10px 5px;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 12px 4px;
+            border-top: none;
+            border-bottom: 2px solid #2c3e50;
         }
         
+        /* Date number row */
         .date-row th {
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
             color: white;
-            font-size: 0.9rem;
-            padding: 10px 5px;
+            font-weight: bold;
+            font-size: 12px;
+            padding: 10px 4px;
+            border-top: none;
         }
         
+        /* Activity labels column */
         .activity-label {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-weight: bold;
             text-align: right;
-            padding: 12px 15px;
-            font-weight: 600;
-            border: 1px solid #dee2e6;
-            width: 120px;
+            padding-right: 15px;
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            border-right: 2px solid #dee2e6;
+            min-width: 100px;
+            white-space: nowrap;
         }
         
         .german-label {
             color: #2980b9;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
         
         .mcg-label {
-            color: #f39c12;
+            color: #e67e22;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
         
+        /* Activity cells */
         .activity-cell {
-            text-align: center;
-            padding: 12px 5px;
-            border: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: all 0.2s;
             font-weight: 500;
-            min-width: 35px;
+            position: relative;
         }
         
-        .german {
-            background-color: #e8f4fc;
+        .activity-cell:hover {
+            background-color: #f8f9fa !important;
+            transform: scale(1.05);
+        }
+        
+        /* German lesson cells */
+        .german-cell.empty {
+            background-color: white;
+        }
+        
+        .german-cell.filled {
+            background: linear-gradient(135deg, #e8f4fc 0%, #d4e6f1 100%);
             color: #2980b9;
+            font-weight: bold;
         }
         
-        .mcg {
-            background-color: #fef9e7;
-            color: #f39c12;
+        /* MCG shift cells */
+        .mcg-cell.empty {
+            background-color: white;
         }
         
+        .mcg-cell.filled {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            color: #e67e22;
+            font-weight: bold;
+        }
+        
+        /* Month separator */
         .month-separator {
-            border-right: 2px solid #7f8c8d !important;
+            border-right: 3px solid #adb5bd !important;
         }
         
-        .controls {
+        /* Empty top-left corner */
+        .corner-cell {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-right: 2px solid #dee2e6;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .info-text {
+            color: #6c757d;
+            font-size: 12px;
+            margin-top: 15px;
+            text-align: center;
+            font-style: italic;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        /* Comment indicator */
+        .has-comment::after {
+            content: "💬";
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 10px;
+        }
+        
+        /* Modal for comments */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eef2f7;
         }
         
-        .month-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .modal-title {
+            color: #2c3e50;
+            font-size: 20px;
+            font-weight: 600;
         }
         
-        button {
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
+        .close-modal {
+            background: none;
             border: none;
-            border-radius: 4px;
+            font-size: 24px;
             cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-        
-        button:hover {
-            background-color: #2980b9;
-        }
-        
-        .current-month {
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: #2c3e50;
-        }
-        
-        .add-event-panel {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 6px;
-            margin-top: 30px;
-            border: 1px solid #eaeaea;
-        }
-        
-        .add-event-panel h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-        }
-        
-        label {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        select, input {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        .add-btn {
-            background-color: #2ecc71;
-        }
-        
-        .add-btn:hover {
-            background-color: #27ae60;
-        }
-        
-        .remove-btn {
-            background-color: #e74c3c;
-        }
-        
-        .remove-btn:hover {
-            background-color: #c0392b;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 30px;
             color: #7f8c8d;
-            font-size: 0.9rem;
-            padding-top: 20px;
-            border-top: 1px solid #eaeaea;
         }
         
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .month-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            button {
-                width: 100%;
-            }
-            
-            .form-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        .modal-date {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .comment-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+        
+        .comment-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .save-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .cancel-btn {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Tooltip for comments */
+        .tooltip {
+            position: absolute;
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            z-index: 100;
+            max-width: 200px;
+            display: none;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #2c3e50 transparent transparent transparent;
+        }
+        
+        /* Vector icons */
+        .vector-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .comment-icon {
+            background: #667eea;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E") no-repeat center;
+        }
+        
+        .user-icon {
+            background: white;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E") no-repeat center;
+        }
+        
+        .lock-icon {
+            background: white;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z'/%3E%3C/svg%3E") no-repeat center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Work & German Lessons Schedule</h1>
-            <p class="description">This schedule shows all dates in the selected month. MCG work shifts and German lesson dates are marked below each date. Days continue on new lines when screen width is filled.</p>
-        </header>
-        
-        <div class="controls">
-            <div class="month-controls">
-                <button id="prevMonth">Previous Month</button>
-                <span class="current-month" id="currentMonth">January 2024</span>
-                <button id="nextMonth">Next Month</button>
+        <!-- Header Section -->
+        <div class="header">
+            <div>
+                <h1 class="main-title">MCG ში მუშაობის განრიგის შეთანხმება გერმანულის გაკვეთილებზე გამოცხადების დაგეგმილ გრაფიკთან</h1>
+                <div class="subtitle">გერმანული გაკვეთილები და MCG ცვლები - მარტივად მართვადი განრიგი</div>
             </div>
-            <button id="todayBtn">Show Current Month</button>
+            
+            <div class="user-controls">
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form">
+                    <input type="text" id="username" class="auth-input" placeholder="მომხმარებელი" required>
+                    <input type="password" id="password" class="auth-input" placeholder="პაროლი" required>
+                    <button type="submit" class="auth-button">
+                        <span class="vector-icon lock-icon"></span>
+                        შესვლა
+                    </button>
+                </form>
+                
+                <!-- User Info (shown after login) -->
+                <div id="userInfo" class="user-info">
+                    <div class="user-avatar">A</div>
+                    <div>
+                        <div style="font-weight: 600;">Alex</div>
+                        <button id="signOutBtn" class="sign-out-btn">გასვლა</button>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="schedule-container">
-            <table class="schedule-table" id="scheduleTable">
-                <!-- Table will be generated by JavaScript -->
+        <!-- Schedule Table -->
+        <div class="table-container">
+            <table id="scheduleTable">
+                <!-- Table will be generated here -->
             </table>
         </div>
         
-        <div class="add-event-panel">
-            <h3>Add/Remove Events</h3>
-            <div class="form-group">
-                <label for="eventType">Event Type:</label>
-                <select id="eventType">
-                    <option value="german">German Lesson (გერმანული)</option>
-                    <option value="mcg">MCG Work Shift</option>
-                </select>
-                
-                <label for="eventDay">Day:</label>
-                <input type="number" id="eventDay" min="1" max="31" value="1" style="width: 70px;">
-                
-                <label for="eventMonth">Month:</label>
-                <select id="eventMonth">
-                    <option value="0">January</option>
-                    <option value="1">February</option>
-                    <option value="2">March</option>
-                    <option value="3">April</option>
-                    <option value="4">May</option>
-                    <option value="5">June</option>
-                    <option value="6">July</option>
-                    <option value="7">August</option>
-                    <option value="8">September</option>
-                    <option value="9">October</option>
-                    <option value="10">November</option>
-                    <option value="11">December</option>
-                </select>
-                
-                <label for="eventYear">Year:</label>
-                <input type="number" id="eventYear" value="2024" style="width: 80px;">
-                
-                <button id="addEvent" class="add-btn">Add Event</button>
-                <button id="removeEvent" class="remove-btn">Remove Event</button>
-            </div>
-            <p style="color: #7f8c8d; font-size: 0.9rem; margin-top: 10px;">Click on any date cell in the schedule to quickly select it for adding/removing events.</p>
+        <div class="info-text">
+            მარცხენა ღილაკი - დაამატეთ ან წაშალეთ გაკვეთილი/ცვლა | მარჯვენა ღილაკი - კომენტარის დამატება/რედაქტირება
         </div>
-        
-        <footer>
-            <p>Schedule shows all dates of the month. Days automatically wrap to new lines when screen width is filled.</p>
-        </footer>
     </div>
+    
+    <!-- Comment Modal -->
+    <div id="commentModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">კომენტარის მენეჯმენტი</div>
+                <button id="closeModal" class="close-modal">×</button>
+            </div>
+            <div id="modalDate" class="modal-date"></div>
+            <textarea id="commentInput" class="comment-input" placeholder="დაწერეთ კომენტარი აქ..."></textarea>
+            <div class="modal-buttons">
+                <button id="deleteCommentBtn" class="modal-btn delete-btn">კომენტარის წაშლა</button>
+                <button id="cancelBtn" class="modal-btn cancel-btn">გაუქმება</button>
+                <button id="saveCommentBtn" class="modal-btn save-btn">შენახვა</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tooltip for comments -->
+    <div id="tooltip" class="tooltip"></div>
 
     <script>
-        // Initialize with current date
-        let currentDate = new Date();
+        // დღევანდელი თარიღი
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth();
         
-        // Schedule data storage
+        // თვეების სახელები ქართულად
+        const monthNames = ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", 
+                           "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"];
+        const shortMonthNames = ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
+        
+        // ჩატვირთეთ შენახული მონაცემები
         let scheduleData = {};
+        let commentsData = {};
+        let currentUser = null;
+        const VALID_USERNAME = "alex";
+        const VALID_PASSWORD = "2911";
         
-        // Load saved data from localStorage or initialize with sample data
-        function loadScheduleData() {
-            const savedData = localStorage.getItem('germanMcgSchedule');
-            if (savedData) {
-                scheduleData = JSON.parse(savedData);
-            } else {
-                // Initialize with sample data if no saved data exists
-                scheduleData = {
-                    "2024-1-5": "german",  // Jan 5, 2024
-                    "2024-1-8": "mcg",     // Jan 8, 2024
-                    "2024-1-12": "german", // Jan 12, 2024
-                    "2024-1-15": "mcg",    // Jan 15, 2024
-                    "2024-1-19": "german", // Jan 19, 2024
-                    "2024-1-22": "mcg",    // Jan 22, 2024
-                    "2024-1-26": "german", // Jan 26, 2024
-                    "2024-1-29": "mcg",    // Jan 29, 2024
-                    "2024-2-2": "german",  // Feb 2, 2024
-                    "2024-2-5": "mcg",     // Feb 5, 2024
-                    "2024-2-9": "german",  // Feb 9, 2024
-                    "2024-2-12": "mcg",    // Feb 12, 2024
-                    "2024-2-16": "german", // Feb 16, 2024
-                    "2024-2-19": "mcg",    // Feb 19, 2024
-                    "2024-2-23": "german", // Feb 23, 2024
-                    "2024-2-26": "mcg"     // Feb 26, 2024
-                };
-                saveScheduleData();
+        try {
+            const savedSchedule = localStorage.getItem('germanMcgSchedule');
+            const savedComments = localStorage.getItem('germanMcgComments');
+            const savedUser = localStorage.getItem('currentUser');
+            
+            if (savedSchedule) {
+                scheduleData = JSON.parse(savedSchedule);
             }
+            if (savedComments) {
+                commentsData = JSON.parse(savedComments);
+            }
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateUserUI();
+            }
+        } catch (e) {
+            console.log("შენახული მონაცემები არ მოიძებნა");
         }
         
-        function saveScheduleData() {
-            localStorage.setItem('germanMcgSchedule', JSON.stringify(scheduleData));
-        }
-        
-        // Generate a key for schedule data
-        function getDateKey(year, month, day) {
-            return `${year}-${month+1}-${day}`;
-        }
-        
+        // დამხმარე ფუნქციები
         function getDaysInMonth(year, month) {
             return new Date(year, month + 1, 0).getDate();
         }
         
-        function getMonthName(monthIndex) {
-            const months = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
-            return months[monthIndex];
+        function getDateKey(year, month, day) {
+            return `${year}-${month + 1}-${day}`;
         }
         
-        function renderSchedule(date) {
-            const year = date.getFullYear();
-            const month = date.getMonth();
-            const monthName = getMonthName(month);
-            const daysInMonth = getDaysInMonth(year, month);
+        function formatDate(dateKey) {
+            const [year, month, day] = dateKey.split('-').map(Number);
+            return `${day} ${monthNames[month - 1]}, ${year}`;
+        }
+        
+        // ავტორიზაციის მართვა
+        function handleLogin(e) {
+            e.preventDefault();
             
-            // Update current month display
-            document.getElementById('currentMonth').textContent = `${monthName} ${year}`;
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
             
-            // Clear the table
+            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                currentUser = {
+                    name: 'Alex',
+                    username: username
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateUserUI();
+            } else {
+                alert('არასწორი მომხმარებლის სახელი ან პაროლი!');
+            }
+        }
+        
+        function handleLogout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserUI();
+        }
+        
+        function updateUserUI() {
+            const loginForm = document.getElementById('loginForm');
+            const userInfo = document.getElementById('userInfo');
+            
+            if (currentUser) {
+                loginForm.style.display = 'none';
+                userInfo.classList.add('active');
+            } else {
+                loginForm.style.display = 'flex';
+                userInfo.classList.remove('active');
+            }
+        }
+        
+        // კომენტარების მენეჯმენტი
+        let currentCommentDate = null;
+        
+        function showCommentModal(dateKey, cellType) {
+            currentCommentDate = dateKey;
+            const modal = document.getElementById('commentModal');
+            const modalDate = document.getElementById('modalDate');
+            const commentInput = document.getElementById('commentInput');
+            const deleteBtn = document.getElementById('deleteCommentBtn');
+            
+            modalDate.textContent = `${cellType === 'german' ? 'გერმანული' : 'MCG'} - ${formatDate(dateKey)}`;
+            
+            const commentKey = `${dateKey}_${cellType}`;
+            commentInput.value = commentsData[commentKey] || '';
+            
+            if (commentsData[commentKey]) {
+                deleteBtn.style.display = 'block';
+            } else {
+                deleteBtn.style.display = 'none';
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function saveComment() {
+            if (!currentCommentDate) return;
+            
+            const dateKey = currentCommentDate;
+            const cellType = document.getElementById('modalDate').textContent.includes('გერმანული') ? 'german' : 'mcg';
+            const commentKey = `${dateKey}_${cellType}`;
+            const commentInput = document.getElementById('commentInput');
+            
+            if (commentInput.value.trim()) {
+                commentsData[commentKey] = commentInput.value.trim();
+                localStorage.setItem('germanMcgComments', JSON.stringify(commentsData));
+                
+                // განაახლეთ უჯრის გამოსახულება
+                const [year, month, day] = dateKey.split('-').map(Number);
+                updateCellCommentIndicator(year - 1, month - 1, day, cellType);
+            } else {
+                delete commentsData[commentKey];
+                localStorage.setItem('germanMcgComments', JSON.stringify(commentsData));
+                
+                const [year, month, day] = dateKey.split('-').map(Number);
+                updateCellCommentIndicator(year - 1, month - 1, day, cellType);
+            }
+            
+            closeCommentModal();
+        }
+        
+        function deleteComment() {
+            if (!currentCommentDate) return;
+            
+            const dateKey = currentCommentDate;
+            const cellType = document.getElementById('modalDate').textContent.includes('გერმანული') ? 'german' : 'mcg';
+            const commentKey = `${dateKey}_${cellType}`;
+            
+            delete commentsData[commentKey];
+            localStorage.setItem('germanMcgComments', JSON.stringify(commentsData));
+            
+            const [year, month, day] = dateKey.split('-').map(Number);
+            updateCellCommentIndicator(year - 1, month - 1, day, cellType);
+            
+            closeCommentModal();
+        }
+        
+        function closeCommentModal() {
+            const modal = document.getElementById('commentModal');
+            modal.classList.remove('active');
+            currentCommentDate = null;
+        }
+        
+        function updateCellCommentIndicator(year, month, day, type) {
+            const dateKey = getDateKey(year, month, day);
+            const commentKey = `${dateKey}_${type}`;
+            const cell = document.querySelector(
+                `[data-year="${year}"][data-month="${month}"][data-day="${day}"][data-type="${type}"]`
+            );
+            
+            if (cell) {
+                if (commentsData[commentKey]) {
+                    cell.classList.add('has-comment');
+                } else {
+                    cell.classList.remove('has-comment');
+                }
+            }
+        }
+        
+        function showTooltip(text, x, y) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.textContent = text;
+            tooltip.style.display = 'block';
+            tooltip.style.left = `${x}px`;
+            tooltip.style.top = `${y - 40}px`;
+        }
+        
+        function hideTooltip() {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'none';
+        }
+        
+        // ცხრილის შექმნა
+        function createSchedule() {
             const table = document.getElementById('scheduleTable');
             table.innerHTML = '';
             
-            // Calculate how many days we can fit per row based on screen width
+            // მიმდინარე თვიდან აგვისტომდე ყველა თვის მონაცემები
+            const monthsData = [];
+            let year = currentYear;
+            let month = currentMonth;
+            
+            // შეგროვება ყველა თვის მონაცემები
+            while (true) {
+                const daysInMonth = getDaysInMonth(year, month);
+                monthsData.push({
+                    year: year,
+                    month: month,
+                    name: monthNames[month],
+                    shortName: shortMonthNames[month],
+                    days: daysInMonth
+                });
+                
+                // თუ მივაღწიეთ აგვისტოს (თვე 7), გავჩერდეთ
+                if (month === 7) break;
+                
+                // გადასვლა შემდეგ თვეზე
+                month++;
+                if (month > 11) {
+                    month = 0;
+                    year++;
+                }
+            }
+            
+            // გამოთვალეთ დღეების რაოდენობა ერთ რიგში
             const screenWidth = window.innerWidth;
             let daysPerRow;
             
-            if (screenWidth > 1200) {
-                daysPerRow = 14; // Large screens
-            } else if (screenWidth > 900) {
-                daysPerRow = 10; // Medium screens
-            } else if (screenWidth > 600) {
-                daysPerRow = 7;  // Small screens
-            } else {
-                daysPerRow = 5;  // Very small screens
-            }
+            if (screenWidth > 1400) daysPerRow = 31;
+            else if (screenWidth > 1200) daysPerRow = 28;
+            else if (screenWidth > 900) daysPerRow = 21;
+            else if (screenWidth > 600) daysPerRow = 14;
+            else daysPerRow = 7;
             
-            const numberOfRows = Math.ceil(daysInMonth / daysPerRow);
+            // ყველა დღის შეგროვება ერთ მასივში
+            const allDays = [];
+            monthsData.forEach(monthInfo => {
+                for (let day = 1; day <= monthInfo.days; day++) {
+                    allDays.push({
+                        year: monthInfo.year,
+                        month: monthInfo.month,
+                        day: day,
+                        monthName: monthInfo.name,
+                        shortMonthName: monthInfo.shortName
+                    });
+                }
+            });
             
-            // Create header rows
-            const headerRow = document.createElement('tr');
+            const totalDays = allDays.length;
+            const totalRows = Math.ceil(totalDays / daysPerRow);
+            
+            // თვეების რიგის შექმნა
+            const monthRow = document.createElement('tr');
             const dateRow = document.createElement('tr');
+            const germanRow = document.createElement('tr');
+            const mcgRow = document.createElement('tr');
             
-            // Add empty cell for the activity labels column
-            const emptyHeader = document.createElement('th');
-            emptyHeader.rowSpan = 2;
-            headerRow.appendChild(emptyHeader);
+            // ცარიელი უჯრა მარცხენა ზედა კუთხეში
+            const cornerCell = document.createElement('th');
+            cornerCell.className = 'corner-cell';
+            cornerCell.rowSpan = 2;
+            monthRow.appendChild(cornerCell);
             
-            const emptyDateHeader = document.createElement('th');
-            dateRow.appendChild(emptyDateHeader);
+            const emptyDateCell = document.createElement('th');
+            emptyDateCell.className = 'activity-label';
+            dateRow.appendChild(emptyDateCell);
             
-            // Create month headers for each day (grouped by rows)
-            for (let row = 0; row < numberOfRows; row++) {
-                const startDay = row * daysPerRow + 1;
-                const endDay = Math.min((row + 1) * daysPerRow, daysInMonth);
-                const dayCount = endDay - startDay + 1;
+            // გერმანული და MCG ეტიკეტები
+            const germanLabel = document.createElement('th');
+            germanLabel.className = 'activity-label german-label';
+            germanLabel.textContent = 'გერმანული';
+            germanRow.appendChild(germanLabel);
+            
+            const mcgLabel = document.createElement('th');
+            mcgLabel.className = 'activity-label mcg-label';
+            mcgLabel.textContent = 'MCG';
+            mcgRow.appendChild(mcgLabel);
+            
+            // ყველა დღის დამატება ცხრილში
+            for (let row = 0; row < totalRows; row++) {
+                const startDay = row * daysPerRow;
+                const endDay = Math.min(startDay + daysPerRow, totalDays);
                 
-                // Month header cell
-                const monthCell = document.createElement('th');
-                monthCell.textContent = monthName;
-                monthCell.className = 'month-header';
-                monthCell.colSpan = dayCount;
+                // მიმდინარე სეგმენტისთვის თვეების დაჯგუფება
+                let currentMonth = null;
+                let monthStart = startDay;
                 
-                // Add a separator for visual clarity between months
-                if (endDay < daysInMonth) {
-                    monthCell.classList.add('month-separator');
+                for (let i = startDay; i < endDay; i++) {
+                    const dayInfo = allDays[i];
+                    
+                    // თუ თვე შეიცვალა
+                    if (currentMonth !== dayInfo.shortMonthName) {
+                        if (currentMonth !== null) {
+                            // დამატება წინა თვის სათაურის
+                            const monthSpan = i - monthStart;
+                            const monthHeader = document.createElement('th');
+                            monthHeader.className = 'month-row';
+                            monthHeader.colSpan = monthSpan;
+                            monthHeader.textContent = currentMonth;
+                            
+                            // გამყოფის დამატება
+                            if (i < endDay || row < totalRows - 1) {
+                                monthHeader.classList.add('month-separator');
+                            }
+                            
+                            monthRow.appendChild(monthHeader);
+                        }
+                        
+                        currentMonth = dayInfo.shortMonthName;
+                        monthStart = i;
+                    }
                 }
                 
-                headerRow.appendChild(monthCell);
-                
-                // Date cells for this row
-                for (let day = startDay; day <= endDay; day++) {
-                    const dateCell = document.createElement('th');
-                    dateCell.textContent = day;
-                    dateCell.className = 'date-row';
+                // ბოლო თვის სათაურის დამატება
+                if (currentMonth !== null && monthStart < endDay) {
+                    const monthSpan = endDay - monthStart;
+                    const monthHeader = document.createElement('th');
+                    monthHeader.className = 'month-row';
+                    monthHeader.colSpan = monthSpan;
+                    monthHeader.textContent = currentMonth;
                     
-                    // Add separator for visual clarity
-                    if (day === endDay && endDay < daysInMonth) {
+                    if (row < totalRows - 1) {
+                        monthHeader.classList.add('month-separator');
+                    }
+                    
+                    monthRow.appendChild(monthHeader);
+                }
+                
+                // დღეების რიცხვების და აქტივობების დამატება
+                for (let i = startDay; i < endDay; i++) {
+                    const dayInfo = allDays[i];
+                    const dateKey = getDateKey(dayInfo.year, dayInfo.month, dayInfo.day);
+                    const hasGerman = scheduleData[dateKey] === 'german';
+                    const hasMcg = scheduleData[dateKey] === 'mcg';
+                    
+                    // დღის ნომრის უჯრა
+                    const dateCell = document.createElement('th');
+                    dateCell.className = 'date-row';
+                    dateCell.textContent = dayInfo.day;
+                    
+                    // გამყოფის დამატება
+                    const nextDay = allDays[i + 1];
+                    if (nextDay && nextDay.month !== dayInfo.month) {
                         dateCell.classList.add('month-separator');
                     }
                     
-                    dateCell.addEventListener('click', () => {
-                        document.getElementById('eventDay').value = day;
-                        document.getElementById('eventMonth').value = month;
-                        document.getElementById('eventYear').value = year;
-                    });
-                    
                     dateRow.appendChild(dateCell);
-                }
-            }
-            
-            table.appendChild(headerRow);
-            table.appendChild(dateRow);
-            
-            // Create German lesson row
-            const germanRow = document.createElement('tr');
-            const germanLabel = document.createElement('td');
-            germanLabel.textContent = 'გერმანული';
-            germanLabel.className = 'activity-label german-label';
-            germanRow.appendChild(germanLabel);
-            
-            // Create MCG row
-            const mcgRow = document.createElement('tr');
-            const mcgLabel = document.createElement('td');
-            mcgLabel.textContent = 'MCG';
-            mcgLabel.className = 'activity-label mcg-label';
-            mcgRow.appendChild(mcgLabel);
-            
-            // Fill activity rows
-            for (let row = 0; row < numberOfRows; row++) {
-                const startDay = row * daysPerRow + 1;
-                const endDay = Math.min((row + 1) * daysPerRow, daysInMonth);
-                
-                for (let day = startDay; day <= endDay; day++) {
-                    const dateKey = getDateKey(year, month, day);
-                    const activity = scheduleData[dateKey];
                     
-                    // German lesson cell
+                    // გერმანული უჯრა
                     const germanCell = document.createElement('td');
-                    germanCell.className = 'activity-cell';
-                    if (activity === 'german') {
-                        germanCell.classList.add('german');
-                        germanCell.textContent = '✓';
+                    germanCell.className = `activity-cell german-cell ${hasGerman ? 'filled' : 'empty'}`;
+                    germanCell.dataset.year = dayInfo.year;
+                    germanCell.dataset.month = dayInfo.month;
+                    germanCell.dataset.day = dayInfo.day;
+                    germanCell.dataset.type = 'german';
+                    
+                    if (hasGerman) {
+                        germanCell.textContent = 'გერმანული';
                     }
                     
-                    // Add separator for visual clarity
-                    if (day === endDay && endDay < daysInMonth) {
+                    // კომენტარის ინდიკატორის დამატება
+                    const commentKey = `${dateKey}_german`;
+                    if (commentsData[commentKey]) {
+                        germanCell.classList.add('has-comment');
+                    }
+                    
+                    // გამყოფის დამატება
+                    if (nextDay && nextDay.month !== dayInfo.month) {
                         germanCell.classList.add('month-separator');
                     }
                     
-                    germanCell.addEventListener('click', () => {
-                        document.getElementById('eventDay').value = day;
-                        document.getElementById('eventMonth').value = month;
-                        document.getElementById('eventYear').value = year;
+                    // მარცხენა და მარჯვენა ღილაკების მენეჯმენტი
+                    germanCell.addEventListener('click', (e) => {
+                        if (e.button === 0) { // მარცხენა ღილაკი
+                            toggleEvent(e);
+                        }
                     });
+                    
+                    germanCell.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        if (currentUser) {
+                            showCommentModal(dateKey, 'german');
+                        } else {
+                            alert('გთხოვთ, ჯერ შეხვიდეთ სისტემაში!');
+                        }
+                    });
+                    
+                    germanCell.addEventListener('mouseenter', (e) => {
+                        const commentKey = `${dateKey}_german`;
+                        if (commentsData[commentKey]) {
+                            showTooltip(commentsData[commentKey], e.clientX, e.clientY);
+                        }
+                    });
+                    
+                    germanCell.addEventListener('mouseleave', hideTooltip);
                     
                     germanRow.appendChild(germanCell);
                     
-                    // MCG shift cell
+                    // MCG უჯრა
                     const mcgCell = document.createElement('td');
-                    mcgCell.className = 'activity-cell';
-                    if (activity === 'mcg') {
-                        mcgCell.classList.add('mcg');
-                        mcgCell.textContent = '✓';
+                    mcgCell.className = `activity-cell mcg-cell ${hasMcg ? 'filled' : 'empty'}`;
+                    mcgCell.dataset.year = dayInfo.year;
+                    mcgCell.dataset.month = dayInfo.month;
+                    mcgCell.dataset.day = dayInfo.day;
+                    mcgCell.dataset.type = 'mcg';
+                    
+                    if (hasMcg) {
+                        mcgCell.textContent = 'MCG';
                     }
                     
-                    // Add separator for visual clarity
-                    if (day === endDay && endDay < daysInMonth) {
+                    // კომენტარის ინდიკატორის დამატება
+                    const mcgCommentKey = `${dateKey}_mcg`;
+                    if (commentsData[mcgCommentKey]) {
+                        mcgCell.classList.add('has-comment');
+                    }
+                    
+                    // გამყოფის დამატება
+                    if (nextDay && nextDay.month !== dayInfo.month) {
                         mcgCell.classList.add('month-separator');
                     }
                     
-                    mcgCell.addEventListener('click', () => {
-                        document.getElementById('eventDay').value = day;
-                        document.getElementById('eventMonth').value = month;
-                        document.getElementById('eventYear').value = year;
+                    // მარცხენა და მარჯვენა ღილაკების მენეჯმენტი
+                    mcgCell.addEventListener('click', (e) => {
+                        if (e.button === 0) { // მარცხენა ღილაკი
+                            toggleEvent(e);
+                        }
                     });
+                    
+                    mcgCell.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        if (currentUser) {
+                            showCommentModal(dateKey, 'mcg');
+                        } else {
+                            alert('გთხოვთ, ჯერ შეხვიდეთ სისტემაში!');
+                        }
+                    });
+                    
+                    mcgCell.addEventListener('mouseenter', (e) => {
+                        const commentKey = `${dateKey}_mcg`;
+                        if (commentsData[commentKey]) {
+                            showTooltip(commentsData[commentKey], e.clientX, e.clientY);
+                        }
+                    });
+                    
+                    mcgCell.addEventListener('mouseleave', hideTooltip);
                     
                     mcgRow.appendChild(mcgCell);
                 }
             }
             
+            // ყველა რიგის დამატება ცხრილში
+            table.appendChild(monthRow);
+            table.appendChild(dateRow);
             table.appendChild(germanRow);
             table.appendChild(mcgRow);
         }
         
-        // Initialize with current month and load data
-        loadScheduleData();
-        renderSchedule(currentDate);
-        
-        // Event listeners for navigation
-        document.getElementById('prevMonth').addEventListener('click', function() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderSchedule(currentDate);
-        });
-        
-        document.getElementById('nextMonth').addEventListener('click', function() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderSchedule(currentDate);
-        });
-        
-        document.getElementById('todayBtn').addEventListener('click', function() {
-            currentDate = new Date();
-            renderSchedule(currentDate);
-        });
-        
-        // Add event button
-        document.getElementById('addEvent').addEventListener('click', function() {
-            const type = document.getElementById('eventType').value;
-            const day = parseInt(document.getElementById('eventDay').value);
-            const month = parseInt(document.getElementById('eventMonth').value);
-            const year = parseInt(document.getElementById('eventYear').value);
-            
-            // Validate day
-            const daysInMonth = getDaysInMonth(year, month);
-            if (day < 1 || day > daysInMonth) {
-                alert(`Invalid day for ${getMonthName(month)} ${year}. Please enter a day between 1 and ${daysInMonth}.`);
+        // უჯრაზე დაწკაპუნების დამუშავება
+        function toggleEvent(event) {
+            if (!currentUser) {
+                alert('გთხოვთ, ჯერ შეხვიდეთ სისტემაში!');
                 return;
             }
             
-            const dateKey = getDateKey(year, month, day);
-            scheduleData[dateKey] = type;
-            saveScheduleData();
-            renderSchedule(currentDate);
-            
-            // Show feedback
-            const activityName = type === 'german' ? 'German lesson' : 'MCG work shift';
-            alert(`${activityName} added for ${day} ${getMonthName(month)} ${year}`);
-        });
-        
-        // Remove event button
-        document.getElementById('removeEvent').addEventListener('click', function() {
-            const day = parseInt(document.getElementById('eventDay').value);
-            const month = parseInt(document.getElementById('eventMonth').value);
-            const year = parseInt(document.getElementById('eventYear').value);
+            const cell = event.currentTarget;
+            const year = parseInt(cell.dataset.year);
+            const month = parseInt(cell.dataset.month);
+            const day = parseInt(cell.dataset.day);
+            const type = cell.dataset.type;
             
             const dateKey = getDateKey(year, month, day);
             
-            if (scheduleData[dateKey]) {
+            // თუ უკვე აქვს ეს აქტივობა, წაშლა
+            if (scheduleData[dateKey] === type) {
                 delete scheduleData[dateKey];
-                saveScheduleData();
-                renderSchedule(currentDate);
-                alert(`Event removed for ${day} ${getMonthName(month)} ${year}`);
+                cell.className = `activity-cell ${type}-cell empty`;
+                cell.textContent = '';
+                
+                // კომენტარის ავტომატურად წაშლა
+                const commentKey = `${dateKey}_${type}`;
+                delete commentsData[commentKey];
+                localStorage.setItem('germanMcgComments', JSON.stringify(commentsData));
+                cell.classList.remove('has-comment');
             } else {
-                alert(`No event found for ${day} ${getMonthName(month)} ${year}`);
+                // ახალი აქტივობის დამატება
+                scheduleData[dateKey] = type;
+                cell.className = `activity-cell ${type}-cell filled`;
+                cell.textContent = type === 'german' ? 'გერმანული' : 'MCG';
+                
+                // მეორე უჯრის გასუფთავება
+                const otherType = type === 'german' ? 'mcg' : 'german';
+                const otherCells = document.querySelectorAll(
+                    `[data-year="${year}"][data-month="${month}"][data-day="${day}"][data-type="${otherType}"]`
+                );
+                
+                otherCells.forEach(otherCell => {
+                    otherCell.className = `activity-cell ${otherType}-cell empty`;
+                    otherCell.textContent = '';
+                    otherCell.classList.remove('has-comment');
+                });
+                
+                // სხვა ტიპის კომენტარის ავტომატურად წაშლა
+                const otherCommentKey = `${dateKey}_${otherType}`;
+                delete commentsData[otherCommentKey];
+                localStorage.setItem('germanMcgComments', JSON.stringify(commentsData));
             }
+            
+            // მონაცემების შენახვა
+            localStorage.setItem('germanMcgSchedule', JSON.stringify(scheduleData));
+        }
+        
+        // ევენთების დამატება
+        document.addEventListener('DOMContentLoaded', () => {
+            createSchedule();
+            updateUserUI();
+            
+            // ავტორიზაციის ევენთები
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('signOutBtn').addEventListener('click', handleLogout);
+            
+            // კომენტარების მოდალის ევენთები
+            document.getElementById('closeModal').addEventListener('click', closeCommentModal);
+            document.getElementById('cancelBtn').addEventListener('click', closeCommentModal);
+            document.getElementById('saveCommentBtn').addEventListener('click', saveComment);
+            document.getElementById('deleteCommentBtn').addEventListener('click', deleteComment);
+            
+            // მოდალის გარეთ დაწკაპუნებისას დახურვა
+            document.getElementById('commentModal').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) {
+                    closeCommentModal();
+                }
+            });
         });
         
-        // Set current month in the form
-        document.getElementById('eventMonth').value = currentDate.getMonth();
-        document.getElementById('eventYear').value = currentDate.getFullYear();
-        
-        // Adjust layout on window resize
-        window.addEventListener('resize', function() {
-            renderSchedule(currentDate);
-        });
+        // ცხრილის განახლება ფანჯრის ზომის ცვლილებისას
+        window.addEventListener('resize', createSchedule);
     </script>
 </body>
 </html>
