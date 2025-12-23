@@ -9,6 +9,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
@@ -21,14 +24,14 @@
             min-height: 100vh;
         }
         
-        /* Colorful Login Page */
+        /* Login Page */
         .login-page {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
             padding: 20px;
         }
         
@@ -51,7 +54,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #27ae60, #e74c3c);
+            background: linear-gradient(90deg, #3498db, #2ecc71);
         }
         
         .login-title {
@@ -59,7 +62,7 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
-            background: linear-gradient(90deg, #27ae60, #e74c3c);
+            background: linear-gradient(90deg, #3498db, #2ecc71);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -88,12 +91,12 @@
         
         .login-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
         .login-button {
-            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            background: linear-gradient(90deg, #3498db, #2980b9);
             color: white;
             border: none;
             padding: 16px;
@@ -108,7 +111,7 @@
         
         .login-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
         }
         
         /* Main App Styling */
@@ -184,123 +187,103 @@
             top: 20px; /* About 2cm from top */
         }
         
-        /* Flexible Schedule Layout */
-        .table-container {
-            width: 100%;
-        }
-        
-        .schedule-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2px;
+        /* Month Box */
+        .month-box {
             margin-bottom: 40px;
             background: white;
             border-radius: 12px;
-            padding: 20px;
+            padding: 30px 20px 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             position: relative;
+            overflow-x: auto;
         }
         
-        .schedule-row::before {
+        .month-box::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #27ae60, #e74c3c);
-            border-radius: 12px 12px 0 0;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
         }
         
-        .month-header {
+        /* Month Title */
+        .month-title {
             position: absolute;
-            top: -30px;
+            top: 10px;
             left: 20px;
-            background: #2c3e50;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
+            color: #2c3e50;
+            font-size: 20px;
             font-weight: 600;
+            z-index: 2;
+        }
+        
+        /* Schedule Table Layout */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+            margin-top: 20px;
+        }
+        
+        /* Column Headers (Dates) */
+        .date-header {
+            min-width: 60px;
+            padding: 10px 5px;
+            text-align: center;
+            font-weight: 600;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e1e8ed;
             font-size: 14px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            color: #2c3e50;
+        }
+        
+        .date-header.weekend {
+            background-color: #e8ecf1;
+            color: #7f8c8d;
+        }
+        
+        /* Activity Row */
+        .activity-row {
+            height: 50px;
+        }
+        
+        /* Activity Label Cell */
+        .activity-label-cell {
+            width: 120px;
+            padding: 0 15px;
+            text-align: right;
+            font-weight: 600;
+            background: #f8f9fa;
+            border-right: 2px solid #e1e8ed;
+            font-size: 14px;
+            position: sticky;
+            left: 0;
             z-index: 1;
         }
         
-        /* Date Cells Container */
-        .dates-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2px;
-            width: calc(100% - 120px);
-            margin-left: 120px;
-        }
-        
-        /* Date Column */
-        .date-column {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 60px;
-        }
-        
-        .date-header {
-            background: #ecf0f1;
-            color: #2c3e50;
-            font-weight: 600;
-            font-size: 13px;
-            padding: 8px;
-            width: 100%;
-            text-align: center;
-            border-radius: 6px 6px 0 0;
-        }
-        
-        /* Activity labels column */
-        .activity-labels {
-            position: absolute;
-            left: 0;
-            top: 20px;
-            width: 120px;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        
-        .activity-label {
-            background: #f8f9fa;
-            font-weight: bold;
-            text-align: right;
-            padding: 12px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            border-right: 2px solid #e1e8ed;
-            font-size: 14px;
-        }
-        
         .german-label {
-            color: #27ae60;
-            background: #f8f9fa;
+            color: #3498db;
         }
         
         .mcg-label {
             color: #e74c3c;
-            background: #f8f9fa;
         }
         
-        /* Activity cells */
+        /* Activity Cell */
         .activity-cell {
-            width: 100%;
+            min-width: 60px;
             height: 50px;
+            text-align: center;
+            vertical-align: middle;
             cursor: pointer;
             transition: all 0.2s;
-            font-weight: 600;
             position: relative;
+            font-weight: 600;
             font-size: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0 0 6px 6px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
         }
         
         .activity-cell:hover {
@@ -309,40 +292,49 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        /* German lesson cells - Green with GER text */
+        /* German lesson cells - Blue with GER text */
         .german-cell.empty {
             background-color: white;
-            border: 2px solid #e1e8ed;
         }
         
         .german-cell.filled {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            border: 2px solid #27ae60;
-            font-weight: bold;
+            border-color: #3498db;
         }
         
         /* MCG shift cells - Red with MCG text */
         .mcg-cell.empty {
             background-color: white;
-            border: 2px solid #e1e8ed;
         }
         
         .mcg-cell.filled {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
-            border: 2px solid #e74c3c;
-            font-weight: bold;
+            border-color: #e74c3c;
         }
         
-        /* Comment indicator */
+        /* Past date styling (after 23:59) */
+        .past-date {
+            opacity: 0.6;
+        }
+        
+        .past-date .activity-cell {
+            filter: grayscale(0.3);
+            opacity: 0.7;
+        }
+        
+        /* Comment indicator - bell symbol */
         .has-comment::after {
-            content: "💬";
+            content: "\f0f3"; /* Font Awesome bell icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
             position: absolute;
             top: 2px;
             right: 2px;
             font-size: 12px;
             opacity: 0.9;
+            color: #f39c12;
         }
         
         /* Comment Popup Modal */
@@ -396,10 +388,22 @@
         .close-comment-modal {
             background: none;
             border: none;
-            font-size: 28px;
+            font-size: 24px;
             cursor: pointer;
             color: #95a5a6;
             line-height: 1;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .close-comment-modal:hover {
+            background-color: #f5f6fa;
+            color: #e74c3c;
         }
         
         .comment-textarea {
@@ -416,8 +420,8 @@
         
         .comment-textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
         .comment-modal-buttons {
@@ -434,10 +438,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .save-comment-btn {
-            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
             color: white;
         }
         
@@ -454,6 +461,23 @@
         .comment-modal-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Current Comment Display */
+        .current-comment {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+            font-style: italic;
+        }
+        
+        .comment-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 14px;
         }
         
         /* Confirmation Modal */
@@ -504,6 +528,18 @@
             font-size: 24px;
             cursor: pointer;
             color: #95a5a6;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .close-confirm-modal:hover {
+            background-color: #f5f6fa;
+            color: #e74c3c;
         }
         
         .confirm-modal-message {
@@ -527,6 +563,9 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .confirm-btn {
@@ -546,33 +585,50 @@
         
         /* Responsive Design */
         @media (max-width: 768px) {
-            .dates-container {
-                margin-left: 100px;
-                width: calc(100% - 100px);
-            }
-            
-            .activity-labels {
-                width: 100px;
-            }
-            
-            .date-column {
+            .date-header {
                 min-width: 50px;
+                font-size: 13px;
+                padding: 8px 4px;
             }
             
-            .activity-label {
-                padding: 10px;
+            .activity-label-cell {
+                width: 100px;
+                padding: 0 10px;
                 font-size: 13px;
             }
             
-            .date-header {
-                font-size: 12px;
-                padding: 6px;
+            .month-title {
+                font-size: 18px;
+                top: 8px;
             }
+            
+            .activity-cell {
+                min-width: 50px;
+            }
+        }
+        
+        /* Scrollbar styling */
+        .month-box::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .month-box::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .month-box::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        .month-box::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
         }
     </style>
 </head>
 <body>
-    <!-- Login Page - Colorful Design -->
+    <!-- Login Page -->
     <div id="loginPage" class="login-page">
         <div class="login-container">
             <div class="login-title">განრიგის მენეჯერი</div>
@@ -592,13 +648,15 @@
             <div class="app-title">განრიგი - გერმანული და MCG</div>
             <div class="user-info">
                 <div style="font-weight: 500;">Alex</div>
-                <button id="logoutBtn" class="logout-button">გასვლა</button>
+                <button id="logoutBtn" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i> გასვლა
+                </button>
             </div>
         </div>
         
         <!-- Schedule Table Container -->
         <div class="table-container" id="tableContainer">
-            <!-- Schedule rows will be generated here -->
+            <!-- Month boxes will be generated here -->
         </div>
     </div>
     
@@ -613,13 +671,25 @@
                     <div class="comment-modal-title" id="commentModalTitle"></div>
                     <div class="comment-date-info" id="commentDateInfo"></div>
                 </div>
-                <button id="closeCommentModal" class="close-comment-modal">×</button>
+                <button id="closeCommentModal" class="close-comment-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="currentCommentContainer" style="display: none;">
+                <div class="comment-label">არსებული კომენტარი:</div>
+                <div class="current-comment" id="currentCommentText"></div>
             </div>
             <textarea id="commentTextarea" class="comment-textarea" placeholder="დაწერეთ კომენტარი..."></textarea>
             <div class="comment-modal-buttons">
-                <button id="deleteCommentBtn" class="comment-modal-btn delete-comment-btn">კომენტარის წაშლა</button>
-                <button id="cancelCommentBtn" class="comment-modal-btn cancel-comment-btn">გაუქმება</button>
-                <button id="saveCommentBtn" class="comment-modal-btn save-comment-btn">შენახვა</button>
+                <button id="deleteCommentBtn" class="comment-modal-btn delete-comment-btn">
+                    <i class="fas fa-trash"></i> კომენტარის წაშლა
+                </button>
+                <button id="cancelCommentBtn" class="comment-modal-btn cancel-comment-btn">
+                    <i class="fas fa-times"></i> გაუქმება
+                </button>
+                <button id="saveCommentBtn" class="comment-modal-btn save-comment-btn">
+                    <i class="fas fa-save"></i> შენახვა
+                </button>
             </div>
         </div>
     </div>
@@ -629,12 +699,19 @@
         <div class="confirm-modal">
             <div class="confirm-modal-header">
                 <div class="confirm-modal-title">დადასტურება</div>
-                <button id="closeConfirmModal" class="close-confirm-modal">×</button>
+                <button id="closeConfirmModal" class="close-confirm-modal">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div id="modalMessage" class="confirm-modal-message"></div>
+            <div id="commentPreview" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #3498db; font-style: italic;"></div>
             <div class="confirm-modal-buttons">
-                <button id="cancelConfirmBtn" class="confirm-modal-btn cancel-confirm-btn">გაუქმება</button>
-                <button id="confirmDeleteBtn" class="confirm-modal-btn confirm-btn">წაშლა</button>
+                <button id="cancelConfirmBtn" class="confirm-modal-btn cancel-confirm-btn">
+                    <i class="fas fa-times"></i> გაუქმება
+                </button>
+                <button id="confirmDeleteBtn" class="confirm-modal-btn confirm-btn">
+                    <i class="fas fa-trash"></i> წაშლა
+                </button>
             </div>
         </div>
     </div>
@@ -670,9 +747,25 @@
         const currentMonth = today.getMonth();
         const currentDay = today.getDate();
         
-        // Georgian month names (full)
+        // Georgian month names
         const monthNames = ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", 
                            "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"];
+        
+        // Georgian holidays (simplified list, you can add more)
+        const georgianHolidays = {
+            "1-1": "ახალი წელი",
+            "1-7": "შობა (ძველი სტილით)",
+            "1-19": "ნათლისღება",
+            "3-3": "დედის დღე",
+            "3-8": "ქალთა საერთაშორისო დღე",
+            "4-9": "ეროვნული ერთიანობის დღე",
+            "5-9": "ფაშიზმზე გამარჯვების დღე",
+            "5-12": "წმინდა ანდრია პირველწოდებულის ხსენების დღე",
+            "5-26": "დამოუკიდებლობის დღე",
+            "8-28": "მარიამობა",
+            "10-14": "მცხეთობის დღე",
+            "11-23": "გიორგობა"
+        };
         
         // Data storage
         let scheduleData = {};
@@ -690,7 +783,34 @@
             return `${year}-${month + 1}-${day}`;
         }
         
-        // Notification function - 2cm from top
+        function isWeekend(year, month, day) {
+            const date = new Date(year, month, day);
+            const dayOfWeek = date.getDay();
+            return dayOfWeek === 0 || dayOfWeek === 6; // 0 = Sunday, 6 = Saturday
+        }
+        
+        function isHoliday(month, day) {
+            const key = `${month + 1}-${day}`;
+            return georgianHolidays[key] !== undefined;
+        }
+        
+        function getHolidayName(month, day) {
+            const key = `${month + 1}-${day}`;
+            return georgianHolidays[key];
+        }
+        
+        function isPastDate(year, month, day) {
+            const date = new Date(year, month, day);
+            const now = new Date();
+            
+            // Set both dates to midnight for accurate comparison
+            date.setHours(23, 59, 59, 999);
+            now.setHours(23, 59, 59, 999);
+            
+            return date < now;
+        }
+        
+        // Notification function
         function showNotification(message, type = 'info') {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -698,9 +818,9 @@
             if (type === 'error') {
                 notification.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
             } else if (type === 'success') {
-                notification.style.background = 'linear-gradient(90deg, #27ae60, #2ecc71)';
+                notification.style.background = 'linear-gradient(90deg, #2ecc71, #27ae60)';
             } else {
-                notification.style.background = 'linear-gradient(90deg, #667eea, #764ba2)';
+                notification.style.background = 'linear-gradient(90deg, #3498db, #2980b9)';
             }
             
             notification.classList.add('show');
@@ -806,13 +926,12 @@
             showNotification('სისტემიდან გამოსული ხართ', 'info');
         }
         
-        // Flexible Schedule Layout
+        // Create Schedule with table layout
         function createSchedule() {
             const container = document.getElementById('tableContainer');
             container.innerHTML = '';
             
-            // Get all days from current date to August
-            const allDays = [];
+            // Get months from current month to August
             let year = currentYear;
             let month = currentMonth;
             
@@ -825,18 +944,10 @@
                     days: daysInMonth
                 };
                 
-                const startDay = (year === currentYear && month === currentMonth) ? currentDay : 1;
+                // Create month box
+                createMonthBox(container, monthInfo);
                 
-                for (let day = startDay; day <= daysInMonth; day++) {
-                    allDays.push({
-                        year: year,
-                        month: month,
-                        day: day,
-                        monthName: monthInfo.name
-                    });
-                }
-                
-                if (month === 7) break;
+                if (month === 7) break; // Stop at August (month index 7)
                 
                 month++;
                 if (month > 11) {
@@ -844,135 +955,131 @@
                     year++;
                 }
             }
-            
-            // Group dates by month and create flexible rows
-            let monthGroups = [];
-            let currentGroup = null;
-            
-            allDays.forEach(day => {
-                const monthKey = `${day.year}-${day.month}`;
-                if (!currentGroup || currentGroup.monthKey !== monthKey) {
-                    if (currentGroup) {
-                        monthGroups.push(currentGroup);
-                    }
-                    currentGroup = {
-                        monthKey: monthKey,
-                        monthName: day.monthName,
-                        days: []
-                    };
-                }
-                currentGroup.days.push(day);
-            });
-            
-            if (currentGroup) {
-                monthGroups.push(currentGroup);
-            }
-            
-            // Create schedule rows for each month group
-            monthGroups.forEach(group => {
-                createMonthScheduleRow(container, group);
-            });
         }
         
-        function createMonthScheduleRow(container, monthGroup) {
-            // Calculate available width for dates
-            const containerWidth = container.clientWidth || window.innerWidth - 40;
-            const dateWidth = 62; // Each date column width
-            const labelWidth = 120;
-            const maxDatesPerRow = Math.max(1, Math.floor((containerWidth - labelWidth) / dateWidth));
+        function createMonthBox(container, monthInfo) {
+            const monthBox = document.createElement('div');
+            monthBox.className = 'month-box';
             
-            const totalDays = monthGroup.days.length;
-            const totalRows = Math.ceil(totalDays / maxDatesPerRow);
+            // Month title
+            const monthTitle = document.createElement('div');
+            monthTitle.className = 'month-title';
+            monthTitle.textContent = monthInfo.name;
+            monthBox.appendChild(monthTitle);
             
-            for (let row = 0; row < totalRows; row++) {
-                const startIdx = row * maxDatesPerRow;
-                const endIdx = Math.min(startIdx + maxDatesPerRow, totalDays);
-                const rowDays = monthGroup.days.slice(startIdx, endIdx);
+            // Create table
+            const table = document.createElement('table');
+            table.className = 'schedule-table';
+            
+            // Create table header with dates
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            
+            // Empty cell for activity labels
+            const emptyHeaderCell = document.createElement('th');
+            emptyHeaderCell.className = 'activity-label-cell';
+            headerRow.appendChild(emptyHeaderCell);
+            
+            // Create date headers
+            const startDay = (monthInfo.year === currentYear && monthInfo.month === currentMonth) 
+                ? currentDay 
+                : 1;
+            
+            for (let day = startDay; day <= monthInfo.days; day++) {
+                const dateHeader = document.createElement('th');
+                dateHeader.className = 'date-header';
+                dateHeader.textContent = day;
                 
-                const scheduleRow = document.createElement('div');
-                scheduleRow.className = 'schedule-row';
-                
-                // Month header for first row of the month
-                if (row === 0) {
-                    const monthHeader = document.createElement('div');
-                    monthHeader.className = 'month-header';
-                    monthHeader.textContent = monthGroup.monthName;
-                    scheduleRow.appendChild(monthHeader);
+                // Add weekend/holiday styling
+                if (isWeekend(monthInfo.year, monthInfo.month, day)) {
+                    dateHeader.classList.add('weekend');
+                    dateHeader.title = "შაბათი ან კვირა";
                 }
                 
-                // Activity labels on the left
-                const activityLabels = document.createElement('div');
-                activityLabels.className = 'activity-labels';
+                if (isHoliday(monthInfo.month, day)) {
+                    dateHeader.classList.add('weekend');
+                    dateHeader.style.backgroundColor = '#e74c3c';
+                    dateHeader.style.color = 'white';
+                    dateHeader.title = getHolidayName(monthInfo.month, day);
+                }
                 
-                const germanLabel = document.createElement('div');
-                germanLabel.className = 'activity-label german-label';
-                germanLabel.textContent = 'გერმანული';
-                activityLabels.appendChild(germanLabel);
+                // Add past date class to entire column
+                if (isPastDate(monthInfo.year, monthInfo.month, day)) {
+                    dateHeader.classList.add('past-date');
+                }
                 
-                const mcgLabel = document.createElement('div');
-                mcgLabel.className = 'activity-label mcg-label';
-                mcgLabel.textContent = 'MCG';
-                activityLabels.appendChild(mcgLabel);
-                
-                scheduleRow.appendChild(activityLabels);
-                
-                // Dates container
-                const datesContainer = document.createElement('div');
-                datesContainer.className = 'dates-container';
-                
-                // Create date columns
-                rowDays.forEach(dayInfo => {
-                    const dateKey = getDateKey(dayInfo.year, dayInfo.month, dayInfo.day);
-                    
-                    const dateColumn = document.createElement('div');
-                    dateColumn.className = 'date-column';
-                    
-                    // Date header
-                    const dateHeader = document.createElement('div');
-                    dateHeader.className = 'date-header';
-                    dateHeader.textContent = dayInfo.day;
-                    dateColumn.appendChild(dateHeader);
-                    
-                    // German cell
-                    const hasGerman = scheduleData[dateKey] === 'german';
-                    const hasGermanComment = commentsData[`${dateKey}_german`];
-                    
-                    const germanCell = document.createElement('div');
-                    germanCell.className = `activity-cell german-cell ${hasGerman ? 'filled' : 'empty'}`;
-                    if (hasGerman) germanCell.textContent = 'GER';
-                    if (hasGermanComment) germanCell.classList.add('has-comment');
-                    
-                    germanCell.dataset.date = dateKey;
-                    germanCell.dataset.type = 'german';
-                    
-                    germanCell.addEventListener('click', handleCellClick);
-                    germanCell.addEventListener('contextmenu', handleRightClick);
-                    
-                    dateColumn.appendChild(germanCell);
-                    
-                    // MCG cell
-                    const hasMcg = scheduleData[dateKey] === 'mcg';
-                    const hasMcgComment = commentsData[`${dateKey}_mcg`];
-                    
-                    const mcgCell = document.createElement('div');
-                    mcgCell.className = `activity-cell mcg-cell ${hasMcg ? 'filled' : 'empty'}`;
-                    if (hasMcg) mcgCell.textContent = 'MCG';
-                    if (hasMcgComment) mcgCell.classList.add('has-comment');
-                    
-                    mcgCell.dataset.date = dateKey;
-                    mcgCell.dataset.type = 'mcg';
-                    
-                    mcgCell.addEventListener('click', handleCellClick);
-                    mcgCell.addEventListener('contextmenu', handleRightClick);
-                    
-                    dateColumn.appendChild(mcgCell);
-                    
-                    datesContainer.appendChild(dateColumn);
-                });
-                
-                scheduleRow.appendChild(datesContainer);
-                container.appendChild(scheduleRow);
+                headerRow.appendChild(dateHeader);
             }
+            
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            
+            // Create table body with activity rows
+            const tbody = document.createElement('tbody');
+            
+            // German row
+            const germanRow = createActivityRow('german', monthInfo);
+            tbody.appendChild(germanRow);
+            
+            // MCG row
+            const mcgRow = createActivityRow('mcg', monthInfo);
+            tbody.appendChild(mcgRow);
+            
+            table.appendChild(tbody);
+            monthBox.appendChild(table);
+            container.appendChild(monthBox);
+        }
+        
+        function createActivityRow(activityType, monthInfo) {
+            const row = document.createElement('tr');
+            row.className = 'activity-row';
+            
+            // Activity label cell
+            const labelCell = document.createElement('td');
+            labelCell.className = `activity-label-cell ${activityType}-label`;
+            labelCell.textContent = activityType === 'german' ? 'გერმანული' : 'MCG';
+            row.appendChild(labelCell);
+            
+            // Create activity cells for each day
+            const startDay = (monthInfo.year === currentYear && monthInfo.month === currentMonth) 
+                ? currentDay 
+                : 1;
+            
+            for (let day = startDay; day <= monthInfo.days; day++) {
+                const dateKey = getDateKey(monthInfo.year, monthInfo.month, day);
+                
+                const cell = document.createElement('td');
+                cell.className = `activity-cell ${activityType}-cell empty`;
+                
+                // Check if this date has activity
+                const hasActivity = scheduleData[dateKey] === activityType;
+                const hasComment = commentsData[`${dateKey}_${activityType}`];
+                
+                if (hasActivity) {
+                    cell.classList.remove('empty');
+                    cell.classList.add('filled');
+                    cell.textContent = activityType === 'german' ? 'GER' : 'MCG';
+                }
+                
+                if (hasComment) {
+                    cell.classList.add('has-comment');
+                }
+                
+                // Add past date class
+                if (isPastDate(monthInfo.year, monthInfo.month, day)) {
+                    cell.classList.add('past-date');
+                }
+                
+                cell.dataset.date = dateKey;
+                cell.dataset.type = activityType;
+                
+                cell.addEventListener('click', handleCellClick);
+                cell.addEventListener('contextmenu', handleRightClick);
+                
+                row.appendChild(cell);
+            }
+            
+            return row;
         }
         
         // Event handlers
@@ -985,15 +1092,26 @@
             const hasComment = commentsData[`${date}_${type}`];
             
             if (hasActivity && hasComment) {
+                // Show confirmation modal with comment preview
                 pendingDelete = { date, type, cell };
                 
                 const [year, month, day] = date.split('-');
                 const georgianMonth = monthNames[parseInt(month) - 1];
+                const commentText = commentsData[`${date}_${type}`];
                 
-                document.getElementById('modalMessage').textContent = 
-                    `${day} ${georgianMonth}, ${year} - ამ დღეს აქვს კომენტარი. დარწმუნებული ხართ, რომ გსურთ "${type === 'german' ? 'გერმანული' : 'MCG'}" წაშლა?`;
+                document.getElementById('modalMessage').innerHTML = 
+                    `<strong>${day} ${georgianMonth}, ${year}</strong><br>` +
+                    `ამ დღეს აქვს კომენტარი. დარწმუნებული ხართ, რომ გსურთ "${type === 'german' ? 'გერმანული' : 'MCG'}" წაშლა?`;
+                
+                // Show comment preview
+                if (commentText) {
+                    document.getElementById('commentPreview').style.display = 'block';
+                    document.getElementById('commentPreview').textContent = commentText;
+                }
                 
                 document.getElementById('confirmModal').classList.add('active');
+            } else if (isPastDate(...date.split('-').map(Number))) {
+                showNotification('წარსული თარიღის მონიშვნა შეუძლებელია', 'error');
             } else {
                 toggleEvent(cell, date, type);
             }
@@ -1019,18 +1137,29 @@
                 `${day} ${georgianMonth}, ${year}`;
             document.getElementById('commentTextarea').value = currentComment;
             
+            // Show/hide existing comment
+            const currentCommentContainer = document.getElementById('currentCommentContainer');
+            const currentCommentText = document.getElementById('currentCommentText');
+            if (currentComment.trim()) {
+                currentCommentContainer.style.display = 'block';
+                currentCommentText.textContent = currentComment;
+            } else {
+                currentCommentContainer.style.display = 'none';
+            }
+            
             // Show/hide delete button based on whether comment exists
             const deleteBtn = document.getElementById('deleteCommentBtn');
-            if (currentComment.trim()) {
-                deleteBtn.style.display = 'block';
-            } else {
-                deleteBtn.style.display = 'none';
-            }
+            deleteBtn.style.display = currentComment.trim() ? 'flex' : 'none';
             
             document.getElementById('commentModal').classList.add('active');
         }
         
         async function toggleEvent(cell, date, type) {
+            if (isPastDate(...date.split('-').map(Number))) {
+                showNotification('წარსული თარიღის მონიშვნა შეუძლებელია', 'error');
+                return;
+            }
+            
             const hasActivity = scheduleData[date] === type;
             
             if (hasActivity) {
@@ -1050,15 +1179,8 @@
                 cell.className = `activity-cell ${type}-cell filled`;
                 cell.textContent = type === 'german' ? 'GER' : 'MCG';
                 
-                // Remove other type if exists
-                const otherType = type === 'german' ? 'mcg' : 'german';
-                const otherCells = document.querySelectorAll(`[data-date="${date}"][data-type="${otherType}"]`);
-                otherCells.forEach(otherCell => {
-                    otherCell.className = `activity-cell ${otherType}-cell empty`;
-                    otherCell.textContent = '';
-                    delete commentsData[`${date}_${otherType}`];
-                    otherCell.classList.remove('has-comment');
-                });
+                // Remove other type if exists (German and MCG can coexist on same date)
+                // Actually, let's allow both on same date based on requirement #3
                 
                 showNotification(`${type === 'german' ? 'გერმანული' : 'MCG'} დაემატა`, 'success');
             }
@@ -1096,44 +1218,81 @@
             const date = currentCommentCell.dataset.date;
             const type = currentCommentCell.dataset.type;
             
-            delete commentsData[`${date}_${type}`];
-            currentCommentCell.classList.remove('has-comment');
-            document.getElementById('commentTextarea').value = '';
+            const commentKey = `${date}_${type}`;
+            const commentText = commentsData[commentKey];
             
-            showNotification('კომენტარი წაიშალა', 'info');
-            document.getElementById('deleteCommentBtn').style.display = 'none';
+            if (commentText) {
+                pendingDelete = { date, type, cell: currentCommentCell, commentOnly: true };
+                
+                const [year, month, day] = date.split('-');
+                const georgianMonth = monthNames[parseInt(month) - 1];
+                
+                document.getElementById('modalMessage').innerHTML = 
+                    `<strong>${day} ${georgianMonth}, ${year}</strong><br>` +
+                    `გსურთ კომენტარის წაშლა?`;
+                
+                // Show comment preview
+                document.getElementById('commentPreview').style.display = 'block';
+                document.getElementById('commentPreview').textContent = commentText;
+                document.getElementById('commentPreview').innerHTML = `<strong>არსებული კომენტარი:</strong><br>${commentText}`;
+                
+                // Update confirm button text
+                document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> კომენტარის წაშლა';
+                
+                document.getElementById('confirmModal').classList.add('active');
+            }
         }
         
         function closeCommentModal() {
             document.getElementById('commentModal').classList.remove('active');
+            document.getElementById('commentTextarea').value = '';
+            document.getElementById('currentCommentContainer').style.display = 'none';
             currentCommentCell = null;
         }
         
         // Confirmation modal handlers
         async function confirmDelete() {
             if (pendingDelete) {
-                const { date, type, cell } = pendingDelete;
+                const { date, type, cell, commentOnly } = pendingDelete;
                 
-                delete scheduleData[date];
-                delete commentsData[`${date}_${type}`];
-                
-                cell.className = `activity-cell ${type}-cell empty`;
-                cell.textContent = '';
-                cell.classList.remove('has-comment');
+                if (commentOnly) {
+                    // Delete only the comment
+                    delete commentsData[`${date}_${type}`];
+                    cell.classList.remove('has-comment');
+                    
+                    showNotification('კომენტარი წაიშალა', 'info');
+                } else {
+                    // Delete activity and comment
+                    delete scheduleData[date];
+                    delete commentsData[`${date}_${type}`];
+                    
+                    cell.className = `activity-cell ${type}-cell empty`;
+                    cell.textContent = '';
+                    cell.classList.remove('has-comment');
+                    
+                    showNotification(`${type === 'german' ? 'გერმანული' : 'MCG'} წაიშალა`, 'info');
+                }
                 
                 await saveDataToFirebase();
                 saveDataToLocalStorage();
                 
-                showNotification(`${type === 'german' ? 'გერმანული' : 'MCG'} წაიშალა`, 'info');
+                // Reset confirm button text
+                document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> წაშლა';
+                
                 pendingDelete = null;
                 
                 document.getElementById('confirmModal').classList.remove('active');
+                document.getElementById('commentPreview').style.display = 'none';
             }
         }
         
         function cancelDelete() {
             pendingDelete = null;
             document.getElementById('confirmModal').classList.remove('active');
+            document.getElementById('commentPreview').style.display = 'none';
+            
+            // Reset confirm button text
+            document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> წაშლა';
         }
         
         // Event listeners
