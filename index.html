@@ -24,27 +24,28 @@
             min-height: 100vh;
         }
         
-        /* Login Page */
+        /* Login Page - More professional/serious colors */
         .login-page {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             padding: 20px;
         }
         
         .login-container {
-            background: white;
-            border-radius: 16px;
+            background: #0f3460;
+            border-radius: 12px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             width: 100%;
             max-width: 420px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            border: 1px solid #1a508b;
         }
         
         .login-container::before {
@@ -54,24 +55,22 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #3498db, #2ecc71);
+            background: linear-gradient(90deg, #1a508b, #0d7377);
         }
         
         .login-title {
-            color: #2c3e50;
+            color: #e6e6e6;
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
-            background: linear-gradient(90deg, #3498db, #2ecc71);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: 0.5px;
         }
         
         .login-subtitle {
-            color: #7f8c8d;
+            color: #b0b0b0;
             font-size: 16px;
             margin-bottom: 30px;
+            font-weight: 400;
         }
         
         .login-form {
@@ -82,36 +81,43 @@
         
         .login-input {
             padding: 14px 16px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
+            border: 2px solid #1a508b;
+            border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s;
             width: 100%;
+            background: #16213e;
+            color: #e6e6e6;
         }
         
         .login-input:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            border-color: #0d7377;
+            box-shadow: 0 0 0 3px rgba(13, 115, 119, 0.2);
+        }
+        
+        .login-input::placeholder {
+            color: #8a8a8a;
         }
         
         .login-button {
-            background: linear-gradient(90deg, #3498db, #2980b9);
+            background: linear-gradient(90deg, #1a508b, #0d7377);
             color: white;
             border: none;
             padding: 16px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
             margin-top: 10px;
+            letter-spacing: 0.5px;
         }
         
         .login-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 10px 20px rgba(13, 115, 119, 0.3);
         }
         
         /* Main App Styling */
@@ -147,7 +153,7 @@
         }
         
         .logout-button {
-            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            background: linear-gradient(90deg, #1a508b, #0d7377);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -160,10 +166,10 @@
         
         .logout-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            box-shadow: 0 5px 15px rgba(13, 115, 119, 0.3);
         }
         
-        /* Notification Popup - 2cm from top */
+        /* Notification Popup - Fixed size, fully rounded */
         .notification {
             position: fixed;
             top: -100px;
@@ -171,23 +177,26 @@
             transform: translateX(-50%);
             background: #2c3e50;
             color: white;
-            padding: 16px 24px;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 12px 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             z-index: 1000;
             transition: top 0.3s ease-out;
             max-width: 500px;
-            width: 90%;
+            min-width: fit-content;
+            width: auto;
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
+            line-height: 1.4;
+            white-space: nowrap;
         }
         
         .notification.show {
-            top: 20px; /* About 2cm from top */
+            top: 20px;
         }
         
-        /* Month Box */
+        /* Month Box - Flex container for dates */
         .month-box {
             margin-bottom: 40px;
             background: white;
@@ -195,7 +204,7 @@
             padding: 30px 20px 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             position: relative;
-            overflow-x: auto;
+            overflow-x: visible;
         }
         
         .month-box::before {
@@ -205,7 +214,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #3498db, #2ecc71);
+            background: linear-gradient(90deg, #1a508b, #0d7377);
         }
         
         /* Month Title */
@@ -219,71 +228,100 @@
             z-index: 2;
         }
         
-        /* Schedule Table Layout */
-        .schedule-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
+        /* Schedule Grid Layout - No table, using flex */
+        .schedule-grid {
+            display: flex;
+            flex-direction: column;
             margin-top: 20px;
+            width: 100%;
         }
         
-        /* Column Headers (Dates) */
+        /* Date Headers Row */
+        .date-headers {
+            display: flex;
+            margin-left: 120px; /* Space for labels */
+            min-height: 40px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        
+        /* Date Header Cells */
         .date-header {
-            min-width: 60px;
-            padding: 10px 5px;
-            text-align: center;
+            width: 60px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 600;
             background: #f8f9fa;
-            border-bottom: 2px solid #e1e8ed;
+            border: 1px solid #e1e8ed;
             font-size: 14px;
             color: #2c3e50;
+            flex-shrink: 0;
         }
         
         .date-header.weekend {
-            background-color: #e8ecf1;
-            color: #7f8c8d;
+            background-color: #2c3e50;
+            color: white;
+            border-color: #2c3e50;
+        }
+        
+        /* Activity Rows Container */
+        .activity-rows {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
         }
         
         /* Activity Row */
         .activity-row {
-            height: 50px;
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
         }
         
-        /* Activity Label Cell */
-        .activity-label-cell {
+        /* Activity Label */
+        .activity-label {
             width: 120px;
             padding: 0 15px;
             text-align: right;
             font-weight: 600;
-            background: #f8f9fa;
-            border-right: 2px solid #e1e8ed;
             font-size: 14px;
-            position: sticky;
-            left: 0;
-            z-index: 1;
+            flex-shrink: 0;
         }
         
         .german-label {
-            color: #3498db;
+            color: #1a508b;
         }
         
         .mcg-label {
-            color: #e74c3c;
+            color: #0d7377;
+        }
+        
+        /* Activity Cells Container */
+        .activity-cells {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            flex-grow: 1;
         }
         
         /* Activity Cell */
         .activity-cell {
-            min-width: 60px;
+            width: 60px;
             height: 50px;
-            text-align: center;
-            vertical-align: middle;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
             font-weight: 600;
-            font-size: 13px;
-            border: 2px solid #e1e8ed;
-            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            flex-shrink: 0;
+            overflow: hidden;
         }
         
         .activity-cell:hover {
@@ -292,29 +330,29 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        /* German lesson cells - Blue with GER text */
+        /* German lesson cells - Blue */
         .german-cell.empty {
             background-color: white;
         }
         
         .german-cell.filled {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, #1a508b, #0d7377);
             color: white;
-            border-color: #3498db;
+            border-color: #1a508b;
         }
         
-        /* MCG shift cells - Red with MCG text */
+        /* MCG shift cells - Red */
         .mcg-cell.empty {
             background-color: white;
         }
         
         .mcg-cell.filled {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            background: linear-gradient(135deg, #0d7377, #1a508b);
             color: white;
-            border-color: #e74c3c;
+            border-color: #0d7377;
         }
         
-        /* Past date styling (after 23:59) */
+        /* Past date styling */
         .past-date {
             opacity: 0.6;
         }
@@ -324,20 +362,20 @@
             opacity: 0.7;
         }
         
-        /* Comment indicator - bell symbol */
+        /* Comment indicator */
         .has-comment::after {
-            content: "\f0f3"; /* Font Awesome bell icon */
+            content: "\f0f3";
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
             top: 2px;
             right: 2px;
-            font-size: 12px;
+            font-size: 10px;
             opacity: 0.9;
             color: #f39c12;
         }
         
-        /* Comment Popup Modal */
+        /* Comment Popup Modal with Time Selector */
         .comment-modal-overlay {
             display: none;
             position: fixed;
@@ -406,9 +444,36 @@
             color: #e74c3c;
         }
         
+        /* Time selector */
+        .time-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .time-selector label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        
+        .time-input {
+            padding: 8px 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 80px;
+        }
+        
+        .time-input:focus {
+            outline: none;
+            border-color: #1a508b;
+        }
+        
         .comment-textarea {
             width: 100%;
-            height: 150px;
+            height: 120px;
             padding: 15px;
             border: 2px solid #e1e8ed;
             border-radius: 10px;
@@ -420,8 +485,8 @@
         
         .comment-textarea:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            border-color: #1a508b;
+            box-shadow: 0 0 0 3px rgba(26, 80, 139, 0.1);
         }
         
         .comment-modal-buttons {
@@ -444,7 +509,7 @@
         }
         
         .save-comment-btn {
-            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            background: linear-gradient(90deg, #1a508b, #0d7377);
             color: white;
         }
         
@@ -469,8 +534,7 @@
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            font-style: italic;
+            border-left: 4px solid #1a508b;
         }
         
         .comment-label {
@@ -478,6 +542,13 @@
             color: #2c3e50;
             margin-bottom: 5px;
             font-size: 14px;
+        }
+        
+        .comment-time {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+            font-style: italic;
         }
         
         /* Confirmation Modal */
@@ -503,7 +574,7 @@
             border-radius: 12px;
             padding: 30px;
             width: 90%;
-            max-width: 400px;
+            max-width: 500px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
@@ -586,12 +657,12 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .date-header {
-                min-width: 50px;
+                width: 50px;
+                height: 35px;
                 font-size: 13px;
-                padding: 8px 4px;
             }
             
-            .activity-label-cell {
+            .activity-label {
                 width: 100px;
                 padding: 0 10px;
                 font-size: 13px;
@@ -603,27 +674,14 @@
             }
             
             .activity-cell {
-                min-width: 50px;
+                width: 50px;
+                height: 45px;
+                font-size: 11px;
             }
-        }
-        
-        /* Scrollbar styling */
-        .month-box::-webkit-scrollbar {
-            height: 8px;
-        }
-        
-        .month-box::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
-        .month-box::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
-        .month-box::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
+            
+            .date-headers {
+                margin-left: 100px;
+            }
         }
     </style>
 </head>
@@ -654,7 +712,7 @@
             </div>
         </div>
         
-        <!-- Schedule Table Container -->
+        <!-- Schedule Grid Container -->
         <div class="table-container" id="tableContainer">
             <!-- Month boxes will be generated here -->
         </div>
@@ -663,7 +721,7 @@
     <!-- Notification -->
     <div id="notification" class="notification"></div>
     
-    <!-- Comment Popup Modal -->
+    <!-- Comment Popup Modal with Time Selector -->
     <div id="commentModal" class="comment-modal-overlay">
         <div class="comment-modal">
             <div class="comment-modal-header">
@@ -677,7 +735,14 @@
             </div>
             <div id="currentCommentContainer" style="display: none;">
                 <div class="comment-label">არსებული კომენტარი:</div>
-                <div class="current-comment" id="currentCommentText"></div>
+                <div class="current-comment">
+                    <div id="currentCommentTime"></div>
+                    <div id="currentCommentText"></div>
+                </div>
+            </div>
+            <div class="time-selector">
+                <label for="commentTime">დრო:</label>
+                <input type="time" id="commentTime" class="time-input" value="19:00">
             </div>
             <textarea id="commentTextarea" class="comment-textarea" placeholder="დაწერეთ კომენტარი..."></textarea>
             <div class="comment-modal-buttons">
@@ -704,7 +769,10 @@
                 </button>
             </div>
             <div id="modalMessage" class="confirm-modal-message"></div>
-            <div id="commentPreview" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #3498db; font-style: italic;"></div>
+            <div id="commentPreview" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #1a508b;">
+                <div id="commentPreviewTime" style="font-size: 12px; color: #7f8c8d; margin-bottom: 5px;"></div>
+                <div id="commentPreviewText"></div>
+            </div>
             <div class="confirm-modal-buttons">
                 <button id="cancelConfirmBtn" class="confirm-modal-btn cancel-confirm-btn">
                     <i class="fas fa-times"></i> გაუქმება
@@ -810,7 +878,7 @@
             return date < now;
         }
         
-        // Notification function
+        // Notification function - Fixed size with padding
         function showNotification(message, type = 'info') {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -818,9 +886,9 @@
             if (type === 'error') {
                 notification.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
             } else if (type === 'success') {
-                notification.style.background = 'linear-gradient(90deg, #2ecc71, #27ae60)';
+                notification.style.background = 'linear-gradient(90deg, #27ae60, #219653)';
             } else {
-                notification.style.background = 'linear-gradient(90deg, #3498db, #2980b9)';
+                notification.style.background = 'linear-gradient(90deg, #1a508b, #0d7377)';
             }
             
             notification.classList.add('show');
@@ -926,7 +994,7 @@
             showNotification('სისტემიდან გამოსული ხართ', 'info');
         }
         
-        // Create Schedule with table layout
+        // Create Schedule with grid layout
         function createSchedule() {
             const container = document.getElementById('tableContainer');
             container.innerHTML = '';
@@ -967,80 +1035,73 @@
             monthTitle.textContent = monthInfo.name;
             monthBox.appendChild(monthTitle);
             
-            // Create table
-            const table = document.createElement('table');
-            table.className = 'schedule-table';
-            
-            // Create table header with dates
-            const thead = document.createElement('thead');
-            const headerRow = document.createElement('tr');
-            
-            // Empty cell for activity labels
-            const emptyHeaderCell = document.createElement('th');
-            emptyHeaderCell.className = 'activity-label-cell';
-            headerRow.appendChild(emptyHeaderCell);
+            // Create grid container
+            const grid = document.createElement('div');
+            grid.className = 'schedule-grid';
             
             // Create date headers
+            const dateHeaders = document.createElement('div');
+            dateHeaders.className = 'date-headers';
+            
             const startDay = (monthInfo.year === currentYear && monthInfo.month === currentMonth) 
                 ? currentDay 
                 : 1;
             
             for (let day = startDay; day <= monthInfo.days; day++) {
-                const dateHeader = document.createElement('th');
+                const dateHeader = document.createElement('div');
                 dateHeader.className = 'date-header';
                 dateHeader.textContent = day;
                 
-                // Add weekend/holiday styling
-                if (isWeekend(monthInfo.year, monthInfo.month, day)) {
+                // Add weekend/holiday styling - darker color
+                if (isWeekend(monthInfo.year, monthInfo.month, day) || isHoliday(monthInfo.month, day)) {
                     dateHeader.classList.add('weekend');
-                    dateHeader.title = "შაბათი ან კვირა";
+                    const holidayName = getHolidayName(monthInfo.month, day);
+                    if (holidayName) {
+                        dateHeader.title = holidayName;
+                    }
                 }
                 
-                if (isHoliday(monthInfo.month, day)) {
-                    dateHeader.classList.add('weekend');
-                    dateHeader.style.backgroundColor = '#e74c3c';
-                    dateHeader.style.color = 'white';
-                    dateHeader.title = getHolidayName(monthInfo.month, day);
-                }
-                
-                // Add past date class to entire column
+                // Add past date class
                 if (isPastDate(monthInfo.year, monthInfo.month, day)) {
                     dateHeader.classList.add('past-date');
                 }
                 
-                headerRow.appendChild(dateHeader);
+                dateHeaders.appendChild(dateHeader);
             }
             
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
+            grid.appendChild(dateHeaders);
             
-            // Create table body with activity rows
-            const tbody = document.createElement('tbody');
+            // Create activity rows container
+            const activityRows = document.createElement('div');
+            activityRows.className = 'activity-rows';
             
             // German row
             const germanRow = createActivityRow('german', monthInfo);
-            tbody.appendChild(germanRow);
+            activityRows.appendChild(germanRow);
             
             // MCG row
             const mcgRow = createActivityRow('mcg', monthInfo);
-            tbody.appendChild(mcgRow);
+            activityRows.appendChild(mcgRow);
             
-            table.appendChild(tbody);
-            monthBox.appendChild(table);
+            grid.appendChild(activityRows);
+            monthBox.appendChild(grid);
             container.appendChild(monthBox);
         }
         
         function createActivityRow(activityType, monthInfo) {
-            const row = document.createElement('tr');
+            const row = document.createElement('div');
             row.className = 'activity-row';
             
-            // Activity label cell
-            const labelCell = document.createElement('td');
-            labelCell.className = `activity-label-cell ${activityType}-label`;
-            labelCell.textContent = activityType === 'german' ? 'გერმანული' : 'MCG';
-            row.appendChild(labelCell);
+            // Activity label
+            const label = document.createElement('div');
+            label.className = `activity-label ${activityType}-label`;
+            label.textContent = activityType === 'german' ? 'გერმანული' : 'MCG';
+            row.appendChild(label);
             
-            // Create activity cells for each day
+            // Activity cells container
+            const cellsContainer = document.createElement('div');
+            cellsContainer.className = 'activity-cells';
+            
             const startDay = (monthInfo.year === currentYear && monthInfo.month === currentMonth) 
                 ? currentDay 
                 : 1;
@@ -1048,7 +1109,7 @@
             for (let day = startDay; day <= monthInfo.days; day++) {
                 const dateKey = getDateKey(monthInfo.year, monthInfo.month, day);
                 
-                const cell = document.createElement('td');
+                const cell = document.createElement('div');
                 cell.className = `activity-cell ${activityType}-cell empty`;
                 
                 // Check if this date has activity
@@ -1076,9 +1137,10 @@
                 cell.addEventListener('click', handleCellClick);
                 cell.addEventListener('contextmenu', handleRightClick);
                 
-                row.appendChild(cell);
+                cellsContainer.appendChild(cell);
             }
             
+            row.appendChild(cellsContainer);
             return row;
         }
         
@@ -1097,16 +1159,17 @@
                 
                 const [year, month, day] = date.split('-');
                 const georgianMonth = monthNames[parseInt(month) - 1];
-                const commentText = commentsData[`${date}_${type}`];
+                const commentData = commentsData[`${date}_${type}`];
                 
                 document.getElementById('modalMessage').innerHTML = 
                     `<strong>${day} ${georgianMonth}, ${year}</strong><br>` +
-                    `ამ დღეს აქვს კომენტარი. დარწმუნებული ხართ, რომ გსურთ "${type === 'german' ? 'გერმანული' : 'MCG'}" წაშლა?`;
+                    `დარწმუნებული ხართ, რომ გსურთ "${type === 'german' ? 'გერმანული' : 'MCG'}" წაშლა?`;
                 
                 // Show comment preview
-                if (commentText) {
+                if (commentData) {
                     document.getElementById('commentPreview').style.display = 'block';
-                    document.getElementById('commentPreview').textContent = commentText;
+                    document.getElementById('commentPreviewTime').textContent = commentData.time ? `დრო: ${commentData.time}` : '';
+                    document.getElementById('commentPreviewText').textContent = commentData.text || '';
                 }
                 
                 document.getElementById('confirmModal').classList.add('active');
@@ -1126,7 +1189,7 @@
             currentCommentCell = cell;
             
             const commentKey = `${date}_${type}`;
-            const currentComment = commentsData[commentKey] || '';
+            const commentData = commentsData[commentKey] || { text: '', time: '19:00' };
             const [year, month, day] = date.split('-');
             const georgianMonth = monthNames[parseInt(month) - 1];
             
@@ -1135,21 +1198,25 @@
                 `${type === 'german' ? 'გერმანული' : 'MCG'} - კომენტარი`;
             document.getElementById('commentDateInfo').textContent = 
                 `${day} ${georgianMonth}, ${year}`;
-            document.getElementById('commentTextarea').value = currentComment;
+            document.getElementById('commentTextarea').value = commentData.text || '';
+            document.getElementById('commentTime').value = commentData.time || '19:00';
             
             // Show/hide existing comment
             const currentCommentContainer = document.getElementById('currentCommentContainer');
             const currentCommentText = document.getElementById('currentCommentText');
-            if (currentComment.trim()) {
+            const currentCommentTime = document.getElementById('currentCommentTime');
+            
+            if (commentData.text && commentData.text.trim()) {
                 currentCommentContainer.style.display = 'block';
-                currentCommentText.textContent = currentComment;
+                currentCommentText.textContent = commentData.text;
+                currentCommentTime.textContent = commentData.time ? `დრო: ${commentData.time}` : '';
             } else {
                 currentCommentContainer.style.display = 'none';
             }
             
             // Show/hide delete button based on whether comment exists
             const deleteBtn = document.getElementById('deleteCommentBtn');
-            deleteBtn.style.display = currentComment.trim() ? 'flex' : 'none';
+            deleteBtn.style.display = (commentData.text && commentData.text.trim()) ? 'flex' : 'none';
             
             document.getElementById('commentModal').classList.add('active');
         }
@@ -1172,17 +1239,29 @@
                 delete commentsData[`${date}_${type}`];
                 cell.classList.remove('has-comment');
                 
-                showNotification(`${type === 'german' ? 'გერმანული' : 'MCG'} წაიშალა`, 'info');
+                // Update notification messages based on type
+                if (type === 'german') {
+                    showNotification('გაკვეთილი წაიშალა', 'info');
+                } else {
+                    showNotification('მორიგეობა წაიშალა', 'info');
+                }
             } else {
                 // Add activity
                 scheduleData[date] = type;
                 cell.className = `activity-cell ${type}-cell filled`;
+                // Fit text to cell by using appropriate font size
                 cell.textContent = type === 'german' ? 'GER' : 'MCG';
+                cell.style.fontSize = '12px';
+                cell.style.display = 'flex';
+                cell.style.alignItems = 'center';
+                cell.style.justifyContent = 'center';
                 
-                // Remove other type if exists (German and MCG can coexist on same date)
-                // Actually, let's allow both on same date based on requirement #3
-                
-                showNotification(`${type === 'german' ? 'გერმანული' : 'MCG'} დაემატა`, 'success');
+                // Update notification messages based on type
+                if (type === 'german') {
+                    showNotification('გაკვეთილი დაემატა', 'success');
+                } else {
+                    showNotification('მორიგეობა დაემატა', 'success');
+                }
             }
             
             await saveDataToFirebase();
@@ -1195,10 +1274,14 @@
             
             const date = currentCommentCell.dataset.date;
             const type = currentCommentCell.dataset.type;
-            const comment = document.getElementById('commentTextarea').value.trim();
+            const commentText = document.getElementById('commentTextarea').value.trim();
+            const commentTime = document.getElementById('commentTime').value;
             
-            if (comment) {
-                commentsData[`${date}_${type}`] = comment;
+            if (commentText) {
+                commentsData[`${date}_${type}`] = {
+                    text: commentText,
+                    time: commentTime
+                };
                 currentCommentCell.classList.add('has-comment');
                 showNotification('კომენტარი შენახულია', 'success');
             } else {
@@ -1219,9 +1302,9 @@
             const type = currentCommentCell.dataset.type;
             
             const commentKey = `${date}_${type}`;
-            const commentText = commentsData[commentKey];
+            const commentData = commentsData[commentKey];
             
-            if (commentText) {
+            if (commentData && commentData.text) {
                 pendingDelete = { date, type, cell: currentCommentCell, commentOnly: true };
                 
                 const [year, month, day] = date.split('-');
@@ -1229,12 +1312,12 @@
                 
                 document.getElementById('modalMessage').innerHTML = 
                     `<strong>${day} ${georgianMonth}, ${year}</strong><br>` +
-                    `გსურთ კომენტარის წაშლა?`;
+                    `დარწმუნებული ხართ, რომ გსურთ კომენტარი წაშლა?`;
                 
                 // Show comment preview
                 document.getElementById('commentPreview').style.display = 'block';
-                document.getElementById('commentPreview').textContent = commentText;
-                document.getElementById('commentPreview').innerHTML = `<strong>არსებული კომენტარი:</strong><br>${commentText}`;
+                document.getElementById('commentPreviewTime').textContent = commentData.time ? `დრო: ${commentData.time}` : '';
+                document.getElementById('commentPreviewText').textContent = commentData.text || '';
                 
                 // Update confirm button text
                 document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> კომენტარის წაშლა';
@@ -1246,6 +1329,7 @@
         function closeCommentModal() {
             document.getElementById('commentModal').classList.remove('active');
             document.getElementById('commentTextarea').value = '';
+            document.getElementById('commentTime').value = '19:00';
             document.getElementById('currentCommentContainer').style.display = 'none';
             currentCommentCell = null;
         }
@@ -1270,7 +1354,12 @@
                     cell.textContent = '';
                     cell.classList.remove('has-comment');
                     
-                    showNotification(`${type === 'german' ? 'გერმანული' : 'MCG'} წაიშალა`, 'info');
+                    // Update notification messages based on type
+                    if (type === 'german') {
+                        showNotification('გაკვეთილი წაიშალა', 'info');
+                    } else {
+                        showNotification('მორიგეობა წაიშალა', 'info');
+                    }
                 }
                 
                 await saveDataToFirebase();
