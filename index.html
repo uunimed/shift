@@ -13,214 +13,218 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            background-color: #f5f7fa;
-        }
-        
-        /* Login Page - LIGHT BACKGROUND */
-        .login-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .login-container {
-            background: #0f3460;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-        }
-        
-        .login-title {
-            color: #CEDFF4;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .login-subtitle {
-            color: #CEDFF4;
-            font-size: 12px;
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-        
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .login-input {
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-            width: 100%;
-            background: #ffffff;
-            color: #333333;
-        }
-        
-        .login-input:focus {
-            outline: none;
-            border-color: #CEDFF4;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-        }
-        
-        .login-input::placeholder {
-            color: #CEDFF4;
-        }
-        
-        .login-button {
-            background: linear-gradient(90deg, #C4D7ED, #788FAA);
-            color: #33465C;
-            border: none;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .login-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px #33465C;
-        }
-        
-        /* Main App Styling */
-        .main-app {
-            display: none;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .activity-cell.filled {
-    font-weight: bold; /* Make text bolder */
-    letter-spacing: 0.5px; /* Add slight letter spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+}
+
+/* Login Page - LIGHT BACKGROUND */
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.login-container {
+    background: #0f3460;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.login-title {
+    color: #CEDFF4;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.login-subtitle {
+    color: #CEDFF4;
+    font-size: 12px;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-input {
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    width: 100%;
+    background: #ffffff;
+    color: #333333;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: #CEDFF4;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+.login-input::placeholder {
+    color: #CEDFF4;
+}
+
+.login-button {
+    background: linear-gradient(90deg, #C4D7ED, #788FAA);
+    color: #33465C;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px #33465C;
+}
+
+/* Main App Styling - FIXED WIDTH REMOVED */
+.main-app {
+    display: none;
+    width: 100%; /* Take full width */
+    padding: 0 0.5cm; /* 2cm from left and right edges */
+}
+
+.activity-cell.filled {
+    font-weight: bold;
+    letter-spacing: 0.5px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Or set specific sizes by class */
 .german-cell.filled {
-    font-size: 17px !important; /* Force size for GER */
+    font-size: 17px !important;
 }
 
 .mcg-cell.filled {
-    font-size: 17px !important; /* Force size for MCG */
+    font-size: 17px !important;
 }
 
-/* Alternative: Use relative sizing */
 .german-cell.filled {
-    font-size: 1.2em; /* 20% larger */
+    font-size: 1.2em;
 }
 
 .mcg-cell.filled {
-    font-size: 1.2em; /* Normal size */
+    font-size: 1.2em;
 }
 
-        /* Header with logout */
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 2px;
-            border-radius: 12px;
-        }
-        
-        .app-title {
-            color: #33465C;
-            font-size: 20px;
-            font-weight: 600;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            font-size: 12px;
-            gap: 15px;
-        }
-        
-        .logout-button {
-            background: linear-gradient(90deg, #f44336, #d32f2f);
-            color: white;
-            border: none;
-            max-height: 200px;
-            max-width: 200px;
-            padding: 5px 5px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .logout-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
-        }
-        
-        /* Notification Popup */
-        .notification {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2c3e50;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 1000;
-            transition: top 0.3s ease-out;
-            max-width: 500px;
-            min-width: fit-content;
-            width: auto;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 1.4;
-            white-space: nowrap;
-        }
-        
-        .notification.show {
-            top: 20px;
-        }
-        
+/* Header with logout */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 2px;
+    border-radius: 12px;
+    width: 100%; /* Full width within padding */
+}
+
+.app-title {
+    color: #33465C;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    gap: 15px;
+}
+
+.logout-button {
+    background: linear-gradient(90deg, #f44336, #d32f2f);
+    color: white;
+    border: none;
+    max-height: 200px;
+    max-width: 200px;
+    padding: 5px 5px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logout-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+}
+
+/* Notification Popup */
+.notification {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2c3e50;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: top 0.3s ease-out;
+    max-width: 500px;
+    min-width: fit-content;
+    width: auto;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.notification.show {
+    top: 20px;
+}
+
+/* Table Container */
+.table-container {
+    width: 100%; /* Full width within padding */
+}
+
 .month-box {
     margin-bottom: 20px;
     position: relative;
@@ -229,17 +233,17 @@
     color:#344455;
     font-weight: bold;
     border-radius: 12px;
-    padding: 0px 5px 0px; /* Keep original padding */
+    padding: 0px 5px 0px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    overflow-x: auto; /* Horizontal scrolling */
+    overflow-x: auto; /* Horizontal scrolling if needed */
     overflow-y: visible;
-    position: relative; /* For the ::before positioning */
+    position: relative;
+    width: 100%; /* Full width within padding */
 }
 
-/* The gradient line at the top */
 .month-box::before {
     content: '';
-    position: sticky; /* Use sticky instead of absolute */
+    position: sticky;
     left: 0;
     top: 0;
     width: 100%;
@@ -249,480 +253,491 @@
     display: block;
 }
 
+/* Month title - ADD THIS */
+.month-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #344455;
+    margin-bottom: 15px;
+    padding: 10px 5px;
+    border-bottom: 2px solid #f0f0f0;
+}
         
 .schedule-grid {
     display: flex;
     flex-direction: column;
     min-width: fit-content; /* Ensure grid doesn't shrink */
-    /* Remove position: relative and padding-top */
+    width: 100%; /* Full width */
 }
         
-        /* Date Headers Row */
-        .date-headers {
-            display: flex;
-            margin-left: 120px; /* Space for labels */
-            min-height: 40px;
-            flex-wrap: nowrap; /* Keep dates in single row */
-        }
+/* Date Headers Row */
+.date-headers {
+    display: flex;
+    margin-left: 120px; /* Space for labels */
+    min-height: 40px;
+    flex-wrap: nowrap; /* Keep dates in single row */
+}
         
-        /* Date Header Cells - ROUNDED CORNERS */
-        .date-header {
-            width: 60px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            background: #C1C7CC;
-            border: 1px solid #C1C7CC;
-            font-size: 14px;
-            color: #344455;
-            flex-shrink: 0;
-            border-radius: 8px; /* Rounded corners */
-            margin-right: 4px;
-        }
+/* Date Header Cells - ROUNDED CORNERS */
+.date-header {
+    width: 60px; /* FIXED WIDTH - NOT CHANGED */
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    background: #C1C7CC;
+    border: 1px solid #C1C7CC;
+    font-size: 14px;
+    color: #344455;
+    flex-shrink: 0;
+    border-radius: 8px;
+    margin-right: 4px;
+}
         
-        .date-header.weekend {
-            background-color: #787F86;
-            color: #344455;
-            border-color: #787F86;
-        }
+.date-header.weekend {
+    background-color: #787F86;
+    color: #344455;
+    border-color: #787F86;
+}
         
-        /* Activity Rows Container */
-        .activity-rows {
-            display: flex;
-            flex-direction: column;
-            margin-top: 0px;
-        }
+/* Activity Rows Container */
+.activity-rows {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+}
         
-        /* Activity Row */
-        .activity-row {
-            display: flex;
-            margin-bottom: 5px;
-            align-items: center;
-        }
+/* Activity Row */
+.activity-row {
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+}
         
-        /* Activity Label */
-        .activity-label {
-            width: 120px;
-            padding: 0 15px;
-            text-align: right;
-            font-weight: 600;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
+/* Activity Label */
+.activity-label {
+    width: 120px;
+    padding: 0 15px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+}
         
-        .german-label {
-            color: #4CAF50;
-            font-weight: bold;
-        }
+.german-label {
+    color: #4CAF50;
+    font-weight: bold;
+}
         
-        .mcg-label {
-            color: #f44336;
-            font-weight: bold;
-        }
+.mcg-label {
+    color: #f44336;
+    font-weight: bold;
+}
         
-        /* Activity Cells Container */
-        .activity-cells {
-            display: flex;
-            flex-wrap: nowrap; /* Keep cells in single row */
-            flex-grow: 1;
-        }
+/* Activity Cells Container */
+.activity-cells {
+    display: flex;
+    flex-wrap: nowrap; /* Keep cells in single row */
+    flex-grow: 1;
+}
         
-        /* Activity Cell - ROUNDED CORNERS */
-        .activity-cell {
-            width: 60px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-            font-weight: 600;
-            font-size: 16px;
-            border: 1px solid #e1e8ed;
-            border-radius: 8px; /* Rounded corners */
-            flex-shrink: 0;
-            overflow: hidden;
-            margin-right: 4px;
-            margin-bottom: 4px;
-        }
+/* Activity Cell - ROUNDED CORNERS - FIXED WIDTH */
+.activity-cell {
+    width: 60px; /* FIXED WIDTH - NOT CHANGED */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    font-weight: 600;
+    font-size: 16px;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    flex-shrink: 0;
+    overflow: hidden;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
         
-        .activity-cell:hover {
-            transform: scale(1.05);
-            z-index: 2;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
+.activity-cell:hover {
+    transform: scale(1.05);
+    z-index: 2;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
         
-        /* German lesson cells - GREEN */
-        .german-cell.empty {
-            background-color: white;
-        }
+/* German lesson cells - GREEN */
+.german-cell.empty {
+    background-color: white;
+}
         
-        .german-cell.filled {
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-            color: white;
-            border-color: #136016;
-        }
+.german-cell.filled {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    border-color: #136016;
+}
         
-        /* MCG shift cells - RED */
-        .mcg-cell.empty {
-            background-color: white;
-        }
+/* MCG shift cells - RED */
+.mcg-cell.empty {
+    background-color: white;
+}
         
-        .mcg-cell.filled {
-            background: linear-gradient(135deg, #f44336, #d32f2f);
-            color: white;
-            border-color: #A51409;
-        }
+.mcg-cell.filled {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    border-color: #A51409;
+}
         
-        /* Past date styling */
-        .past-date {
-            opacity: 0.6;
-        }
+/* Past date styling */
+.past-date {
+    opacity: 0.6;
+}
         
-        .past-date .activity-cell {
-            filter: grayscale(0.3);
-            opacity: 0.7;
-        }
+.past-date .activity-cell {
+    filter: grayscale(0.3);
+    opacity: 0.7;
+}
         
-        /* Comment indicator */
-        .has-comment::after {
-            content: "\f017"; /* Clock icon for time comment */
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            font-size: 10px;
-            opacity: 0.9;
-            color: #FFFB00;
-        }
+/* Comment indicator */
+.has-comment::after {
+    content: "\f017"; /* Clock icon for time comment */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 10px;
+    opacity: 0.9;
+    color: #FFFB00;
+}
         
-        /* Comment Popup Modal with Time Selector */
-        .comment-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
+/* Comment Popup Modal with Time Selector */
+.comment-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
         
-        .comment-modal-overlay.active {
-            display: flex;
-        }
+.comment-modal-overlay.active {
+    display: flex;
+}
         
-        .comment-modal {
-            background: white;
-            border-radius: 16px;
-            padding: 10px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-        }
+.comment-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 10px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+}
         
-        .comment-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-            padding-bottom: 15px;
-            border-bottom: 5px solid #ecf0f1;
-        }
+.comment-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    padding-bottom: 15px;
+    border-bottom: 5px solid #ecf0f1;
+}
         
-        .comment-modal-title {
-            color: #2c3e50;
-            font-size: 20px;
-            font-weight: bold;
-        }
+.comment-modal-title {
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: bold;
+}
         
-        .comment-date-info {
-            color: #7f8c8d;
-            font-size: 14px;
-            margin-top: 5px;
-        }
+.comment-date-info {
+    color: #7f8c8d;
+    font-size: 14px;
+    margin-top: 5px;
+}
         
-        .close-comment-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #95a5a6;
-            line-height: 1;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
+.close-comment-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #95a5a6;
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
         
-        .close-comment-modal:hover {
-            background-color: #f5f6fa;
-            color: #e74c3c;
-        }
+.close-comment-modal:hover {
+    background-color: #f5f6fa;
+    color: #e74c3c;
+}
         
-        /* Time selector - LONGER INPUT */
-        .time-selector {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 5px;
-        }
+/* Time selector - LONGER INPUT */
+.time-selector {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}
         
-        .time-selector label {
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 14px;
-            min-width: 60px;
-        }
+.time-selector label {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+    min-width: 60px;
+}
         
-        .time-input {
-            padding: 10px 15px;
-            border: 2px solid #e1e8ed;
-            border-radius: 8px;
-            font-size: 16px;
-            width: 140px; /* Longer input */
-            font-family: 'Segoe UI', monospace;
-        }
+.time-input {
+    padding: 10px 15px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 140px;
+    font-family: 'Segoe UI', monospace;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.time-input::placeholder {
+    color: #999;
+}
+
+/* Remove the calendar picker indicator styles since we're using text input */
         
-        /* Hide am/pm indicators */
-        .time-input::-webkit-datetime-edit-ampm-field {
-            display: none;
-        }
+.time-input:focus {
+    outline: none;
+    border-color: #e1e8ed;
+}
         
-        .time-input[type=time]::-webkit-calendar-picker-indicator {
-            background: #none;
-        }
+.comment-textarea {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    border: 2px solid #e1e8ed;
+    border-radius: 10px;
+    font-size: 16px;
+    resize: vertical;
+    margin-bottom: 20px;
+    font-family: inherit;
+}
         
-        .time-input:focus {
-            outline: none;
-            border-color: #e1e8ed;
-        }
+.comment-textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
         
-        .comment-textarea {
-            width: 100%;
-            height: 120px;
-            padding: 15px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            font-size: 16px;
-            resize: vertical;
-            margin-bottom: 20px;
-            font-family: inherit;
-        }
+.comment-modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
         
-        .comment-textarea:focus {
-            outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-        }
+.comment-modal-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
         
-        .comment-modal-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-        }
+.save-comment-btn {
+    background: linear-gradient(90deg, #4CAF50, #2E7D32);
+    color: white;
+}
         
-        .comment-modal-btn {
-            padding: 12px 28px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+.delete-comment-btn {
+    background: linear-gradient(90deg, #f44336, #d32f2f);
+    color: white;
+}
         
-        .save-comment-btn {
-            background: linear-gradient(90deg, #4CAF50, #2E7D32);
-            color: white;
-        }
+.cancel-comment-btn {
+    background: #95a5a6;
+    color: white;
+}
         
-        .delete-comment-btn {
-            background: linear-gradient(90deg, #f44336, #d32f2f);
-            color: white;
-        }
+.comment-modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
         
-        .cancel-comment-btn {
-            background: #95a5a6;
-            color: white;
-        }
+/* Current Comment Display */
+.current-comment {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #4CAF50;
+}
         
-        .comment-modal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+.comment-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
         
-        /* Current Comment Display */
-        .current-comment {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border-left: 4px solid #4CAF50;
-        }
+.comment-time {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 5px;
+    font-style: italic;
+}
         
-        .comment-label {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
+/* Confirmation Modal */
+.confirm-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
         
-        .comment-time {
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-top: 5px;
-            font-style: italic;
-        }
+.confirm-modal-overlay.active {
+    display: flex;
+}
         
-        /* Confirmation Modal */
-        .confirm-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
+.confirm-modal {
+    background: white;
+    border-radius: 12px;
+    padding: 5px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
         
-        .confirm-modal-overlay.active {
-            display: flex;
-        }
+.confirm-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ecf0f1;
+}
         
-        .confirm-modal {
-            background: white;
-            border-radius: 12px;
-            padding: 5px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
+.confirm-modal-title {
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: bold;
+}
         
-        .confirm-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #ecf0f1;
-        }
+.close-confirm-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #95a5a6;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
         
-        .confirm-modal-title {
-            color: #2c3e50;
-            font-size: 18px;
-            font-weight: bold;
-        }
+.close-confirm-modal:hover {
+    background-color: #f5f6fa;
+    color: #e74c3c;
+}
         
-        .close-confirm-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #95a5a6;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
+.confirm-modal-message {
+    color: #2c3e50;
+    font-size: 16px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
         
-        .close-confirm-modal:hover {
-            background-color: #f5f6fa;
-            color: #e74c3c;
-        }
+.confirm-modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
         
-        .confirm-modal-message {
-            color: #2c3e50;
-            font-size: 16px;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
+.confirm-modal-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
         
-        .confirm-modal-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-        }
+.confirm-btn {
+    background: linear-gradient(90deg, #f44336, #d32f2f);
+    color: white;
+}
         
-        .confirm-modal-btn {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+.cancel-confirm-btn {
+    background: #95a5a6;
+    color: white;
+}
         
-        .confirm-btn {
-            background: linear-gradient(90deg, #f44336, #d32f2f);
-            color: white;
-        }
+.confirm-modal-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
         
-        .cancel-confirm-btn {
-            background: #95a5a6;
-            color: white;
-        }
-        
-        .confirm-modal-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .date-header {
-                width: 50px;
-                height: 35px;
-                font-size: 13px;
-            }
-            
-            .activity-label {
-                width: 100px;
-                padding: 0 10px;
-                font-size: 13px;
-            }
-            
-            .month-title {
-                font-size: 18px;
-                top: 8px;
-            }
-            
-            .activity-cell {
-                width: 50px;
-                height: 45px;
-                font-size: 11px;
-            }
-            
-            .date-headers {
-                margin-left: 100px;
-            }
-            
-            .time-input {
-                width: 120px;
-            }
-        }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-app {
+        padding: 0 1cm; /* Less padding on mobile */
+    }
+    
+    .date-header {
+        width: 50px;
+        height: 35px;
+        font-size: 13px;
+    }
+    
+    .activity-label {
+        width: 100px;
+        padding: 0 10px;
+        font-size: 13px;
+    }
+    
+    .month-title {
+        font-size: 18px;
+    }
+    
+    .activity-cell {
+        width: 50px;
+        height: 45px;
+        font-size: 11px;
+    }
+    
+    .date-headers {
+        margin-left: 100px;
+    }
+    
+    .time-input {
+        width: 120px;
+    }
+}
     </style>
 </head>
 <body>
@@ -782,8 +797,8 @@
             </div>
             <div class="time-selector">
                 <label for="commentTime">დრო:</label>
-                <input type="time" id="commentTime" class="time-input" value="19:00">
-            </div>
+<input type="text" id="commentTime" class="time-input" value="00:00" maxlength="5" placeholder="00:00">
+</div>
             <textarea id="commentTextarea" class="comment-textarea" placeholder="დაწერეთ კომენტარი..."></textarea>
             <div class="comment-modal-buttons">
                 <button id="deleteCommentBtn" class="comment-modal-btn delete-comment-btn">
@@ -1077,6 +1092,134 @@
             }
         }
         
+        function formatTimeTo12Hour(time24) {
+    if (!time24) return '7:00';
+    
+    const [hours, minutes] = time24.split(':').map(Number);
+    let hours12 = hours % 12;
+    hours12 = hours12 === 0 ? 12 : hours12;
+    return `${hours12}:${minutes.toString().padStart(2, '0')}`;
+}
+
+// Function to format time input automatically
+function setupTimeInput() {
+    const timeInput = document.getElementById('commentTime');
+    
+    timeInput.addEventListener('keydown', function(e) {
+        // Allow: backspace, delete, tab, escape, enter
+        if ([46, 8, 9, 27, 13].indexOf(e.keyCode) !== -1 ||
+            // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+            (e.keyCode === 65 && e.ctrlKey === true) ||
+            (e.keyCode === 67 && e.ctrlKey === true) ||
+            (e.keyCode === 86 && e.ctrlKey === true) ||
+            (e.keyCode === 88 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            return;
+        }
+        
+        // Ensure it's a number
+        if ((e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+    
+    timeInput.addEventListener('input', function(e) {
+        let value = this.value.replace(/\D/g, '');
+        
+        if (value.length > 0) {
+            if (value.length <= 2) {
+                // Just hours
+                this.value = value.padStart(2, '0');
+            } else if (value.length <= 4) {
+                // Hours and minutes
+                const hours = value.substring(0, 2);
+                const minutes = value.substring(2, 4);
+                this.value = hours + ':' + minutes;
+            } else {
+                // Too many digits, truncate
+                const hours = value.substring(0, 2);
+                const minutes = value.substring(2, 4);
+                this.value = hours + ':' + minutes;
+            }
+        } else {
+            this.value = '00:00';
+        }
+    });
+    
+    timeInput.addEventListener('blur', function(e) {
+        if (this.value === '' || this.value === '00:00') {
+            this.value = '00:00';
+        } else {
+            // Ensure format is correct
+            let value = this.value.replace(/\D/g, '');
+            if (value.length === 0) {
+                this.value = '00:00';
+            } else if (value.length === 1) {
+                this.value = '0' + value + ':00';
+            } else if (value.length === 2) {
+                this.value = value + ':00';
+            } else if (value.length === 3) {
+                this.value = value.substring(0, 2) + ':0' + value.substring(2, 3);
+            } else {
+                this.value = value.substring(0, 2) + ':' + value.substring(2, 4);
+            }
+        }
+    });
+}
+
+// Function to convert stored time to display format
+function formatTimeForDisplay(time24) {
+    if (!time24 || time24 === '00:00') return '00:00';
+    
+    const [hours, minutes] = time24.split(':').map(Number);
+    
+    // Convert 24-hour to 12-hour display
+    let displayHours = hours % 12;
+    displayHours = displayHours === 0 ? 12 : displayHours;
+    
+    return `${displayHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
+
+// Function to convert input time to 24-hour for storage
+function formatTimeForStorage(time12) {
+    if (!time12 || time12 === '00:00') return '00:00';
+    
+    const [hoursStr, minutesStr] = time12.split(':');
+    let hours = parseInt(hoursStr, 10);
+    const minutes = minutesStr || '00';
+    
+    // For display purposes, we keep as is
+    // For storage, we need to decide if it's AM or PM
+    // Since we don't have AM/PM indicator, we'll assume:
+    // 00:00-11:59 -> AM (store as is)
+    // 12:00-12:59 -> PM (store as 12:xx)
+    // 01:00-11:59 -> PM (add 12 hours)
+    
+    // Actually, let's just store it as entered and handle display separately
+    return time12;
+}
+
+
+function formatTimeTo24Hour(time12) {
+    if (!time12) return '19:00';
+    
+    // If time already has :, use it directly
+    if (time12.includes(':')) {
+        const [hoursStr, minutes] = time12.split(':');
+        let hours = parseInt(hoursStr, 10);
+        
+        // Default to PM if no AM/PM specified (for backward compatibility)
+        // Since we're removing AM/PM, assume PM for hours < 8, AM for hours >= 8
+        if (hours < 8) {
+            hours += 12; // Assume PM for evening times
+        }
+        return `${hours.toString().padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+    }
+    
+    return '19:00'; // Default fallback
+}
+
         function createMonthBox(container, monthInfo) {
             const monthBox = document.createElement('div');
             monthBox.className = 'month-box';
@@ -1251,20 +1394,19 @@
             document.getElementById('commentDateInfo').textContent = 
                 `${day} ${georgianMonth}, ${year}`;
             document.getElementById('commentTextarea').value = commentData.text || '';
-            document.getElementById('commentTime').value = commentData.time || '19:00';
+document.getElementById('commentTime').value = commentData.time || '00:00';
             
             // Show/hide existing comment
             const currentCommentContainer = document.getElementById('currentCommentContainer');
             const currentCommentText = document.getElementById('currentCommentText');
             const currentCommentTime = document.getElementById('currentCommentTime');
             
-            if (commentData.text && commentData.text.trim()) {
-                currentCommentContainer.style.display = 'block';
-                currentCommentText.textContent = commentData.text;
-                currentCommentTime.textContent = commentData.time ? `დრო: ${commentData.time}` : '';
-            } else {
-                currentCommentContainer.style.display = 'none';
-            }
+if (commentData.text && commentData.text.trim()) {
+    currentCommentContainer.style.display = 'block';
+    currentCommentText.textContent = commentData.text;
+    const displayTime = commentData.timeDisplay || formatTimeTo12Hour(commentData.time) || '';
+    currentCommentTime.textContent = displayTime ? `დრო: ${displayTime}` : '';
+}
             
             // Show/hide delete button based on whether comment exists
             const deleteBtn = document.getElementById('deleteCommentBtn');
@@ -1320,38 +1462,45 @@
         }
         
         // Comment modal handlers
-        function saveComment() {
-            if (!currentCommentCell) return;
-            
-            const date = currentCommentCell.dataset.date;
-            const type = currentCommentCell.dataset.type;
-            const commentText = document.getElementById('commentTextarea').value.trim();
-            const commentTime = document.getElementById('commentTime').value;
-            
-            // Time is required
-            if (!commentTime) {
-                showNotification('გთხოვთ მიუთითოთ დრო', 'error');
-                return;
-            }
-            
-            // Save both time and additional comment
-            commentsData[`${date}_${type}`] = {
-                text: commentText,
-                time: commentTime
-            };
-            currentCommentCell.classList.add('has-comment');
-            
-            // Show notification with time
-            if (commentText) {
-                showNotification(`დრო და კომენტარი შენახულია (${commentTime})`, 'success');
-            } else {
-                showNotification(`დრო შენახულია (${commentTime})`, 'success');
-            }
-            
-            saveDataToFirebase();
-            saveDataToLocalStorage();
-            closeCommentModal();
-        }
+function saveComment() {
+    if (!currentCommentCell) return;
+    
+    const date = currentCommentCell.dataset.date;
+    const type = currentCommentCell.dataset.type;
+    const commentText = document.getElementById('commentTextarea').value.trim();
+    const commentTimeInput = document.getElementById('commentTime').value.trim();
+    
+    // Time is required
+    if (!commentTimeInput) {
+        showNotification('გთხოვთ მიუთითოთ დრო', 'error');
+        return;
+    }
+    
+    // Validate time format (HH:MM)
+    const timeRegex = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
+    if (!timeRegex.test(commentTimeInput)) {
+        showNotification('გთხოვთ მიუთითოთ სწორი დროის ფორმატი (მაგ: 07:00, 12:30)', 'error');
+        return;
+    }
+    
+    // Save both time and additional comment
+    commentsData[`${date}_${type}`] = {
+        text: commentText,
+        time: commentTimeInput // Store exactly as entered
+    };
+    currentCommentCell.classList.add('has-comment');
+    
+    // Show notification with time
+    if (commentText) {
+        showNotification(`დრო და კომენტარი შენახულია (${commentTimeInput})`, 'success');
+    } else {
+        showNotification(`დრო შენახულია (${commentTimeInput})`, 'success');
+    }
+    
+    saveDataToFirebase();
+    saveDataToLocalStorage();
+    closeCommentModal();
+}
         
         function deleteComment() {
             if (!currentCommentCell) return;
@@ -1374,8 +1523,9 @@
                 
                 // Show comment preview
                 document.getElementById('commentPreview').style.display = 'block';
-                document.getElementById('commentPreviewTime').textContent = commentData.time ? `დრო: ${commentData.time}` : '';
-                document.getElementById('commentPreviewText').textContent = commentData.text || '';
+const previewTime = commentData.timeDisplay || formatTimeTo12Hour(commentData.time) || '';
+document.getElementById('commentPreviewTime').textContent = previewTime ? `დრო: ${previewTime}` : '';
+document.getElementById('commentPreviewText').textContent = commentData.text || '';
                 
                 // Update confirm button text
                 document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> კომენტარის წაშლა';
