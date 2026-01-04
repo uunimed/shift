@@ -1287,29 +1287,32 @@ function getPastDateClass(year, month, day) {
             showNotification('სისტემიდან გამოსული ხართ', 'info');
         }
         
-        // Create Schedule with grid layout
 function createSchedule() {
     const container = document.getElementById('tableContainer');
     container.innerHTML = '';
     
-    // Get months from current month to August
-    let year = currentYear;
-    let month = currentMonth;
+    // Show months from December 2025 to August 2026
+    let monthsToShow = [];
     
+    // Start from December 2025
+    let year = 2025;
+    let month = 11; // December (0-indexed: 0=Jan, 11=Dec)
+    
+    // Add months until we reach August 2026
     while (true) {
-        const daysInMonth = getDaysInMonth(year, month);
-        const monthInfo = {
+        monthsToShow.push({
             year: year,
             month: month,
             name: monthNames[month],
-            days: daysInMonth
-        };
+            days: getDaysInMonth(year, month)
+        });
         
-        // Create month box
-        createMonthBox(container, monthInfo);
+        // Check if we reached August 2026
+        if (year === 2026 && month === 7) { // 7 = August (0-indexed)
+            break;
+        }
         
-        if (month === 7) break; // Stop at August (month index 7)
-        
+        // Move to next month
         month++;
         if (month > 11) {
             month = 0;
@@ -1317,28 +1320,50 @@ function createSchedule() {
         }
     }
     
-    // ADD THIS LINE HERE:
+    // Create month boxes
+    monthsToShow.forEach(monthInfo => {
+        createMonthBox(container, monthInfo);
+    });
+    
     setTimeout(updateGermanCounters, 100);
 }
         
 function createMonthBox(container, monthInfo) {
     const monthBox = document.createElement('div');
     monthBox.className = 'month-box';
+    monthBox.id = `month-box-${monthInfo.year}-${monthInfo.month}`;
     
-    // Month title WITH COUNTER
+    // Month title WITH COUNTER and TOGGLE BUTTON
     const monthTitle = document.createElement('div');
     monthTitle.className = 'month-title';
+    monthTitle.style.cursor = 'pointer';
+    monthTitle.style.display = 'flex';
+    monthTitle.style.alignItems = 'center';
+    monthTitle.style.justifyContent = 'space-between';
+    monthTitle.style.width = '100%';
+    monthTitle.style.padding = '10px 5px';
+    monthTitle.style.borderBottom = '2px solid #f0f0f0';
     
-    // Create title container
-    const titleContainer = document.createElement('div');
-    titleContainer.style.display = 'flex';
-    titleContainer.style.alignItems = 'center';
-    titleContainer.style.justifyContent = 'space-between';
-    titleContainer.style.width = '100%';
+    // Month name with toggle icon
+    const monthNameContainer = document.createElement('div');
+    monthNameContainer.style.display = 'flex';
+    monthNameContainer.style.alignItems = 'center';
+    monthNameContainer.style.gap = '10px';
     
-    // Month name
+    const toggleIcon = document.createElement('i');
+    toggleIcon.className = 'fas fa-chevron-down';
+    toggleIcon.style.transition = 'transform 0.3s';
+    toggleIcon.style.fontSize = '14px';
+    toggleIcon.style.color = '#344455';
+    
     const monthName = document.createElement('div');
     monthName.textContent = monthInfo.name;
+    monthName.style.fontSize = '22px';
+    monthName.style.fontWeight = 'bold';
+    monthName.style.color = '#344455';
+    
+    monthNameContainer.appendChild(toggleIcon);
+    monthNameContainer.appendChild(monthName);
     
     // German counter
     const germanCounter = document.createElement('div');
@@ -1357,51 +1382,48 @@ function createMonthBox(container, monthInfo) {
     germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> გაკვეთილების რაოდენობა: ${germanCount}`;
     
     // Add elements to title container
-    titleContainer.appendChild(monthName);
-    titleContainer.appendChild(germanCounter);
-    
-    monthTitle.appendChild(titleContainer);
+    monthTitle.appendChild(monthNameContainer);
+    monthTitle.appendChild(germanCounter);
     monthBox.appendChild(monthTitle);
     
     // Create grid container
     const grid = document.createElement('div');
     grid.className = 'schedule-grid';
+    grid.style.marginTop = '10px';
+    grid.id = `grid-${monthInfo.year}-${monthInfo.month}`;
     
     // Create date headers
     const dateHeaders = document.createElement('div');
     dateHeaders.className = 'date-headers';
     
-    // CHANGE THIS: Always start from day 1, not from current day
-    const startDay = 1; // Changed from conditional to always 1
-    
-for (let day = startDay; day <= monthInfo.days; day++) {
-    const dateHeader = document.createElement('div');
-    dateHeader.className = 'date-header';
-    dateHeader.textContent = day;
-    
-    // Add weekend/holiday styling
-    if (isWeekend(monthInfo.year, monthInfo.month, day) || isHoliday(monthInfo.month, day)) {
-        dateHeader.classList.add('weekend');
-        const holidayName = getHolidayName(monthInfo.month, day);
-        if (holidayName) {
-            dateHeader.title = holidayName;
+    // Start from day 1 always
+    for (let day = 1; day <= monthInfo.days; day++) {
+        const dateHeader = document.createElement('div');
+        dateHeader.className = 'date-header';
+        dateHeader.textContent = day;
+        
+        // Add weekend/holiday styling
+        if (isWeekend(monthInfo.year, monthInfo.month, day) || isHoliday(monthInfo.month, day)) {
+            dateHeader.classList.add('weekend');
+            const holidayName = getHolidayName(monthInfo.month, day);
+            if (holidayName) {
+                dateHeader.title = holidayName;
+            }
         }
+        
+        // Add past date class to date headers too
+        if (isPastDate(monthInfo.year, monthInfo.month, day)) {
+            dateHeader.classList.add('past-date');
+            const pastClass = getPastDateClass(monthInfo.year, monthInfo.month, day);
+            if (pastClass && pastClass !== 'recent') {
+                dateHeader.classList.add(pastClass);
+            }
+        }
+        
+        dateHeaders.appendChild(dateHeader);
     }
     
-    // Add past date class to date headers too
-    if (isPastDate(monthInfo.year, monthInfo.month, day)) {
-        dateHeader.classList.add('past-date');
-        // Optional: add specific class based on how old
-        const pastClass = getPastDateClass(monthInfo.year, monthInfo.month, day);
-        if (pastClass && pastClass !== 'recent') {
-            dateHeader.classList.add(pastClass);
-        }
-    }
-    
-    dateHeaders.appendChild(dateHeader);
-}
-
-grid.appendChild(dateHeaders);
+    grid.appendChild(dateHeaders);
     
     // Create activity rows container
     const activityRows = document.createElement('div');
@@ -1418,52 +1440,68 @@ grid.appendChild(dateHeaders);
     grid.appendChild(activityRows);
     monthBox.appendChild(grid);
     container.appendChild(monthBox);
+    
+    // Add click event to toggle the schedule
+    monthTitle.addEventListener('click', function() {
+        const gridElement = document.getElementById(`grid-${monthInfo.year}-${monthInfo.month}`);
+        const isHidden = gridElement.style.display === 'none';
+        
+        if (isHidden) {
+            gridElement.style.display = 'block';
+            toggleIcon.style.transform = 'rotate(0deg)';
+            toggleIcon.className = 'fas fa-chevron-down';
+        } else {
+            gridElement.style.display = 'none';
+            toggleIcon.style.transform = 'rotate(-90deg)';
+            toggleIcon.className = 'fas fa-chevron-right';
+        }
+    });
+    
+    // Check if this ENTIRE month is in the past (all days are past)
+    const today = new Date();
+    const firstDayOfMonth = new Date(monthInfo.year, monthInfo.month, 1);
+    const lastDayOfMonth = new Date(monthInfo.year, monthInfo.month, monthInfo.days);
+    
+    // Check if the LAST day of this month is in the past
+    // (meaning the entire month is in the past)
+    if (lastDayOfMonth < today) {
+        // This entire month is in the past, collapse it by default
+        grid.style.display = 'none';
+        toggleIcon.style.transform = 'rotate(-90deg)';
+        toggleIcon.className = 'fas fa-chevron-right';
+    }
 }
         
-// Function to update all German counters
 function updateGermanCounters() {
     // Get all month boxes
     const monthBoxes = document.querySelectorAll('.month-box');
     
-    // Get current year/month for reference
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    
-    monthBoxes.forEach((monthBox, index) => {
+    monthBoxes.forEach((monthBox) => {
         // Find the counter inside the month box
         const germanCounter = monthBox.querySelector('.german-counter');
         if (!germanCounter) return;
         
-        // Get the month title text
-        const monthTitle = monthBox.querySelector('.month-title div:first-child');
-        if (!monthTitle) return;
+        // Extract month and year from the month box ID
+        const monthBoxId = monthBox.id;
+        const matches = monthBoxId.match(/month-box-(\d+)-(\d+)/);
         
-        const monthName = monthTitle.textContent.trim();
-        const monthIndex = monthNames.indexOf(monthName);
+        if (!matches) return;
         
-        if (monthIndex === -1) return;
-        
-        // Determine the year
-        let year = currentYear;
-        // If month index is less than current month, it's next year
-        if (monthIndex < currentMonth && index === 0) {
-            // First month box might be current month
-        } else if (monthIndex < monthIndex) {
-            // This logic might need adjustment based on your schedule display
-        }
+        const year = parseInt(matches[1]);
+        const month = parseInt(matches[2]);
         
         // Count ALL German lessons for this month (past and future)
         let germanCount = 0;
-        const daysInMonth = getDaysInMonth(year, monthIndex);
+        const daysInMonth = getDaysInMonth(year, month);
         
         for (let day = 1; day <= daysInMonth; day++) {
-            const dateKey = getDateKey(year, monthIndex, day);
+            const dateKey = getDateKey(year, month, day);
             if (scheduleData[dateKey] === 'german') {
                 germanCount++;
             }
         }
         
-        germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> GER: ${germanCount}`;
+        germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> გაკვეთილების რაოდენობა: ${germanCount}`;
     });
 }
 
