@@ -122,8 +122,8 @@ body {
 /* Main App Styling - FIXED WIDTH REMOVED */
 .main-app {
     display: none;
-    width: 100%; /* Take full width */
-    padding: 0 0.5cm; /* 2cm from left and right edges */
+    width: 100%;
+    padding: 0 0.5cm;
 }
 
 .activity-cell.filled {
@@ -158,7 +158,7 @@ body {
     margin-bottom: 15px;
     padding: 2px;
     border-radius: 12px;
-    width: 100%; /* Full width within padding */
+    width: 100%;
 }
 
 .app-title {
@@ -222,7 +222,7 @@ body {
 
 /* Table Container */
 .table-container {
-    width: 100%; /* Full width within padding */
+    width: 100%;
 }
 
 /* German Counter Styles */
@@ -254,10 +254,10 @@ body {
     border-radius: 12px;
     padding: 0px 5px 0px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    overflow-x: auto; /* Horizontal scrolling if needed */
+    overflow-x: auto;
     overflow-y: visible;
     position: relative;
-    width: 100%; /* Full width within padding */
+    width: 100%;
 }
 
 .month-box::before {
@@ -272,7 +272,7 @@ body {
     display: block;
 }
 
-/* Month title - ADD THIS */
+/* Month title */
 .month-title {
     font-size: 22px;
     font-weight: bold;
@@ -285,21 +285,21 @@ body {
 .schedule-grid {
     display: flex;
     flex-direction: column;
-    min-width: fit-content; /* Ensure grid doesn't shrink */
-    width: 100%; /* Full width */
+    min-width: fit-content;
+    width: 100%;
 }
         
 /* Date Headers Row */
 .date-headers {
     display: flex;
-    margin-left: 120px; /* Space for labels */
+    margin-left: 120px;
     min-height: 40px;
-    flex-wrap: nowrap; /* Keep dates in single row */
+    flex-wrap: nowrap;
 }
         
 /* Date Header Cells - ROUNDED CORNERS */
 .date-header {
-    width: 60px; /* FIXED WIDTH - NOT CHANGED */
+    width: 60px;
     height: 20px;
     display: flex;
     align-items: center;
@@ -357,13 +357,13 @@ body {
 /* Activity Cells Container */
 .activity-cells {
     display: flex;
-    flex-wrap: nowrap; /* Keep cells in single row */
+    flex-wrap: nowrap;
     flex-grow: 1;
 }
         
 /* Activity Cell - ROUNDED CORNERS - FIXED WIDTH */
 .activity-cell {
-    width: 60px; /* FIXED WIDTH - NOT CHANGED */
+    width: 60px;
     height: 50px;
     display: flex;
     align-items: center;
@@ -419,9 +419,9 @@ body {
     opacity: 0.7;
 }
         
-/* Comment indicator */
+/* Comment indicator - Clock icon */
 .has-comment::after {
-    content: "\f017"; /* Clock icon for time comment */
+    content: "\f017";
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
     position: absolute;
@@ -430,6 +430,109 @@ body {
     font-size: 10px;
     opacity: 0.9;
     color: #FFFB00;
+}
+
+/* Payment indicator - Elegant dollar sign with subtle glow */
+.has-payment::before {
+    content: "\f155";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    font-size: 10px;
+    opacity: 0.95;
+    color: #FFD966;
+    text-shadow: 0 0 2px rgba(0,0,0,0.3);
+    animation: subtlePulse 2s infinite;
+}
+
+/* Animation for payment indicator */
+@keyframes subtlePulse {
+    0%, 100% {
+        opacity: 0.85;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+/* When both comment and payment exist */
+.has-comment.has-payment::after {
+    right: auto;
+    left: 2px;
+    top: 2px;
+}
+
+.has-comment.has-payment::before {
+    bottom: 2px;
+    right: 2px;
+    left: auto;
+    top: auto;
+}
+
+/* Payment checkbox styling - Elegant and refined */
+.payment-checkbox-container {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #FFF9E6, #FFF5E0);
+    border-radius: 12px;
+    border: 1px solid #FFE5B4;
+    transition: all 0.3s ease;
+}
+
+.payment-checkbox-container:hover {
+    background: linear-gradient(135deg, #FFF8E0, #FFF3D8);
+    border-color: #FFD700;
+    transform: translateY(-1px);
+}
+
+.payment-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.payment-checkbox-wrapper input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #FFC107;
+}
+
+.payment-checkbox-wrapper label {
+    font-weight: 600;
+    color: #2c3e50;
+    cursor: pointer;
+    margin: 0;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.payment-checkbox-wrapper i {
+    color: #FFC107;
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+.payment-checkbox-wrapper:hover i {
+    transform: scale(1.1);
+}
+
+.payment-badge {
+    background: linear-gradient(135deg, #FFC107, #FFA000);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: 8px;
+    display: inline-block;
 }
         
 /* Comment Popup Modal with Time Selector */
@@ -459,7 +562,7 @@ body {
     box-shadow: 0 25px 50px rgba(0,0,0,0.25);
 }
         
-        /* Time selector - 12-hour format */
+/* Time selector - 12-hour format */
 .time-selector-container {
     margin-bottom: 5px;
 }
@@ -546,7 +649,7 @@ body {
     color: #e74c3c;
 }
         
-/* Time selector - LONGER INPUT */
+/* Time selector */
 .time-selector {
     display: flex;
     align-items: center;
@@ -561,7 +664,7 @@ body {
     min-width: 60px;
 }
         
-        /* Confirmation Modal Comment Preview */
+/* Confirmation Modal Comment Preview */
 #commentPreview {
     display: none;
     background: #f8f9fa;
@@ -572,8 +675,8 @@ body {
 }
 
 #commentPreviewTime {
-    font-size: px; /* Increased from 12px */
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: bold;
     color: #2c3e50;
     margin-bottom: 10px;
     display: flex;
@@ -582,7 +685,7 @@ body {
 }
 
 #commentPreviewTime::before {
-    content: "\f017"; /* Clock icon */
+    content: "\f017";
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
     font-size: 20px;
@@ -595,7 +698,19 @@ body {
     line-height: 1.5;
 }
 
-/* REMOVE ALL EXISTING PAST DATE CSS AND REPLACE WITH THESE */
+/* Payment preview styling */
+.payment-preview {
+    color: #FFC107;
+    margin-top: 8px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.payment-preview i {
+    font-size: 12px;
+}
 
 /* Past date styling for date headers */
 .past-date.date-header {
@@ -642,8 +757,6 @@ body {
 }
 
 /* VERY OLD DATES (more than 30 days) */
-
-/* Very old date headers */
 .past-date.very-old.date-header {
     opacity: 0.3;
     filter: grayscale(0.7);
@@ -675,17 +788,8 @@ body {
     border: 2px solid #e1e8ed;
     border-radius: 8px;
     font-size: 16px;
-    width: 140px; /* Longer input */
+    width: 140px;
     font-family: 'Segoe UI', monospace;
-}
-        
-/* Hide am/pm indicators */
-.time-input::-webkit-datetime-edit-ampm-field {
-    display: none;
-}
-        
-.time-input[type=time]::-webkit-calendar-picker-indicator {
-    background: #none;
 }
         
 .time-input:focus {
@@ -879,7 +983,7 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .main-app {
-        padding: 0 1cm; /* Less padding on mobile */
+        padding: 0 1cm;
     }
     
     .date-header {
@@ -971,44 +1075,61 @@ body {
             </div>
             <div class="time-selector">
                 <label for="commentTime">დრო:</label>
-<div class="time-selector-container">
-    <div class="time-input-group">
-        <select id="commentHour" class="time-hour">
-            <option value="01">1</option>
-            <option value="02">2</option>
-            <option value="03">3</option>
-            <option value="04">4</option>
-            <option value="05">5</option>
-            <option value="06">6</option>
-            <option value="07">7</option>
-            <option value="08">8</option>
-            <option value="09">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-        </select>
-        <span class="time-separator">:</span>
-        <select id="commentMinute" class="time-minute">
-            <option value="00">00</option>
-            <option value="05">05</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-            <option value="30">30</option>
-            <option value="35">35</option>
-            <option value="40">40</option>
-            <option value="45">45</option>
-            <option value="50">50</option>
-            <option value="55">55</option>
-        </select>
-        <select id="commentPeriod" class="time-period">
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-        </select>
+                <div class="time-selector-container">
+                    <div class="time-input-group">
+                        <select id="commentHour" class="time-hour">
+                            <option value="01">1</option>
+                            <option value="02">2</option>
+                            <option value="03">3</option>
+                            <option value="04">4</option>
+                            <option value="05">5</option>
+                            <option value="06">6</option>
+                            <option value="07">7</option>
+                            <option value="08">8</option>
+                            <option value="09">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <span class="time-separator">:</span>
+                        <select id="commentMinute" class="time-minute">
+                            <option value="00">00</option>
+                            <option value="05">05</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="35">35</option>
+                            <option value="40">40</option>
+                            <option value="45">45</option>
+                            <option value="50">50</option>
+                            <option value="55">55</option>
+                        </select>
+                        <select id="commentPeriod" class="time-period">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+<!-- Payment Checkbox - Elegant Design -->
+<div class="payment-checkbox-container">
+    <div class="payment-checkbox-wrapper">
+        <input type="checkbox" id="paymentCheckbox">
+        <label for="paymentCheckbox">
+            <i class="fas fa-dollar-sign"></i> 
+            გადასახდელია
+            <span class="payment-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.7-1.38 2.9-3.12 3.16z"/>
+                </svg>
+            </span>
+        </label>
     </div>
 </div>
-</div>
+            
             <textarea id="commentTextarea" class="comment-textarea" placeholder="დაწერეთ კომენტარი..."></textarea>
             <div class="comment-modal-buttons">
                 <button id="deleteCommentBtn" class="comment-modal-btn delete-comment-btn">
@@ -1034,10 +1155,10 @@ body {
                 </button>
             </div>
             <div id="modalMessage" class="confirm-modal-message"></div>
-<div id="commentPreview" style="display: none; background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10x; border-left: 4px solid #4CAF50;">
-    <div id="commentPreviewTime" style="font-size: 20px; font-weight:bold; color: #2c3e50; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;"></div>
-    <div id="commentPreviewText" style="font-size: 15px; color: #344455; line-height: 1.5;"></div>
-</div>
+            <div id="commentPreview" style="display: none; background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #4CAF50;">
+                <div id="commentPreviewTime" style="font-size: 20px; font-weight:bold; color: #2c3e50; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;"></div>
+                <div id="commentPreviewText" style="font-size: 15px; color: #344455; line-height: 1.5;"></div>
+            </div>
             <div class="confirm-modal-buttons">
                 <button id="cancelConfirmBtn" class="confirm-modal-btn cancel-confirm-btn">
                     <i class="fas fa-times"></i> გაუქმება
@@ -1095,7 +1216,6 @@ body {
             "1-2": "ახალი წელი",
             "1-3": "ახალი წელი",
             "1-4": "ახალი წელი",
-            "1-4": "ახალი წელი",
             "1-6": "ახალი წელი",
             "1-7": "ახალი წელი",
             "1-8": "ახალი წელი",
@@ -1131,7 +1251,7 @@ body {
         function isWeekend(year, month, day) {
             const date = new Date(year, month, day);
             const dayOfWeek = date.getDay();
-            return dayOfWeek === 0 || dayOfWeek === 6; // 0 = Sunday, 6 = Saturday
+            return dayOfWeek === 0 || dayOfWeek === 6;
         }
         
         function isHoliday(month, day) {
@@ -1144,16 +1264,30 @@ body {
             return georgianHolidays[key];
         }
         
-function isPastDate(year, month, day) {
-    const date = new Date(year, month, day);
-    const now = new Date();
-    
-    // Compare dates only (not times)
-    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
-    return dateOnly < nowOnly;
-}
+        function isPastDate(year, month, day) {
+            const date = new Date(year, month, day);
+            const now = new Date();
+            
+            const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            
+            return dateOnly < nowOnly;
+        }
+        
+        function getPastDateClass(year, month, day) {
+            const date = new Date(year, month, day);
+            const now = new Date();
+            
+            const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            
+            const diffTime = nowOnly - dateOnly;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays > 30) return 'very-old';
+            if (diffDays > 7) return 'old';
+            return 'recent';
+        }
         
         // Notification function
         function showNotification(message, type = 'info') {
@@ -1196,22 +1330,6 @@ function isPastDate(year, month, day) {
             }
         }
         
-// Add this function after the isPastDate() function
-function getPastDateClass(year, month, day) {
-    const date = new Date(year, month, day);
-    const now = new Date();
-    
-    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
-    const diffTime = nowOnly - dateOnly;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays > 30) return 'very-old'; // More than 30 days old
-    if (diffDays > 7) return 'old'; // 1-4 weeks old
-    return 'recent'; // Less than 1 week old
-}
-
         async function loadDataFromFirebase() {
             if (!currentUser) return;
             
@@ -1287,562 +1405,521 @@ function getPastDateClass(year, month, day) {
             showNotification('სისტემიდან გამოსული ხართ', 'info');
         }
         
-function createSchedule() {
-    const container = document.getElementById('tableContainer');
-    container.innerHTML = '';
-    
-    // Show months from December 2025 to August 2026
-    let monthsToShow = [];
-    
-    // Start from December 2025
-    let year = 2025;
-    let month = 11; // December (0-indexed: 0=Jan, 11=Dec)
-    
-    // Add months until we reach August 2026
-    while (true) {
-        monthsToShow.push({
-            year: year,
-            month: month,
-            name: monthNames[month],
-            days: getDaysInMonth(year, month)
-        });
-        
-        // Check if we reached August 2026
-        if (year === 2026 && month === 7) { // 7 = August (0-indexed)
-            break;
-        }
-        
-        // Move to next month
-        month++;
-        if (month > 11) {
-            month = 0;
-            year++;
-        }
-    }
-    
-    // Create month boxes
-    monthsToShow.forEach(monthInfo => {
-        createMonthBox(container, monthInfo);
-    });
-    
-    setTimeout(updateGermanCounters, 100);
-}
-        
-function createMonthBox(container, monthInfo) {
-    const monthBox = document.createElement('div');
-    monthBox.className = 'month-box';
-    monthBox.id = `month-box-${monthInfo.year}-${monthInfo.month}`;
-    
-    // Month title WITH COUNTER and TOGGLE BUTTON
-    const monthTitle = document.createElement('div');
-    monthTitle.className = 'month-title';
-    monthTitle.style.cursor = 'pointer';
-    monthTitle.style.display = 'flex';
-    monthTitle.style.alignItems = 'center';
-    monthTitle.style.justifyContent = 'space-between';
-    monthTitle.style.width = '100%';
-    monthTitle.style.padding = '10px 5px';
-    monthTitle.style.borderBottom = '2px solid #f0f0f0';
-    
-    // Month name with toggle icon
-    const monthNameContainer = document.createElement('div');
-    monthNameContainer.style.display = 'flex';
-    monthNameContainer.style.alignItems = 'center';
-    monthNameContainer.style.gap = '10px';
-    
-    const toggleIcon = document.createElement('i');
-    toggleIcon.className = 'fas fa-chevron-down';
-    toggleIcon.style.transition = 'transform 0.3s';
-    toggleIcon.style.fontSize = '14px';
-    toggleIcon.style.color = '#344455';
-    
-    const monthName = document.createElement('div');
-    monthName.textContent = monthInfo.name;
-    monthName.style.fontSize = '22px';
-    monthName.style.fontWeight = 'bold';
-    monthName.style.color = '#344455';
-    
-    monthNameContainer.appendChild(toggleIcon);
-    monthNameContainer.appendChild(monthName);
-    
-    // German counter
-    const germanCounter = document.createElement('div');
-    germanCounter.className = 'german-counter';
-    germanCounter.id = `german-counter-${monthInfo.year}-${monthInfo.month}`;
-    
-    // Count German lessons for this month
-    let germanCount = 0;
-    for (let day = 1; day <= monthInfo.days; day++) {
-        const dateKey = getDateKey(monthInfo.year, monthInfo.month, day);
-        if (scheduleData[dateKey] === 'german') {
-            germanCount++;
-        }
-    }
-    
-    germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> გაკვეთილების რაოდენობა: ${germanCount}`;
-    
-    // Add elements to title container
-    monthTitle.appendChild(monthNameContainer);
-    monthTitle.appendChild(germanCounter);
-    monthBox.appendChild(monthTitle);
-    
-    // Create grid container
-    const grid = document.createElement('div');
-    grid.className = 'schedule-grid';
-    grid.style.marginTop = '10px';
-    grid.id = `grid-${monthInfo.year}-${monthInfo.month}`;
-    
-    // Create date headers
-    const dateHeaders = document.createElement('div');
-    dateHeaders.className = 'date-headers';
-    
-    // Start from day 1 always
-    for (let day = 1; day <= monthInfo.days; day++) {
-        const dateHeader = document.createElement('div');
-        dateHeader.className = 'date-header';
-        dateHeader.textContent = day;
-        
-        // Add weekend/holiday styling
-        if (isWeekend(monthInfo.year, monthInfo.month, day) || isHoliday(monthInfo.month, day)) {
-            dateHeader.classList.add('weekend');
-            const holidayName = getHolidayName(monthInfo.month, day);
-            if (holidayName) {
-                dateHeader.title = holidayName;
+        function createSchedule() {
+            const container = document.getElementById('tableContainer');
+            container.innerHTML = '';
+            
+            let monthsToShow = [];
+            
+            let year = 2025;
+            let month = 11;
+            
+            while (true) {
+                monthsToShow.push({
+                    year: year,
+                    month: month,
+                    name: monthNames[month],
+                    days: getDaysInMonth(year, month)
+                });
+                
+                if (year === 2026 && month === 7) {
+                    break;
+                }
+                
+                month++;
+                if (month > 11) {
+                    month = 0;
+                    year++;
+                }
             }
+            
+            monthsToShow.forEach(monthInfo => {
+                createMonthBox(container, monthInfo);
+            });
+            
+            setTimeout(updateGermanCounters, 100);
         }
         
-        // Add past date class to date headers too
-        if (isPastDate(monthInfo.year, monthInfo.month, day)) {
-            dateHeader.classList.add('past-date');
-            const pastClass = getPastDateClass(monthInfo.year, monthInfo.month, day);
-            if (pastClass && pastClass !== 'recent') {
-                dateHeader.classList.add(pastClass);
-            }
-        }
-        
-        dateHeaders.appendChild(dateHeader);
-    }
-    
-    grid.appendChild(dateHeaders);
-    
-    // Create activity rows container
-    const activityRows = document.createElement('div');
-    activityRows.className = 'activity-rows';
-    
-    // German row
-    const germanRow = createActivityRow('german', monthInfo);
-    activityRows.appendChild(germanRow);
-    
-    // MCG row
-    const mcgRow = createActivityRow('mcg', monthInfo);
-    activityRows.appendChild(mcgRow);
-    
-    grid.appendChild(activityRows);
-    monthBox.appendChild(grid);
-    container.appendChild(monthBox);
-    
-    // Add click event to toggle the schedule
-    monthTitle.addEventListener('click', function() {
-        const gridElement = document.getElementById(`grid-${monthInfo.year}-${monthInfo.month}`);
-        const isHidden = gridElement.style.display === 'none';
-        
-        if (isHidden) {
-            gridElement.style.display = 'block';
-            toggleIcon.style.transform = 'rotate(0deg)';
+        function createMonthBox(container, monthInfo) {
+            const monthBox = document.createElement('div');
+            monthBox.className = 'month-box';
+            monthBox.id = `month-box-${monthInfo.year}-${monthInfo.month}`;
+            
+            const monthTitle = document.createElement('div');
+            monthTitle.className = 'month-title';
+            monthTitle.style.cursor = 'pointer';
+            monthTitle.style.display = 'flex';
+            monthTitle.style.alignItems = 'center';
+            monthTitle.style.justifyContent = 'space-between';
+            monthTitle.style.width = '100%';
+            monthTitle.style.padding = '10px 5px';
+            monthTitle.style.borderBottom = '2px solid #f0f0f0';
+            
+            const monthNameContainer = document.createElement('div');
+            monthNameContainer.style.display = 'flex';
+            monthNameContainer.style.alignItems = 'center';
+            monthNameContainer.style.gap = '10px';
+            
+            const toggleIcon = document.createElement('i');
             toggleIcon.className = 'fas fa-chevron-down';
-        } else {
-            gridElement.style.display = 'none';
-            toggleIcon.style.transform = 'rotate(-90deg)';
-            toggleIcon.className = 'fas fa-chevron-right';
-        }
-    });
-    
-    // Check if this ENTIRE month is in the past (all days are past)
-    const today = new Date();
-    const firstDayOfMonth = new Date(monthInfo.year, monthInfo.month, 1);
-    const lastDayOfMonth = new Date(monthInfo.year, monthInfo.month, monthInfo.days);
-    
-    // Check if the LAST day of this month is in the past
-    // (meaning the entire month is in the past)
-    if (lastDayOfMonth < today) {
-        // This entire month is in the past, collapse it by default
-        grid.style.display = 'none';
-        toggleIcon.style.transform = 'rotate(-90deg)';
-        toggleIcon.className = 'fas fa-chevron-right';
-    }
-}
-        
-function updateGermanCounters() {
-    // Get all month boxes
-    const monthBoxes = document.querySelectorAll('.month-box');
-    
-    monthBoxes.forEach((monthBox) => {
-        // Find the counter inside the month box
-        const germanCounter = monthBox.querySelector('.german-counter');
-        if (!germanCounter) return;
-        
-        // Extract month and year from the month box ID
-        const monthBoxId = monthBox.id;
-        const matches = monthBoxId.match(/month-box-(\d+)-(\d+)/);
-        
-        if (!matches) return;
-        
-        const year = parseInt(matches[1]);
-        const month = parseInt(matches[2]);
-        
-        // Count ALL German lessons for this month (past and future)
-        let germanCount = 0;
-        const daysInMonth = getDaysInMonth(year, month);
-        
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dateKey = getDateKey(year, month, day);
-            if (scheduleData[dateKey] === 'german') {
-                germanCount++;
+            toggleIcon.style.transition = 'transform 0.3s';
+            toggleIcon.style.fontSize = '14px';
+            toggleIcon.style.color = '#344455';
+            
+            const monthName = document.createElement('div');
+            monthName.textContent = monthInfo.name;
+            monthName.style.fontSize = '22px';
+            monthName.style.fontWeight = 'bold';
+            monthName.style.color = '#344455';
+            
+            monthNameContainer.appendChild(toggleIcon);
+            monthNameContainer.appendChild(monthName);
+            
+            const germanCounter = document.createElement('div');
+            germanCounter.className = 'german-counter';
+            germanCounter.id = `german-counter-${monthInfo.year}-${monthInfo.month}`;
+            
+            let germanCount = 0;
+            for (let day = 1; day <= monthInfo.days; day++) {
+                const dateKey = getDateKey(monthInfo.year, monthInfo.month, day);
+                if (scheduleData[dateKey] === 'german') {
+                    germanCount++;
+                }
+            }
+            
+            germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> გაკვეთილების რაოდენობა: ${germanCount}`;
+            
+            monthTitle.appendChild(monthNameContainer);
+            monthTitle.appendChild(germanCounter);
+            monthBox.appendChild(monthTitle);
+            
+            const grid = document.createElement('div');
+            grid.className = 'schedule-grid';
+            grid.style.marginTop = '10px';
+            grid.id = `grid-${monthInfo.year}-${monthInfo.month}`;
+            
+            const dateHeaders = document.createElement('div');
+            dateHeaders.className = 'date-headers';
+            
+            for (let day = 1; day <= monthInfo.days; day++) {
+                const dateHeader = document.createElement('div');
+                dateHeader.className = 'date-header';
+                dateHeader.textContent = day;
+                
+                if (isWeekend(monthInfo.year, monthInfo.month, day) || isHoliday(monthInfo.month, day)) {
+                    dateHeader.classList.add('weekend');
+                    const holidayName = getHolidayName(monthInfo.month, day);
+                    if (holidayName) {
+                        dateHeader.title = holidayName;
+                    }
+                }
+                
+                if (isPastDate(monthInfo.year, monthInfo.month, day)) {
+                    dateHeader.classList.add('past-date');
+                    const pastClass = getPastDateClass(monthInfo.year, monthInfo.month, day);
+                    if (pastClass && pastClass !== 'recent') {
+                        dateHeader.classList.add(pastClass);
+                    }
+                }
+                
+                dateHeaders.appendChild(dateHeader);
+            }
+            
+            grid.appendChild(dateHeaders);
+            
+            const activityRows = document.createElement('div');
+            activityRows.className = 'activity-rows';
+            
+            const germanRow = createActivityRow('german', monthInfo);
+            activityRows.appendChild(germanRow);
+            
+            const mcgRow = createActivityRow('mcg', monthInfo);
+            activityRows.appendChild(mcgRow);
+            
+            grid.appendChild(activityRows);
+            monthBox.appendChild(grid);
+            container.appendChild(monthBox);
+            
+            monthTitle.addEventListener('click', function() {
+                const gridElement = document.getElementById(`grid-${monthInfo.year}-${monthInfo.month}`);
+                const isHidden = gridElement.style.display === 'none';
+                
+                if (isHidden) {
+                    gridElement.style.display = 'block';
+                    toggleIcon.style.transform = 'rotate(0deg)';
+                    toggleIcon.className = 'fas fa-chevron-down';
+                } else {
+                    gridElement.style.display = 'none';
+                    toggleIcon.style.transform = 'rotate(-90deg)';
+                    toggleIcon.className = 'fas fa-chevron-right';
+                }
+            });
+            
+            const today = new Date();
+            const lastDayOfMonth = new Date(monthInfo.year, monthInfo.month, monthInfo.days);
+            
+            if (lastDayOfMonth < today) {
+                grid.style.display = 'none';
+                toggleIcon.style.transform = 'rotate(-90deg)';
+                toggleIcon.className = 'fas fa-chevron-right';
             }
         }
         
-        germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> გაკვეთილების რაოდენობა: ${germanCount}`;
-    });
-}
-
-// Helper function to format time for display
-function formatTimeForDisplay(time24) {
-    if (!time24) return '';
-    
-    const [hour, minute] = time24.split(':');
-    const hourNum = parseInt(hour);
-    
-    if (hourNum >= 12) {
-        const hour12 = hourNum === 12 ? '12' : (hourNum - 12).toString().padStart(2, '0');
-        return `${hour12}:${minute} PM`;
-    } else {
-        const hour12 = hourNum === 0 ? '12' : hourNum.toString().padStart(2, '0');
-        return `${hour12}:${minute} AM`;
-    }
-}
-
-        
-function createActivityRow(activityType, monthInfo) {
-    const row = document.createElement('div');
-    row.className = 'activity-row';
-    
-    // Activity label
-    const label = document.createElement('div');
-    label.className = `activity-label ${activityType}-label`;
-    label.textContent = activityType === 'german' ? 'გერმანული' : 'MCG';
-    row.appendChild(label);
-    
-    // Activity cells container
-    const cellsContainer = document.createElement('div');
-    cellsContainer.className = 'activity-cells';
-    
-    // CHANGE THIS: Always start from day 1, not from current day
-    const startDay = 1; // Changed from conditional to always 1
-    
-    for (let day = startDay; day <= monthInfo.days; day++) {
-        const dateKey = getDateKey(monthInfo.year, monthInfo.month, day);
-        
-        const cell = document.createElement('div');
-        cell.className = `activity-cell ${activityType}-cell empty`;
-        
-        // Check if this date has activity
-        const hasActivity = scheduleData[dateKey] === activityType;
-        const hasComment = commentsData[`${dateKey}_${activityType}`];
-        
-        if (hasActivity) {
-            cell.classList.remove('empty');
-            cell.classList.add('filled');
-            cell.textContent = activityType === 'german' ? 'GER' : 'MCG';
+        function updateGermanCounters() {
+            const monthBoxes = document.querySelectorAll('.month-box');
+            
+            monthBoxes.forEach((monthBox) => {
+                const germanCounter = monthBox.querySelector('.german-counter');
+                if (!germanCounter) return;
+                
+                const monthBoxId = monthBox.id;
+                const matches = monthBoxId.match(/month-box-(\d+)-(\d+)/);
+                
+                if (!matches) return;
+                
+                const year = parseInt(matches[1]);
+                const month = parseInt(matches[2]);
+                
+                let germanCount = 0;
+                const daysInMonth = getDaysInMonth(year, month);
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dateKey = getDateKey(year, month, day);
+                    if (scheduleData[dateKey] === 'german') {
+                        germanCount++;
+                    }
+                }
+                
+                germanCounter.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> გაკვეთილების რაოდენობა: ${germanCount}`;
+            });
         }
         
-        if (hasComment) {
-            cell.classList.add('has-comment');
+        function formatTimeForDisplay(time24) {
+            if (!time24) return '';
+            
+            const [hour, minute] = time24.split(':');
+            const hourNum = parseInt(hour);
+            
+            if (hourNum >= 12) {
+                const hour12 = hourNum === 12 ? '12' : (hourNum - 12).toString().padStart(2, '0');
+                return `${hour12}:${minute} PM`;
+            } else {
+                const hour12 = hourNum === 0 ? '12' : hourNum.toString().padStart(2, '0');
+                return `${hour12}:${minute} AM`;
+            }
         }
         
-        // Add past date class
-        if (isPastDate(monthInfo.year, monthInfo.month, day)) {
-            cell.classList.add('past-date');
-            // Optional: add specific class based on how old
-            const pastClass = getPastDateClass(monthInfo.year, monthInfo.month, day);
-            if (pastClass) cell.classList.add(pastClass);
+        function createActivityRow(activityType, monthInfo) {
+            const row = document.createElement('div');
+            row.className = 'activity-row';
+            
+            const label = document.createElement('div');
+            label.className = `activity-label ${activityType}-label`;
+            label.textContent = activityType === 'german' ? 'გერმანული' : 'MCG';
+            row.appendChild(label);
+            
+            const cellsContainer = document.createElement('div');
+            cellsContainer.className = 'activity-cells';
+            
+            const startDay = 1;
+            
+            for (let day = startDay; day <= monthInfo.days; day++) {
+                const dateKey = getDateKey(monthInfo.year, monthInfo.month, day);
+                
+                const cell = document.createElement('div');
+                cell.className = `activity-cell ${activityType}-cell empty`;
+                
+                const hasActivity = scheduleData[dateKey] === activityType;
+                const hasComment = commentsData[`${dateKey}_${activityType}`];
+                
+                if (hasActivity) {
+                    cell.classList.remove('empty');
+                    cell.classList.add('filled');
+                    cell.textContent = activityType === 'german' ? 'GER' : 'MCG';
+                }
+                
+                if (hasComment) {
+                    cell.classList.add('has-comment');
+                    const commentData = commentsData[`${dateKey}_${activityType}`];
+                    if (commentData && commentData.payment) {
+                        cell.classList.add('has-payment');
+                    }
+                }
+                
+                if (isPastDate(monthInfo.year, monthInfo.month, day)) {
+                    cell.classList.add('past-date');
+                    const pastClass = getPastDateClass(monthInfo.year, monthInfo.month, day);
+                    if (pastClass) cell.classList.add(pastClass);
+                }
+                
+                cell.dataset.date = dateKey;
+                cell.dataset.type = activityType;
+                
+                cell.addEventListener('click', handleCellClick);
+                cell.addEventListener('contextmenu', handleRightClick);
+                
+                cellsContainer.appendChild(cell);
+            }
+            
+            row.appendChild(cellsContainer);
+            return row;
         }
         
-        cell.dataset.date = dateKey;
-        cell.dataset.type = activityType;
-        
-        cell.addEventListener('click', handleCellClick);
-        cell.addEventListener('contextmenu', handleRightClick);
-        
-        cellsContainer.appendChild(cell);
-    }
-    
-    row.appendChild(cellsContainer);
-    return row;
-}
-
-        
-        // Event handlers
-function handleCellClick(e) {
-    const cell = e.currentTarget;
-    const date = cell.dataset.date;
-    const type = cell.dataset.type;
-    
-    const hasActivity = scheduleData[date] === type;
-    const hasComment = commentsData[`${date}_${type}`];
-    
-    if (hasActivity && hasComment) {
-        // Show confirmation modal with comment preview
-        pendingDelete = { date, type, cell };
-        
-        const [year, month, day] = date.split('-');
-        const georgianMonth = monthNames[parseInt(month) - 1];
-        const commentData = commentsData[`${date}_${type}`];
-        
-        document.getElementById('modalMessage').innerHTML = 
-            `<strong>${day} ${georgianMonth}, ${year}</strong><br>` +
-            `დარწმუნებული ხართ, რომ გსურთ "${type === 'german' ? 'გერმანული' : 'MCG'}" წაშლა?`;
-        
-        // Show comment preview
-        if (commentData) {
-            document.getElementById('commentPreview').style.display = 'block';
-            document.getElementById('commentPreviewTime').textContent = commentData.time ? `გამოცხადების დრო: ${commentData.time}` : '';
-            document.getElementById('commentPreviewText').textContent = commentData.text || '';
+        function handleCellClick(e) {
+            const cell = e.currentTarget;
+            const date = cell.dataset.date;
+            const type = cell.dataset.type;
+            
+            const hasActivity = scheduleData[date] === type;
+            const hasComment = commentsData[`${date}_${type}`];
+            
+            if (hasActivity && hasComment) {
+                pendingDelete = { date, type, cell };
+                
+                const [year, month, day] = date.split('-');
+                const georgianMonth = monthNames[parseInt(month) - 1];
+                const commentData = commentsData[`${date}_${type}`];
+                
+                document.getElementById('modalMessage').innerHTML = 
+                    `<strong>${day} ${georgianMonth}, ${year}</strong><br>` +
+                    `დარწმუნებული ხართ, რომ გსურთ "${type === 'german' ? 'გერმანული' : 'MCG'}" წაშლა?`;
+                
+                if (commentData) {
+                    document.getElementById('commentPreview').style.display = 'block';
+                    document.getElementById('commentPreviewTime').textContent = commentData.time ? `გამოცხადების დრო: ${commentData.time}` : '';
+                    let previewText = commentData.text || '';
+                    if (commentData.payment) {
+                        previewText += '<div class="payment-preview"><i class="fas fa-dollar-sign"></i> გადასახდელია</div>';
+                    }
+                    document.getElementById('commentPreviewText').innerHTML = previewText;
+                }
+                
+                document.getElementById('confirmModal').classList.add('active');
+            } else {
+                toggleEvent(cell, date, type);
+            }
         }
         
-        document.getElementById('confirmModal').classList.add('active');
-    } 
-    // REMOVE THIS CHECK - ALLOW CLICKING ON PAST DATES
-    // else if (isPastDate(...date.split('-').map(Number))) {
-    //     showNotification('წარსული თარიღის მონიშვნა შეუძლებელია', 'error');
-    // } 
-    else {
-        toggleEvent(cell, date, type);
-    }
-}
-        
-function handleRightClick(e) {
-    e.preventDefault();
-    const cell = e.currentTarget;
-    const date = cell.dataset.date;
-    const type = cell.dataset.type;
-    
-    currentCommentCell = cell;
-    
-    const commentKey = `${date}_${type}`;
-    const commentData = commentsData[commentKey] || { text: '', time: '19:00' };
-    const [year, month, day] = date.split('-');
-    const georgianMonth = monthNames[parseInt(month) - 1];
-    
-    // Show comment popup modal
-    document.getElementById('commentModalTitle').textContent = 
-        `${type === 'german' ? 'გერმანული' : 'MCG'} - კომენტარის დამატება`;
-    document.getElementById('commentDateInfo').textContent = 
-        `${day} ${georgianMonth}, ${year}`;
-    document.getElementById('commentTextarea').value = commentData.text || '';
-    
-    // Set time values from existing comment or default - YOUR CODE HERE
-    const commentTime = commentData.time || '19:00';
-    let hour = '07';
-    let minute = '00';
-    let period = 'PM';
-    
-    // Parse 24-hour format to 12-hour format
-    if (commentTime) {
-        const [timeHour, timeMinute] = commentTime.split(':');
-        const hour24 = parseInt(timeHour);
-        
-        if (hour24 >= 12) {
-            period = 'PM';
-            hour = hour24 === 12 ? '12' : (hour24 - 12).toString().padStart(2, '0');
-        } else {
-            period = 'AM';
-            hour = hour24 === 0 ? '12' : hour24.toString().padStart(2, '0');
+        function handleRightClick(e) {
+            e.preventDefault();
+            const cell = e.currentTarget;
+            const date = cell.dataset.date;
+            const type = cell.dataset.type;
+            
+            currentCommentCell = cell;
+            
+            const commentKey = `${date}_${type}`;
+            const commentData = commentsData[commentKey] || { text: '', time: '19:00', payment: false };
+            const [year, month, day] = date.split('-');
+            const georgianMonth = monthNames[parseInt(month) - 1];
+            
+            document.getElementById('commentModalTitle').textContent = 
+                `${type === 'german' ? 'გერმანული' : 'MCG'} - კომენტარის დამატება`;
+            document.getElementById('commentDateInfo').textContent = 
+                `${day} ${georgianMonth}, ${year}`;
+            document.getElementById('commentTextarea').value = commentData.text || '';
+            
+            const commentTime = commentData.time || '19:00';
+            let hour = '07';
+            let minute = '00';
+            let period = 'PM';
+            
+            if (commentTime) {
+                const [timeHour, timeMinute] = commentTime.split(':');
+                const hour24 = parseInt(timeHour);
+                
+                if (hour24 >= 12) {
+                    period = 'PM';
+                    hour = hour24 === 12 ? '12' : (hour24 - 12).toString().padStart(2, '0');
+                } else {
+                    period = 'AM';
+                    hour = hour24 === 0 ? '12' : hour24.toString().padStart(2, '0');
+                }
+                minute = timeMinute;
+            }
+            
+            document.getElementById('commentHour').value = hour;
+            document.getElementById('commentMinute').value = minute;
+            document.getElementById('commentPeriod').value = period;
+            
+            const paymentCheckbox = document.getElementById('paymentCheckbox');
+            paymentCheckbox.checked = commentData.payment || false;
+            
+            const currentCommentContainer = document.getElementById('currentCommentContainer');
+            const currentCommentText = document.getElementById('currentCommentText');
+            const currentCommentTime = document.getElementById('currentCommentTime');
+            
+            if (commentData.text && commentData.text.trim()) {
+                currentCommentContainer.style.display = 'block';
+                currentCommentText.textContent = commentData.text;
+                currentCommentTime.textContent = commentData.time ? `დრო: ${formatTimeForDisplay(commentData.time)}` : '';
+                if (commentData.payment) {
+                    currentCommentTime.innerHTML += '<br><span style="color: #FFC107;"><i class="fas fa-dollar-sign"></i> გადასახდელია</span>';
+                }
+            } else {
+                currentCommentContainer.style.display = 'none';
+            }
+            
+            const deleteBtn = document.getElementById('deleteCommentBtn');
+            deleteBtn.style.display = (commentData.text && commentData.text.trim()) ? 'flex' : 'none';
+            
+            document.getElementById('commentModal').classList.add('active');
         }
-        minute = timeMinute;
-    }
-    
-    document.getElementById('commentHour').value = hour;
-    document.getElementById('commentMinute').value = minute;
-    document.getElementById('commentPeriod').value = period;
-    
-    // Show/hide existing comment
-    const currentCommentContainer = document.getElementById('currentCommentContainer');
-    const currentCommentText = document.getElementById('currentCommentText');
-    const currentCommentTime = document.getElementById('currentCommentTime');
-    
-    if (commentData.text && commentData.text.trim()) {
-        currentCommentContainer.style.display = 'block';
-        currentCommentText.textContent = commentData.text;
-        // Format time for display
-        currentCommentTime.textContent = commentData.time ? `დრო: ${formatTimeForDisplay(commentData.time)}` : '';
-    } else {
-        currentCommentContainer.style.display = 'none';
-    }
-    
-    // Show/hide delete button based on whether comment exists
-    const deleteBtn = document.getElementById('deleteCommentBtn');
-    deleteBtn.style.display = (commentData.text && commentData.text.trim()) ? 'flex' : 'none';
-    
-    document.getElementById('commentModal').classList.add('active');
-}
         
-async function toggleEvent(cell, date, type) {
-    // REMOVE THIS CHECK - ALLOW MODIFYING PAST DATES
-    // if (isPastDate(...date.split('-').map(Number))) {
-    //     showNotification('წარსული თარიღის მონიშვნა შეუძლებელია', 'error');
-    //     return;
-    // }
-    
-    const hasActivity = scheduleData[date] === type;
-    
-    if (hasActivity) {
-        // Remove activity
-        delete scheduleData[date];
-        cell.className = `activity-cell ${type}-cell empty`;
-        cell.textContent = '';
-        
-        // Remove comment
-        delete commentsData[`${date}_${type}`];
-        cell.classList.remove('has-comment');
-        
-        // Update notification messages based on type
-        if (type === 'german') {
-            showNotification('გაკვეთილი წაიშალა', 'info');
-        } else {
-            showNotification('მორიგეობა წაიშალა', 'info');
+        async function toggleEvent(cell, date, type) {
+            const hasActivity = scheduleData[date] === type;
+            
+            if (hasActivity) {
+                delete scheduleData[date];
+                cell.className = `activity-cell ${type}-cell empty`;
+                cell.textContent = '';
+                
+                delete commentsData[`${date}_${type}`];
+                cell.classList.remove('has-comment');
+                cell.classList.remove('has-payment');
+                
+                if (type === 'german') {
+                    showNotification('გაკვეთილი წაიშალა', 'info');
+                } else {
+                    showNotification('მორიგეობა წაიშალა', 'info');
+                }
+            } else {
+                scheduleData[date] = type;
+                cell.className = `activity-cell ${type}-cell filled`;
+                cell.textContent = type === 'german' ? 'GER' : 'MCG';
+                cell.style.fontSize = '12px';
+                cell.style.display = 'flex';
+                cell.style.alignItems = 'center';
+                cell.style.justifyContent = 'center';
+                
+                if (type === 'german') {
+                    showNotification('გაკვეთილი დაემატა', 'success');
+                } else {
+                    showNotification('მორიგეობა დაემატა', 'success');
+                }
+            }
+            
+            await saveDataToFirebase();
+            saveDataToLocalStorage();
+            updateGermanCounters();
         }
-    } else {
-        // Add activity
-        scheduleData[date] = type;
-        cell.className = `activity-cell ${type}-cell filled`;
-        cell.textContent = type === 'german' ? 'GER' : 'MCG';
-        cell.style.fontSize = '12px';
-        cell.style.display = 'flex';
-        cell.style.alignItems = 'center';
-        cell.style.justifyContent = 'center';
         
-        // Update notification messages based on type
-        if (type === 'german') {
-            showNotification('გაკვეთილი დაემატა', 'success');
-        } else {
-            showNotification('მორიგეობა დაემატა', 'success');
+        function saveComment() {
+            if (!currentCommentCell) return;
+            
+            const date = currentCommentCell.dataset.date;
+            const type = currentCommentCell.dataset.type;
+            const commentText = document.getElementById('commentTextarea').value.trim();
+            
+            const hour12 = document.getElementById('commentHour').value;
+            const minute = document.getElementById('commentMinute').value;
+            const period = document.getElementById('commentPeriod').value;
+            
+            let hour24 = parseInt(hour12);
+            if (period === 'PM' && hour24 < 12) {
+                hour24 += 12;
+            } else if (period === 'AM' && hour24 === 12) {
+                hour24 = 0;
+            }
+            
+            const commentTime = `${hour24.toString().padStart(2, '0')}:${minute}`;
+            const paymentStatus = document.getElementById('paymentCheckbox').checked;
+            
+            if (!commentTime) {
+                showNotification('გთხოვთ მიუთითოთ დრო', 'error');
+                return;
+            }
+            
+            commentsData[`${date}_${type}`] = {
+                text: commentText,
+                time: commentTime,
+                payment: paymentStatus
+            };
+            
+            currentCommentCell.classList.add('has-comment');
+            if (paymentStatus) {
+                currentCommentCell.classList.add('has-payment');
+            } else {
+                currentCommentCell.classList.remove('has-payment');
+            }
+            
+            const displayTime = formatTimeForDisplay(commentTime);
+            if (commentText && paymentStatus) {
+                showNotification(`დრო, კომენტარი და გადასახდელის სტატუსი შენახულია (${displayTime})`, 'success');
+            } else if (commentText) {
+                showNotification(`დრო და კომენტარი შენახულია (${displayTime})`, 'success');
+            } else if (paymentStatus) {
+                showNotification(`დრო და გადასახდელის სტატუსი შენახულია (${displayTime})`, 'success');
+            } else {
+                showNotification(`დრო შენახულია (${displayTime})`, 'success');
+            }
+            
+            saveDataToFirebase();
+            saveDataToLocalStorage();
+            closeCommentModal();
         }
-    }
-    
-    await saveDataToFirebase();
-    saveDataToLocalStorage();
-    updateGermanCounters();
-}
-
-function saveComment() {
-    if (!currentCommentCell) return;
-    
-    const date = currentCommentCell.dataset.date;
-    const type = currentCommentCell.dataset.type;
-    const commentText = document.getElementById('commentTextarea').value.trim();
-    
-    // Get 12-hour time values - YOUR CODE HERE
-    const hour12 = document.getElementById('commentHour').value;
-    const minute = document.getElementById('commentMinute').value;
-    const period = document.getElementById('commentPeriod').value;
-    
-    // Convert to 24-hour format
-    let hour24 = parseInt(hour12);
-    if (period === 'PM' && hour24 < 12) {
-        hour24 += 12;
-    } else if (period === 'AM' && hour24 === 12) {
-        hour24 = 0;
-    }
-    
-    const commentTime = `${hour24.toString().padStart(2, '0')}:${minute}`;
-    
-    // Time is required
-    if (!commentTime) {
-        showNotification('გთხოვთ მიუთითოთ დრო', 'error');
-        return;
-    }
-    
-    // Save both time and additional comment
-    commentsData[`${date}_${type}`] = {
-        text: commentText,
-        time: commentTime
-    };
-    currentCommentCell.classList.add('has-comment');
-    
-    // Show notification with time - use formatted time for display
-    const displayTime = formatTimeForDisplay(commentTime);
-    if (commentText) {
-        showNotification(`დრო და კომენტარი შენახულია (${displayTime})`, 'success');
-    } else {
-        showNotification(`დრო შენახულია (${displayTime})`, 'success');
-    }
-    
-    saveDataToFirebase();
-    saveDataToLocalStorage();
-    closeCommentModal();
-}
         
-function deleteComment() {
-    if (!currentCommentCell) return;
-    
-    const date = currentCommentCell.dataset.date;
-    const type = currentCommentCell.dataset.type;
-    
-    const commentKey = `${date}_${type}`;
-    const commentData = commentsData[commentKey];
-    
-    if (commentData) {
-        pendingDelete = { date, type, cell: currentCommentCell, commentOnly: true };
-        
-        const [year, month, day] = date.split('-');
-        const georgianMonth = monthNames[parseInt(month) - 1];
-        
-        document.getElementById('modalMessage').innerHTML = 
-            `<strong>${day} ${georgianMonth}, ${year}</strong><br>` +
-            `დარწმუნებული ხართ, რომ გსურთ კომენტარის წაშლა?`;
-        
-        // Show comment preview
-        document.getElementById('commentPreview').style.display = 'block';
-        document.getElementById('commentPreviewTime').textContent = 
-            commentData.time ? `დრო: ${formatTimeForDisplay(commentData.time)}` : '';
-        document.getElementById('commentPreviewText').textContent = commentData.text || '';
-        
-        // Update confirm button text
-        document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> კომენტარის წაშლა';
-        
-        document.getElementById('confirmModal').classList.add('active');
-    }
-}
+        function deleteComment() {
+            if (!currentCommentCell) return;
+            
+            const date = currentCommentCell.dataset.date;
+            const type = currentCommentCell.dataset.type;
+            
+            const commentKey = `${date}_${type}`;
+            const commentData = commentsData[commentKey];
+            
+            if (commentData) {
+                pendingDelete = { date, type, cell: currentCommentCell, commentOnly: true };
+                
+                const [year, month, day] = date.split('-');
+                const georgianMonth = monthNames[parseInt(month) - 1];
+                
+                document.getElementById('modalMessage').innerHTML = 
+                    `<strong>${day} ${georgianMonth}, ${year}</strong><br>` +
+                    `დარწმუნებული ხართ, რომ გსურთ კომენტარის წაშლა?`;
+                
+                let previewText = commentData.text || '';
+                if (commentData.payment) {
+                    previewText += '<div class="payment-preview"><i class="fas fa-dollar-sign"></i> გადასახდელია</div>';
+                }
+                document.getElementById('commentPreview').style.display = 'block';
+                document.getElementById('commentPreviewTime').textContent = 
+                    commentData.time ? `დრო: ${formatTimeForDisplay(commentData.time)}` : '';
+                document.getElementById('commentPreviewText').innerHTML = previewText;
+                
+                document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> კომენტარის წაშლა';
+                
+                document.getElementById('confirmModal').classList.add('active');
+            }
+        }
         
         function closeCommentModal() {
             document.getElementById('commentModal').classList.remove('active');
             document.getElementById('commentTextarea').value = '';
-            document.getElementById('commentTime').value = '19:00';
+            document.getElementById('paymentCheckbox').checked = false;
             document.getElementById('currentCommentContainer').style.display = 'none';
             currentCommentCell = null;
         }
         
-        // Confirmation modal handlers
         async function confirmDelete() {
             if (pendingDelete) {
                 const { date, type, cell, commentOnly } = pendingDelete;
                 
                 if (commentOnly) {
-                    // Delete only the comment
                     delete commentsData[`${date}_${type}`];
                     cell.classList.remove('has-comment');
+                    cell.classList.remove('has-payment');
                     
-                    showNotification('წაიშალა', 'info');
+                    showNotification('კომენტარი წაიშალა', 'info');
                 } else {
-                    // Delete activity and comment
                     delete scheduleData[date];
                     delete commentsData[`${date}_${type}`];
                     
                     cell.className = `activity-cell ${type}-cell empty`;
                     cell.textContent = '';
                     cell.classList.remove('has-comment');
+                    cell.classList.remove('has-payment');
                     
-                    // Update notification messages based on type
                     if (type === 'german') {
                         showNotification('გაკვეთილი წაიშალა', 'info');
                     } else {
@@ -1854,7 +1931,6 @@ function deleteComment() {
                 saveDataToLocalStorage();
                 updateGermanCounters();
                 
-                // Reset confirm button text
                 document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> წაშლა';
                 
                 pendingDelete = null;
@@ -1869,7 +1945,6 @@ function deleteComment() {
             document.getElementById('confirmModal').classList.remove('active');
             document.getElementById('commentPreview').style.display = 'none';
             
-            // Reset confirm button text
             document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> წაშლა';
         }
         
@@ -1880,18 +1955,15 @@ function deleteComment() {
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
             document.getElementById('logoutBtn').addEventListener('click', handleLogout);
             
-            // Comment modal
             document.getElementById('closeCommentModal').addEventListener('click', closeCommentModal);
             document.getElementById('cancelCommentBtn').addEventListener('click', closeCommentModal);
             document.getElementById('saveCommentBtn').addEventListener('click', saveComment);
             document.getElementById('deleteCommentBtn').addEventListener('click', deleteComment);
             
-            // Confirmation modal
             document.getElementById('closeConfirmModal').addEventListener('click', cancelDelete);
             document.getElementById('cancelConfirmBtn').addEventListener('click', cancelDelete);
             document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
             
-            // Close modals when clicking outside
             document.getElementById('commentModal').addEventListener('click', (e) => {
                 if (e.target === e.currentTarget) {
                     closeCommentModal();
@@ -1904,7 +1976,6 @@ function deleteComment() {
                 }
             });
             
-            // Handle window resize
             let resizeTimeout;
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimeout);
@@ -1915,7 +1986,6 @@ function deleteComment() {
                 }, 250);
             });
             
-            // Handle Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     if (document.getElementById('commentModal').classList.contains('active')) {
