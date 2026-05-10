@@ -1172,6 +1172,7 @@ body {
 
     <script>
         // Firebase Configuration
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBePd7QF1DhWXmqwEYShA0oOKYeS8hAOLg",
             authDomain: "shifts-c5fb8.firebaseapp.com",
@@ -1190,6 +1191,9 @@ body {
         } catch (error) {
             console.error("Firebase initialization error:", error);
         }
+        
+        // GOOGLE APPS SCRIPT URL FOR EMAILS
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDCLxPQE-xt1EeKcGJwM3iniv1Yb90y-xO9Bx402n8buvxDS3Nv8P1tnhmyTCUEnw7/exec";
         
         // Constants
         const VALID_USERNAME = "alex";
@@ -1309,6 +1313,191 @@ body {
             }, 3000);
         }
         
+                // Function to check for tomorrow's sessions and send reminders
+        async function checkAndSendTomorrowReminders() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            
+            const tomorrowYear = tomorrow.getFullYear();
+            const tomorrowMonth = tomorrow.getMonth();
+            const tomorrowDay = tomorrow.getDate();
+            
+            // Check each session type
+            const sessions = ['german', 'mcg'];
+            let hasReminderSent = false;
+            
+            for (const sessionType of sessions) {
+                const dateKey = getDateKey(tomorrowYear, tomorrowMonth, tomorrowDay);
+                
+                if (scheduleData[dateKey] === sessionType) {
+                    // Get session time from comments or use default
+                    const commentData = commentsData[`${dateKey}_${sessionType}`];
+                    let sessionTime = '';
+                    
+                    if (sessionType === 'german') {
+                        // German session: use time from comment or default 19:00
+                        sessionTime = commentData?.time || '19:00';
+                    } else {
+                        // MCG session always starts at 09:00
+                        sessionTime = '09:00';
+                    }
+                    
+                    // Format time for display (12-hour format)
+                    const [hour24, minute] = sessionTime.split(':');
+                    let displayHour = parseInt(hour24);
+                    let period = 'AM';
+                    
+                    if (displayHour >= 12) {
+                        period = 'PM';
+                        displayHour = displayHour === 12 ? 12 : displayHour - 12;
+                    } else {
+                        period = 'AM';
+                        displayHour = displayHour === 0 ? 12 : displayHour;
+                    }
+                    const formattedTimeForDisplay = `${displayHour}:${minute} ${period}`;
+                    
+                    // Format date for display
+                    const formattedDate = `${tomorrowDay.toString().padStart(2,'0')}.${(tomorrowMonth+1).toString().padStart(2,'0')}.${tomorrowYear}`;
+                    
+                    const sessionTypeName = sessionType === 'german' ? 'გერმანული ენის სესია' : 'მორიგეობა';
+                    
+                    const message = `
+                        <p>მოგესალმებით, ალექსი.</p>
+                        <p>შეგახსენებთ, რომ ხვალ, <strong>${formattedDate}, ${formattedTimeForDisplay}-ზე</strong> ჩანიშნული გაქვთ <strong>${sessionTypeName}</strong>.</p>
+                    `;
+                    
+                    try {
+                        await fetch(GOOGLE_SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                subject: "განრიგი - შეხსენება",
+                                message: message
+                            })
+                        });
+                        console.log(`Reminder sent for ${sessionType} on ${formattedDate}`);
+                        hasReminderSent = true;
+                    } catch (error) {
+                        console.error('Failed to send reminder email:', error);
+                    }
+                }
+            }
+            
+            if (hasReminderSent) {
+                console.log('Tomorrow reminders sent successfully');
+            }
+        }
+        
+        // Function to schedule the reminder check at 23:30 every day
+        function scheduleReminderCheck() {
+            const now = new Date();
+            const targetTime = new Date();
+            targetTime.setHours(23, 30, 0, 0);
+            
+            // If current time is past 23:30, schedule for tomorrow
+            if (now > targetTime) {
+                targetTime.setDate(targetTime.getDate() + 1);
+            }
+            
+            const timeUntilTarget = targetTime - now;
+            
+            setTimeout(() => {
+                // Run the reminder check
+                checkAndSendTomorrowReminders();
+                
+                // Then schedule it to run every 24 hours
+                setInterval(() => {
+                    checkAndSendTomorrowReminders();
+                }, 24 * 60 * 60 * 1000);
+            }, timeUntilTarget);
+            
+            console.log(`Reminder checker scheduled for ${targetTime.toLocaleString()}`);
+        }
+        
+        // Email notification function
+async function sendEmailNotification(type, details) {
+    const scriptUrl = GOOGLE_SCRIPT_URL;
+    
+    let subject = "განრიგი";
+    let message = "";
+    
+    const sessionType = details.sessionType === 'german' ? 'გერმანული ენის' : 'მორიგეობის';
+    const formattedDate = `${details.day.toString().padStart(2,'0')}.${(details.month+1).toString().padStart(2,'0')}.${details.year}`;
+    const formattedTime = details.time ? details.time : '';
+    
+    if (type === 'lesson_added') {
+        message = `
+            <p>მოგესალმებით, ალექსი</p>
+            <p>დაემატა ახალი სესია:</p>
+            <p><strong>${formattedDate}, ${formattedTime}-ში დაემატა ${sessionType} სესია.</strong></p>
+        `;
+    } 
+    else if (type === 'lesson_deleted') {
+        message = `
+            <p>მოგესალმებით, ალექსი</p>
+            <p>ინფორმაცია სესიის ცვლილებაზე:</p>
+            <p><strong>${formattedDate}, ${formattedTime}-ში არსებული ${sessionType} სესია გაუქმდა.</strong></p>
+        `;
+    }
+    else if (type === 'comment_added') {
+        const commentText = details.commentText ? `<br>კომენტარი: ${details.commentText}` : '';
+        message = `
+            <p>მოგესალმებით, ალექსი</p>
+            <p>სესიის შესახებ ინფორმაცია:</p>
+            <p>ჩაინიშნა ${sessionType} შემდეგ თარიღზე:</p>
+            <p><strong>${formattedDate}, ${formattedTime}</strong></p>
+            ${commentText}
+        `;
+    }
+    else if (type === 'comment_deleted') {
+        message = `
+            <p>მოგესალმებით, ალექსი</p>
+            <p>სესიის შესახებ ინფორმაცია:</p>
+            <p>წაიშალა ${sessionType} დეტალები შემდეგ თარიღზე:</p>
+            <p><strong>${formattedDate}, ${formattedTime}</strong></p>
+        `;
+    }
+    else if (type === 'comment_changed') {
+        message = `
+            <p>მოგესალმებით, ალექსი</p>
+            <p>სესიის შესახებ ინფორმაცია:</p>
+            <p>შეიცვალა ${sessionType} დეტალები შემდეგ თარიღზე:</p>
+            <p><strong>${formattedDate}</strong></p>
+            ${details.newTime ? `<p>ახალი დრო: <strong>${formattedDate}, ${details.newTime}</strong></p>` : ''}
+        `;
+    }
+    else if (type === 'payment_reminder') {
+        message = `
+            <p>მოგესალმებით, ალექსი</p>
+            <p>სესიის შესახებ ინფორმაცია:</p>
+            <p>შეგახსენებთ, რომ სესიის - ${sessionType} თანხა გადასახდელია თარიღზე:</p>
+            <p><strong>${formattedDate}</strong></p>
+            <p>გადასახდელი თანხის ოდენობა - <strong>150 ₾</strong></p>
+        `;
+    }
+    
+    try {
+        await fetch(scriptUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                subject: subject,
+                message: message
+            })
+        });
+        console.log('Email notification sent:', type);
+    } catch (error) {
+        console.error('Failed to send email:', error);
+    }
+}
+
         // Data Management Functions
         async function saveDataToFirebase() {
             if (!currentUser) return;
@@ -1375,8 +1564,7 @@ body {
             }
         }
         
-        // Authentication
-        async function handleLogin(e) {
+                async function handleLogin(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value.trim().toLowerCase();
@@ -1391,6 +1579,9 @@ body {
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
                 createSchedule();
+                
+                // Start the reminder scheduler after successful login
+                scheduleReminderCheck();
             } else {
                 showNotification('არასწორი მომხმარებლის სახელი ან პაროლი!', 'error');
             }
@@ -1766,98 +1957,138 @@ body {
             document.getElementById('commentModal').classList.add('active');
         }
         
-        async function toggleEvent(cell, date, type) {
-            const hasActivity = scheduleData[date] === type;
-            
-            if (hasActivity) {
-                delete scheduleData[date];
-                cell.className = `activity-cell ${type}-cell empty`;
-                cell.textContent = '';
-                
-                delete commentsData[`${date}_${type}`];
-                cell.classList.remove('has-comment');
-                cell.classList.remove('has-payment');
-                
-                if (type === 'german') {
-                    showNotification('გაკვეთილი წაიშალა', 'info');
-                } else {
-                    showNotification('მორიგეობა წაიშალა', 'info');
-                }
-            } else {
-                scheduleData[date] = type;
-                cell.className = `activity-cell ${type}-cell filled`;
-                cell.textContent = type === 'german' ? 'GER' : 'MCG';
-                cell.style.fontSize = '12px';
-                cell.style.display = 'flex';
-                cell.style.alignItems = 'center';
-                cell.style.justifyContent = 'center';
-                
-                if (type === 'german') {
-                    showNotification('გაკვეთილი დაემატა', 'success');
-                } else {
-                    showNotification('მორიგეობა დაემატა', 'success');
-                }
-            }
-            
-            await saveDataToFirebase();
-            saveDataToLocalStorage();
-            updateGermanCounters();
-        }
+async function toggleEvent(cell, date, type) {
+    const hasActivity = scheduleData[date] === type;
+    const [year, month, day] = date.split('-');
+    const commentData = commentsData[`${date}_${type}`];
+    const time = commentData?.time || '19:00';
+    
+    if (hasActivity) {
+        // DELETING LESSON
+        delete scheduleData[date];
+        cell.className = `activity-cell ${type}-cell empty`;
+        cell.textContent = '';
         
-        function saveComment() {
-            if (!currentCommentCell) return;
-            
-            const date = currentCommentCell.dataset.date;
-            const type = currentCommentCell.dataset.type;
-            const commentText = document.getElementById('commentTextarea').value.trim();
-            
-            const hour12 = document.getElementById('commentHour').value;
-            const minute = document.getElementById('commentMinute').value;
-            const period = document.getElementById('commentPeriod').value;
-            
-            let hour24 = parseInt(hour12);
-            if (period === 'PM' && hour24 < 12) {
-                hour24 += 12;
-            } else if (period === 'AM' && hour24 === 12) {
-                hour24 = 0;
-            }
-            
-            const commentTime = `${hour24.toString().padStart(2, '0')}:${minute}`;
-            const paymentStatus = document.getElementById('paymentCheckbox').checked;
-            
-            if (!commentTime) {
-                showNotification('გთხოვთ მიუთითოთ დრო', 'error');
-                return;
-            }
-            
-            commentsData[`${date}_${type}`] = {
-                text: commentText,
-                time: commentTime,
-                payment: paymentStatus
-            };
-            
-            currentCommentCell.classList.add('has-comment');
-            if (paymentStatus) {
-                currentCommentCell.classList.add('has-payment');
-            } else {
-                currentCommentCell.classList.remove('has-payment');
-            }
-            
-            const displayTime = formatTimeForDisplay(commentTime);
-            if (commentText && paymentStatus) {
-                showNotification(`დრო, კომენტარი და გადასახდელის სტატუსი შენახულია (${displayTime})`, 'success');
-            } else if (commentText) {
-                showNotification(`დრო და კომენტარი შენახულია (${displayTime})`, 'success');
-            } else if (paymentStatus) {
-                showNotification(`დრო და გადასახდელის სტატუსი შენახულია (${displayTime})`, 'success');
-            } else {
-                showNotification(`დრო შენახულია (${displayTime})`, 'success');
-            }
-            
-            saveDataToFirebase();
-            saveDataToLocalStorage();
-            closeCommentModal();
+        delete commentsData[`${date}_${type}`];
+        cell.classList.remove('has-comment');
+        cell.classList.remove('has-payment');
+        
+        // Send email notification for deletion
+        await sendEmailNotification('lesson_deleted', {
+            sessionType: type,
+            year: parseInt(year),
+            month: parseInt(month) - 1,
+            day: parseInt(day),
+            time: time
+        });
+        
+        if (type === 'german') {
+            showNotification('გაკვეთილი წაიშალა', 'info');
+        } else {
+            showNotification('მორიგეობა წაიშალა', 'info');
         }
+    } else {
+        // ADDING LESSON
+        scheduleData[date] = type;
+        cell.className = `activity-cell ${type}-cell filled`;
+        cell.textContent = type === 'german' ? 'GER' : 'MCG';
+        
+        // Send email notification for addition
+        await sendEmailNotification('lesson_added', {
+            sessionType: type,
+            year: parseInt(year),
+            month: parseInt(month) - 1,
+            day: parseInt(day),
+            time: time
+        });
+        
+        if (type === 'german') {
+            showNotification('გაკვეთილი დაემატა', 'success');
+        } else {
+            showNotification('მორიგეობა დაემატა', 'success');
+        }
+    }
+    
+    await saveDataToFirebase();
+    saveDataToLocalStorage();
+    updateGermanCounters();
+}
+        
+async function saveComment() {
+    if (!currentCommentCell) return;
+    
+    const date = currentCommentCell.dataset.date;
+    const type = currentCommentCell.dataset.type;
+    const commentText = document.getElementById('commentTextarea').value.trim();
+    const wasExisting = !!commentsData[`${date}_${type}`];
+    const oldCommentData = wasExisting ? {...commentsData[`${date}_${type}`]} : null;
+    
+    const hour12 = document.getElementById('commentHour').value;
+    const minute = document.getElementById('commentMinute').value;
+    const period = document.getElementById('commentPeriod').value;
+    
+    let hour24 = parseInt(hour12);
+    if (period === 'PM' && hour24 < 12) {
+        hour24 += 12;
+    } else if (period === 'AM' && hour24 === 12) {
+        hour24 = 0;
+    }
+    
+    const commentTime = `${hour24.toString().padStart(2, '0')}:${minute}`;
+    const paymentStatus = document.getElementById('paymentCheckbox').checked;
+    
+    if (!commentTime) {
+        showNotification('გთხოვთ მიუთითოთ დრო', 'error');
+        return;
+    }
+    
+    const [year, month, day] = date.split('-');
+    const formattedTime = `${hour24.toString().padStart(2, '0')}:${minute}`;
+    
+    // Check if this is a new comment or update
+    const isNewComment = !wasExisting;
+    const isUpdate = wasExisting && (oldCommentData.text !== commentText || oldCommentData.time !== commentTime || oldCommentData.payment !== paymentStatus);
+    
+    commentsData[`${date}_${type}`] = {
+        text: commentText,
+        time: commentTime,
+        payment: paymentStatus
+    };
+    
+    currentCommentCell.classList.add('has-comment');
+    if (paymentStatus) {
+        currentCommentCell.classList.add('has-payment');
+    } else {
+        currentCommentCell.classList.remove('has-payment');
+    }
+    
+    // Send email based on action
+    if (isNewComment) {
+        await sendEmailNotification('comment_added', {
+            sessionType: type,
+            year: parseInt(year),
+            month: parseInt(month) - 1,
+            day: parseInt(day),
+            time: formattedTime,
+            commentText: commentText
+        });
+        showNotification(`კომენტარი დაემატა (${formattedTime})`, 'success');
+    } else if (isUpdate) {
+        await sendEmailNotification('comment_changed', {
+            sessionType: type,
+            year: parseInt(year),
+            month: parseInt(month) - 1,
+            day: parseInt(day),
+            time: formattedTime,
+            newTime: formattedTime
+        });
+        showNotification(`კომენტარი განახლდა (${formattedTime})`, 'success');
+    }
+    
+    await saveDataToFirebase();
+    saveDataToLocalStorage();
+    closeCommentModal();
+}
         
         function deleteComment() {
             if (!currentCommentCell) return;
@@ -1901,44 +2132,61 @@ body {
             currentCommentCell = null;
         }
         
-        async function confirmDelete() {
-            if (pendingDelete) {
-                const { date, type, cell, commentOnly } = pendingDelete;
-                
-                if (commentOnly) {
-                    delete commentsData[`${date}_${type}`];
-                    cell.classList.remove('has-comment');
-                    cell.classList.remove('has-payment');
-                    
-                    showNotification('კომენტარი წაიშალა', 'info');
-                } else {
-                    delete scheduleData[date];
-                    delete commentsData[`${date}_${type}`];
-                    
-                    cell.className = `activity-cell ${type}-cell empty`;
-                    cell.textContent = '';
-                    cell.classList.remove('has-comment');
-                    cell.classList.remove('has-payment');
-                    
-                    if (type === 'german') {
-                        showNotification('გაკვეთილი წაიშალა', 'info');
-                    } else {
-                        showNotification('მორიგეობა წაიშალა', 'info');
-                    }
-                }
-                
-                await saveDataToFirebase();
-                saveDataToLocalStorage();
-                updateGermanCounters();
-                
-                document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> წაშლა';
-                
-                pendingDelete = null;
-                
-                document.getElementById('confirmModal').classList.remove('active');
-                document.getElementById('commentPreview').style.display = 'none';
-            }
+async function confirmDelete() {
+    if (pendingDelete) {
+        const { date, type, cell, commentOnly } = pendingDelete;
+        const [year, month, day] = date.split('-');
+        const commentData = commentsData[`${date}_${type}`];
+        const time = commentData?.time || '19:00';
+        
+        if (commentOnly) {
+            // DELETING COMMENT ONLY
+            delete commentsData[`${date}_${type}`];
+            cell.classList.remove('has-comment');
+            cell.classList.remove('has-payment');
+            
+            await sendEmailNotification('comment_deleted', {
+                sessionType: type,
+                year: parseInt(year),
+                month: parseInt(month) - 1,
+                day: parseInt(day),
+                time: time
+            });
+            
+            showNotification('კომენტარი წაიშალა', 'info');
+        } else {
+            // DELETING WHOLE LESSON
+            delete scheduleData[date];
+            delete commentsData[`${date}_${type}`];
+            
+            cell.className = `activity-cell ${type}-cell empty`;
+            cell.textContent = '';
+            cell.classList.remove('has-comment');
+            cell.classList.remove('has-payment');
+            
+            await sendEmailNotification('lesson_deleted', {
+                sessionType: type,
+                year: parseInt(year),
+                month: parseInt(month) - 1,
+                day: parseInt(day),
+                time: time
+            });
+            
+            showNotification(`${type === 'german' ? 'გაკვეთილი' : 'მორიგეობა'} წაიშალა`, 'info');
         }
+        
+        await saveDataToFirebase();
+        saveDataToLocalStorage();
+        updateGermanCounters();
+        
+        document.getElementById('confirmDeleteBtn').innerHTML = '<i class="fas fa-trash"></i> წაშლა';
+        
+        pendingDelete = null;
+        
+        document.getElementById('confirmModal').classList.remove('active');
+        document.getElementById('commentPreview').style.display = 'none';
+    }
+}
         
         function cancelDelete() {
             pendingDelete = null;
@@ -1951,6 +2199,9 @@ body {
         // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
             loadDataFromLocalStorage();
+            
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
             
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
             document.getElementById('logoutBtn').addEventListener('click', handleLogout);
